@@ -1,12 +1,12 @@
 <?php
-if(!env('DISABLE_WEBSITE'))
-{
-    Route::get('/', 'HomeController@index')->name('homepage');    
-}
-else
-{
+// if(!env('DISABLE_WEBSITE'))
+// {
+//     Route::get('/', 'HomeController@index')->name('homepage');
+// }
+// else
+// {
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('homepage');
-}
+// }
 
 Route::get('pricing', 'HomeController@pricing')->name('pricing');
 Route::get('contact', 'HomeController@contact')->name('contact');
