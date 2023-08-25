@@ -11,7 +11,7 @@
 |
 */
 
-load_route('installer');
+// load_route('installer');
 load_route('website');
 
  Route::post('additional/services', 'ServiceController@getAdditionalServicesByServiceId')
@@ -35,12 +35,12 @@ Route::group(['middleware' => ['auth','verified'] ], function () {
     // For Admin Only
     Route::group(['middleware' => ['role:admin']], function () {
         load_route('admin');
-        
+
     });
     // End of Admin only
 
     // For Staff Only
-    Route::group(['middleware' => ['role:staff']], function () {        
+    Route::group(['middleware' => ['role:staff']], function () {
         load_route('staff');
     });
     // End of Staff Only
@@ -50,12 +50,12 @@ Route::group(['middleware' => ['auth','verified'] ], function () {
     Route::group(['middleware' => ['role:admin|staff']], function () {
 
         Route::get('tasks', 'TaskController@index')->name('tasks_list');
-        Route::post('/tasks/datatable/', 'TaskController@datatable')->name('tasks_datatable');      
+        Route::post('/tasks/datatable/', 'TaskController@datatable')->name('tasks_datatable');
         Route::post('task/submit/{order}', 'TaskController@submit_work')->name('submit_work');
         Route::post('task/start/{order}', 'TaskController@start_working')->name('start_working');
 
     });
     // End of Admin and staff
-  
+
 
 });

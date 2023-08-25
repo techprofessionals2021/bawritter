@@ -220,17 +220,20 @@ a h5:hover {
 .navbar-background {
     /*background: #591E8B !important;*/
     /* background-color: #6e00ff !important;*/
-    background: rgb(159, 65, 238);
-    background: linear-gradient(
-        90deg,
-        rgba(159, 65, 238, 1) 0%,
-        rgba(113, 65, 222, 1) 48%,
-        rgba(158, 76, 235, 1) 100%
-    );
+    // background: rgb(159, 65, 238);
+    // background: linear-gradient(
+    //     90deg,
+    //     rgba(159, 65, 238, 1) 0%,
+    //     rgba(113, 65, 222, 1) 48%,
+    //     rgba(158, 76, 235, 1) 100%
+    // );
+
+    background: #fff !important;
+
 }
 
 .navbar-background .nav-item > .nav-link {
-    color: #fff !important;
+    color:rgba(0,0,0,.4) !important;
 }
 
 .navbar-toggler {

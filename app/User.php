@@ -9,17 +9,17 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Traits\TagOperation;
 use App\Traits\Wallet\HasWallet;
 use App\Traits\Wallet\Transactionable;
-use Spatie\Activitylog\Traits\CausesActivity; 
+use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Permission\Models\Role;
 use App\Setting;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    // use SoftDeletes;
+    use SoftDeletes;
     use Notifiable, HasRoles, TagOperation, HasWallet;
     use CausesActivity;
     use Transactionable;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -134,7 +134,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $data['tag_id_list'] = Tag::orderBy('name', 'ASC')->pluck('name', 'id')->toArray();
 
-        $data['role_id_list'] = Role::orderBy('name', 'ASC')->pluck('name', 'name')->toArray();  
+        $data['role_id_list'] = Role::orderBy('name', 'ASC')->pluck('name', 'name')->toArray();
 
         $data['countries'] = ['' =>'Select'] + Country::orderBy('id', 'ASC')->pluck('name', 'name')->toArray();
 

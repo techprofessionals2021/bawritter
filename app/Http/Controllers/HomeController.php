@@ -14,22 +14,22 @@ use App\Mail\CustomerQuery;
 class HomeController extends Controller
 {
     private $seoService;
-    
+
     function __construct(SeoService $seoService)
     {
         $this->seoService = $seoService;
     }
 
     public function index()
-    {     
+    {
 
-       if(env('ENABLE_APP_SETUP_CONFIG') != TRUE)
-       {
-          return redirect()->route('installer_page');
-       }   
+    //    if(env('ENABLE_APP_SETUP_CONFIG') != TRUE)
+    //    {
+    //       return redirect()->route('installer_page');
+    //    }
         $this->seoService->load('home');
-        
-        
+
+
         $data['services'] = [];
 
         $services = Service::all();
@@ -47,8 +47,8 @@ class HomeController extends Controller
 
     function pricing(CalculatorService $calculator)
     {
-        $this->seoService->load('pricing'); 
-  
+        $this->seoService->load('pricing');
+
         return view('website.pricing')->with(['data' => $calculator->priceList()]);
     }
 
