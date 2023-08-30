@@ -86,7 +86,8 @@ function is_active_menu($route_name)
 
 function get_company_name()
 {
-    return Purifier::clean(settings('company_name'));
+   return env('APP_NAME');
+    // return Purifier::clean(settings('company_name'));
 }
 
 function get_software_version()
@@ -234,8 +235,8 @@ function logActivity($performedOn = NULL, $log, $user = NULL, $properties = NULL
     if($performedOn)
     {
         $activity->performedOn($performedOn);
-    }    
-   
+    }
+
     if ($properties) {
         $activity->withProperties($properties);
     }
