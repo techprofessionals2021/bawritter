@@ -3,8 +3,8 @@
 <h4>Conversations</h4>
 <p class="text-muted"><small>Sorted based on most recent comment</small></p>
 @foreach($comments as $comment)
-<div id="thread_{{ $comment->id }}" class="{{ ($comment->user_id == auth()->user()->id) ? 'thread-member' : 'thread-customer' }} comment-box">
-   <div class="row">
+<div id="thread_{{ $comment->id }}" class="{{ ($comment->user_id == auth()->user()->id) ? 'thread-customer' :  'thread-member'}} comment-box">
+   <div class="row {{ ($comment->user_id == auth()->user()->id) ? 'flex-row-reverse':'' }}">
       <div class="col-md-3">
          <p class="h6">
             @if(auth()->user()->hasRole('admin'))
@@ -15,16 +15,16 @@
          </p>
          <div class="text-muted">
             @if($order->customer_id == $comment->user_id)
-            Client    
+            Client
             @elseif($order->staff_id == $comment->user_id)
             Team Member
             @else
-            Admin	
+            Admin
             @endif
          </div>
       </div>
-      <div class="col-md-9 comment-body-parent">
-         <?php echo nl2br($comment->body); ?>                       
+      <div class="col-md-9 comment-body-parent @if($comment->user_id == auth()->id()) text-right @endif">
+         <?php echo nl2br($comment->body); ?>
       </div>
    </div>
    <br><br>
