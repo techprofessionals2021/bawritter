@@ -31,9 +31,9 @@ class NumberGenerator extends Model
     {
         $prefix_list = [
             'App\Bill' => 'BILL',
-            'App\Order' => 'ORD',
+            'App\Order' => 'BAW',
             'App\Payment' => 'PMT',
-            'App\Wallet' => 'WAL',          
+            'App\Wallet' => 'WAL',
         ];
 
         return (isset($prefix_list[$generatable_type])) ? $prefix_list[$generatable_type] : NULL;
