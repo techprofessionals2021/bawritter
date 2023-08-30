@@ -13,7 +13,7 @@ use App\Enums\SpacingType;
 class CalculatorService
 {
     /*
-        The calculatePrice method requires the following keys to contain in 
+        The calculatePrice method requires the following keys to contain in
         the request array parameter:
             $request['service_id']
             $request['work_level_id']
@@ -22,7 +22,7 @@ class CalculatorService
             $request['quantity']
             $request['added_services']
     */
-    
+
     function calculatePrice($request)
     {
         $service = Service::find($request['service_id']);
@@ -43,10 +43,12 @@ class CalculatorService
         if ($service->price_type_id  == PriceType::PerPage) {
             if ($request['spacing_type'] == SpacingType::DoubleLine) {
                 // If spacing type is double
-                $base_price = $service->double_spacing_price;
+                // $base_price = $service->double_spacing_price;
+                $base_price = $request['base_price'];
             } else {
                 // If spacing type is single
-                $base_price = $service->single_spacing_price;
+                // $base_price = $service->single_spacing_price;
+                $base_price = $request['base_price'];
             }
             $unit_name = PriceType::PerPagePriceUnit;
         }
@@ -58,7 +60,7 @@ class CalculatorService
         // Calculate Work Level Price
         $work_level_price = $this->calculatePercentage($base_price, $workLevel->percentage_to_add);
 
-        // Calculate Urgency Price 
+        // Calculate Urgency Price
         $urgency_price = $this->calculatePercentage($base_price, $urgency->percentage_to_add);
 
         // Calculate Unit Price
@@ -70,7 +72,7 @@ class CalculatorService
         // Calculate Total Price of Additional Services
         $additional_services_cost = $this->getTotalPriceoOfAdditionalServices($request['added_services']);
 
-        // Calculate Sub Total  Amount + Additional Services      
+        // Calculate Sub Total  Amount + Additional Services
         $sub_total = $this->roundPrice(($amount + $additional_services_cost));
 
         // Total (work here if you need to add discount option)
@@ -78,7 +80,7 @@ class CalculatorService
 
         return [
             'spacing_type' => $request['spacing_type'],
-            'unit_name' => $unit_name,            
+            'unit_name' => $unit_name,
             'base_price' => $base_price,
             'work_level_price' => $work_level_price,
             'urgency_price' => $urgency_price,
@@ -88,7 +90,7 @@ class CalculatorService
             'sub_total' => $sub_total,
             'discount' => 0,
             'total' => $total,
-            
+
         ];
     }
     function orderTotal($request)
@@ -181,7 +183,7 @@ class CalculatorService
         return NULL;
     }
 
-    
+
     public function roundPrice($amount)
     {
         return number_format($amount, 2, '.', '');

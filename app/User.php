@@ -66,6 +66,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Order', 'staff_id', 'id');
     }
 
+    public function staff_price()
+    {
+        return $this->hasOne('App\StaffPrice');
+    }
+
     public function ratings_received()
     {
         return $this->hasManyThrough('App\Rating', 'App\Order', 'staff_id');

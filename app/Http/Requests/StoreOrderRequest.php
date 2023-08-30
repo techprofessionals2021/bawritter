@@ -48,6 +48,8 @@ class StoreOrderRequest extends FormRequest
             'quantity' => 'required',
             'added_services' => 'nullable|array',
             'files_data' => 'nullable|array',
+            'writer_model' => 'nullable|array',
+            'base_price' => 'nullable',
         ];
 
         if (Service::find($this->service_id)->price_type_id  == PriceType::PerPage) {

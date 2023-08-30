@@ -120,7 +120,7 @@ class CheckoutController extends Controller
         }
 
         if ($success) {
-            // the transaction worked ...            
+            // the transaction worked ...
             return redirect()->route('offline_payment_success')
                 ->with('success_message', $paymentMethod->success_message);
         } else {
@@ -172,7 +172,7 @@ class CheckoutController extends Controller
         }
 
         if ($success) {
-            // the transaction worked ...            
+            // the transaction worked ...
             return redirect()->route('orders_show', $order_id)->withSuccess('Your order has been received. You will be notified when your document is ready');
         } else {
 

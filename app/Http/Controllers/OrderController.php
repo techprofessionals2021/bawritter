@@ -51,24 +51,24 @@ class OrderController extends Controller
         $orders = Order::with([
             'assignee',
             'customer'
-        ]);         
-        
+        ]);
+
         // display by nearest due date
         (empty($request->show_by_nearest_due_date)) ? $orders->orderBy('id', 'DESC') : $orders->orderBy('dead_line', 'DESC');
-        
+
         // Show archived orders
         (empty($request->show_archived)) ? $orders->whereNull('archived'): $orders->whereNotNull('archived');
-        
+
         // Show show_pending_payment_orders
         if($request->show_pending_payment_orders)
         {
-            $orders->where('order_status_id',ORDER_STATUS_PENDING_PAYMENT); 
+            $orders->where('order_status_id',ORDER_STATUS_PENDING_PAYMENT);
         }
         else
         {
-            $orders->where('order_status_id','<>', ORDER_STATUS_PENDING_PAYMENT); 
+            $orders->where('order_status_id','<>', ORDER_STATUS_PENDING_PAYMENT);
         }
-       
+
         return Datatables::eloquent($orders)->addColumn('customer_html', function ($order) {
 
             return view('order.partials.order_list_row', compact('order'))->render();
@@ -359,7 +359,7 @@ class OrderController extends Controller
     }
 
     public function destroy(OrderService $orderService, Order $order)
-    {     
+    {
         if($orderService->destroy($order))
         {
             return redirect()->route('orders_list')->withSuccess('Order deleted');
@@ -368,6 +368,6 @@ class OrderController extends Controller
         {
             return redirect()->back()->withFail('Sorry, could not delete the order');
         }
-        
+
     }
 }

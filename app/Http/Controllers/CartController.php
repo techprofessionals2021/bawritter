@@ -15,6 +15,7 @@ class CartController extends Controller
     {
         $data = $request->validated();
         $data = array_merge($data, $calculator->calculatePrice($data));
+        $data['staff_id_from_client'] = $data['writer_model']['id'];
         $data['customer_id'] = auth()->user()->id;
         $data['cart_total'] = $data['total'];
         $data['staff_payment_amount'] = $calculator->staffPaymentAmount($data['cart_total']);
@@ -30,7 +31,7 @@ class CartController extends Controller
             'cart_total' => $data['cart_total']
         ], CartType::NewOrder);
 
-        session()->flash('success', 'Order has been saved. Please make the payment to confirm it'); 
+        session()->flash('success', 'Order has been saved. Please make the payment to confirm it');
 
         return response()->json([
             'status' => 'success',
@@ -51,6 +52,6 @@ class CartController extends Controller
             return redirect()->route('choose_payment_method');
         }
 
-        
+
     }
 }

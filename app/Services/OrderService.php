@@ -87,7 +87,7 @@ class OrderService
     {
         DB::beginTransaction();
         $success = false;
-        try {            
+        try {
             // $order->comments()->delete();
             // $order->followers()->delete();
             // $order->attachments()->delete();

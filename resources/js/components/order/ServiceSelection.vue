@@ -13,7 +13,21 @@
         label="name"
         v-model="form.service_model"
         :options="services"
+        :allow-empty="false"
+        deselect-label=""
         @input="getAdditionalServices(form.service_model)"
+      ></multiselect>
+    </div>
+    <div class="form-group">
+      <label>Writers</label>
+
+      <multiselect
+        track-by="id"
+        label="first_name"
+        v-model="form.writer_model"
+        :options="writer_list"
+        :allow-empty="false"
+        deselect-label=""
       ></multiselect>
     </div>
     <div class="form-group">
@@ -39,7 +53,7 @@
           </label>
         </div>
       </div>
-    </div>  
+    </div>
 
     <div class="form-row" v-if="form.service_model.price_type_id == pricingTypes.perPage">
       <div class="form-group col-md-4">
@@ -136,7 +150,7 @@
               >+</button>
             </div>
           </div>
-        </div>       
+        </div>
         <div class="invalid-feedback d-block" v-if="errors.number_of_words">{{ errors.number_of_words[0] }}</div>
       </div>
 
@@ -145,7 +159,7 @@
         v-bind:class="{ 'col-md-6': (form.service_model.price_type_id == pricingTypes.perWord), 'col-md-12': (form.service_model.price_type_id != pricingTypes.perWord) }"
       >
         <label>Urgency</label>
-        <multiselect track-by="id" label="name" v-model="form.urgency_model" :options="urgencies"></multiselect>
+        <multiselect track-by="id" label="name" v-model="form.urgency_model" :options="urgencies" :allow-empty="false" deselect-label=""></multiselect>
       </div>
     </div>
 
@@ -178,9 +192,9 @@
       </div>
     </div>
 
-    <div v-if="user_id">  
+    <div v-if="user_id">
       <button
-        :disabled="hasError"   
+        :disabled="hasError"
         type="button"
         class="btn btn-success btn-lg btn-block"
         v-on:click.prevent="changeTab(2)"
@@ -189,7 +203,7 @@
       </button>
     </div>
     <div v-else>
-      <button          
+      <button
         type="button"
         class="btn btn-success btn-lg btn-block"
         v-on:click.prevent="changeTab(2)"
@@ -211,7 +225,7 @@ export default {
   components: {
     Multiselect
   },
-  props: {    
+  props: {
     pricingTypes: {
       default: {}
     },
@@ -259,7 +273,10 @@ export default {
       default() {
         return null;
       }
-    }
+    },
+    writer_list: {
+      default: {}
+    },
   },
 
   filters: {
@@ -270,6 +287,7 @@ export default {
   created() {
     this.triggerChange(this.form);
     this.getAdditionalServices(this.form.service_model);
+    console.log(this.writer_list,'this.writer_list');
   },
   watch: {
     form: {
@@ -277,21 +295,22 @@ export default {
         this.triggerChange(val);
       },
       deep: true
-    },  
+    },
     errors: {
       handler(val) {
         this.checkError(val);
       },
       deep: true
-    }   
+    }
   },
   data() {
     return {
       hasError:false,
-      errors: {},      
+      errors: {},
       additional_services: [],
       form: {
         service_model: this.services ? this.services[0] : {},
+        writer_model: this.writer_list ? this.writer_list[0] : {},
         urgency_model: this.urgencies ? this.urgencies[0] : {},
         work_level_model: this.levels ? this.levels[0] : {},
         work_level_id: this.levels ? this.levels[0].id : 1,
@@ -304,7 +323,7 @@ export default {
   },
   methods: {
     checkError(){
-      var errorList = JSON.parse(JSON.stringify(this.errors));       
+      var errorList = JSON.parse(JSON.stringify(this.errors));
       this.hasError = (Object.keys(errorList).length > 0) ? true : false ;
     },
     triggerChange(form) {
@@ -341,14 +360,14 @@ export default {
       if (number_of_words == 0 && changeByValue < 1) {
         return false;
       }
-      this.form.number_of_words = number_of_words + changeByValue;  
-      this.validateNumberOfWords();    
+      this.form.number_of_words = number_of_words + changeByValue;
+      this.validateNumberOfWords();
     },
     validateNumberOfWords(){
       if(this.form.number_of_words < this.form.service_model.minimum_order_quantity)
       {
         var minimum_order_quantity = this.form.service_model.minimum_order_quantity;
-        this.$set(this.errors, "number_of_words", ['Minium order quantity is ' + minimum_order_quantity]);         
+        this.$set(this.errors, "number_of_words", ['Minium order quantity is ' + minimum_order_quantity]);
       }
       else
       {
@@ -360,7 +379,7 @@ export default {
       if(this.form.number_of_pages < this.form.service_model.minimum_order_quantity)
       {
         var minimum_order_quantity = this.form.service_model.minimum_order_quantity;
-        this.$set(this.errors, "number_of_pages", ['Minium order quantity is ' + minimum_order_quantity]);         
+        this.$set(this.errors, "number_of_pages", ['Minium order quantity is ' + minimum_order_quantity]);
       }
       else
       {
@@ -371,7 +390,7 @@ export default {
     getAdditionalServices(service_model) {
 
       // Clear the errors
-      this.errors = {};     
+      this.errors = {};
       // Clear the added services
       this.$set(this.form,'added_services', []);
 
@@ -395,7 +414,7 @@ export default {
       {
         this.form.number_of_words = 500;
       }
-      
+
       var $scope = this;
       axios.post(this.additional_services_by_service_id_url, {
           service_id: service_id

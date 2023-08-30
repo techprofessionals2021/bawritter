@@ -35,7 +35,7 @@
               <b>Rate</b>
               :
               {{ form.unit_price }}
-            </div>            
+            </div>
           </div>
 
           <div v-if="form.service_model.price_type_id == pricingTypes.perPage">
@@ -49,8 +49,35 @@
               :
               {{ form.number_of_pages }}
             </div>
+            <!--  -->
             <div>
-              <b>Rate</b>
+              <b>Writer Fee</b>
+              :
+              {{ form.spacing_type == spacingTypes.double ?   this.form?.writer_model?.staff_price?.double_space_price : this.form?.writer_model?.staff_price?.single_space_price | formatMoney }}
+            </div>
+
+            <div>
+              <b>Work Level Charges</b>
+              :
+              {{ this.calculatePercentage(
+                    form.spacing_type == spacingTypes.double ?   this.form?.writer_model?.staff_price?.double_space_price : this.form?.writer_model?.staff_price?.single_space_price,
+                    this.form.work_level_model.percentage_to_add
+                    ) | formatMoney
+              }}
+            </div>
+
+            <div>
+              <b>Urgency Charges</b>
+              :
+              {{ this.calculatePercentage(
+                    form.spacing_type == spacingTypes.double ?   this.form?.writer_model?.staff_price?.double_space_price : this.form?.writer_model?.staff_price?.single_space_price,
+                    this.form.urgency_model.percentage_to_add
+                    ) | formatMoney
+              }}
+            </div>
+            <!--  -->
+            <div>
+              <b>Unit Rate</b>
               :
               {{ form.unit_price | formatMoney }}
             </div>
@@ -83,7 +110,7 @@
           </tbody>
         </table>
       </div>
-    </div>   
+    </div>
   </div>
 </template>
 
@@ -119,34 +146,39 @@ export default {
   computed: {
     calculateTotal: function() {
       if (!this.isObjectEmpty(this.form)) {
+        console.log(this.form,'this.form');
         var form = this.form;
         var serviceModel = form.service_model;
+        var writerModel = form.writer_model;
         var pricingTypes = this.pricingTypes;
         var spacingTypes = this.spacingTypes;
         var workLevelModel = form.work_level_model;
         var urgencyModel = form.urgency_model;
 
         // When Price Type is fixed
-        if (serviceModel.price_type_id == pricingTypes.fixed) {          
+        if (serviceModel.price_type_id == pricingTypes.fixed) {
           var quantity = 1;
           var base_price = parseFloat(serviceModel.price);
-        
+
         }
         // When Price Type is Per Word
-        if (serviceModel.price_type_id == pricingTypes.perWord) {          
+        if (serviceModel.price_type_id == pricingTypes.perWord) {
           var quantity = parseFloat(form.number_of_words);
           var base_price = parseFloat(serviceModel.price);
-         
+
         }
         // When Price Type is based on Number of Pages
         if (serviceModel.price_type_id == pricingTypes.perPage) {
           if (form.spacing_type == spacingTypes.double) {
             // If spacing type is double
-            var base_price = parseFloat(serviceModel.double_spacing_price);
+            // var base_price = parseFloat(serviceModel.double_spacing_price);
+            var base_price = parseFloat(writerModel?.staff_price?.double_space_price);
           } else {
             // If spacing type is single
-            var base_price = parseFloat(serviceModel.single_spacing_price);
-          }       
+            // var base_price = parseFloat(serviceModel.single_spacing_price);
+            var base_price = parseFloat(writerModel?.staff_price?.single_space_price);
+
+          }
           var quantity = parseFloat(form.number_of_pages);
         }
         // Calculate Work Level Price
@@ -161,16 +193,16 @@ export default {
         );
         // Calculate Unit Price
         var unit_price = Number(parseFloat(base_price + work_level_price + urgency_price)).toFixed(2);
-        
+
         // Amount before including Additional Services
         var amount = (unit_price * quantity).toFixed(2);
-        
+
         // Calculate Total Price of Additional Services
         let additional_services_cost = _.sumBy(form.added_services, function(row) {
           return parseFloat(row.rate);
         });
 
-        // Calculate Sub Total  Amount + Additional Services      
+        // Calculate Sub Total  Amount + Additional Services
         var sub_total = (
           parseFloat(amount) + parseFloat(additional_services_cost)
         ).toFixed(2);
@@ -182,11 +214,11 @@ export default {
         this.$set(this.form, "urgency_id", urgencyModel.id);
         this.$set(this.form, "urgency_percentage", urgencyModel.percentage_to_add);
         this.$set(this.form, "dead_line", urgencyModel.date);
-                
+
         this.$set(this.form, "work_level_id", workLevelModel.id);
         this.$set(this.form, "work_level_percentage", workLevelModel.percentage_to_add);
 
-        this.$set(this.form, "base_price", base_price); 
+        this.$set(this.form, "base_price", base_price);
         // unit price = base_price + work_level_price + urgency_price
         this.$set(this.form, "unit_price", unit_price);
         this.$set(this.form, "quantity", quantity);
@@ -195,8 +227,8 @@ export default {
         this.$set(this.form, "sub_total", sub_total);
         this.$set(this.form, "total", total);
         this.$set(this.form, "work_level_price", work_level_price);
-        this.$set(this.form, "urgency_price", urgency_price);      
-        
+        this.$set(this.form, "urgency_price", urgency_price);
+
         var $scope = this;
 
         Vue.nextTick(function () {
@@ -206,7 +238,7 @@ export default {
           delete records['number_of_pages'];
           delete records['service_model'];
           delete records['urgency_model'];
-          delete records['work_level_model'];     
+          delete records['work_level_model'];
           $scope.$emit("dataChanged", records);
         });
 
@@ -214,7 +246,7 @@ export default {
       }
     }
   },
-  methods: { 
+  methods: {
     calculatePercentage(basePrice, percentageToAdd) {
       var number = (parseFloat(basePrice) * parseFloat(percentageToAdd)) / 100;
       return Number(parseFloat(number).toFixed(2));
@@ -225,6 +257,6 @@ export default {
     formatMoneyFromNumber($amount) {
       return accounting.formatMoney($amount, currencyConfig.currency);
     }
-  }
+    }
 };
 </script>

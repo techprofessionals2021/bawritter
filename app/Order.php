@@ -52,6 +52,7 @@ class Order extends Model
         'order_status_id',
         'update_via_sms',
         'billed',
+        'staff_id_from_client',
     ];
 
     function walletPayment()
@@ -111,6 +112,10 @@ class Order extends Model
     function assignee()
     {
         return $this->belongsTo('App\User', 'staff_id', 'id');
+    }
+    function assignee_from_client()
+    {
+        return $this->belongsTo('App\User', 'staff_id_from_client', 'id');
     }
 
     function customer()
@@ -197,7 +202,9 @@ class Order extends Model
 
     static function dropdown()
     {
-        $data['service_id_list'] = Service::orderBy('name', 'ASC')->whereNull('inactive')->get();
+
+        $data['writer_list'] = $users = User::role('staff')->with('staff_price')->get();
+        $data['service_id_list'] = Service::orderBy('name', 'ASC')->whereNull('inactive')->where('price_type_id',3)->get();
         $data['work_level_id_list'] = WorkLevel::orderBy('id', 'ASC')->whereNull('inactive')->get();
         $urgencies = Urgency::whereNull('inactive')
             ->orderBy('percentage_to_add', 'ASC')->get();

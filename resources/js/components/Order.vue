@@ -11,11 +11,12 @@
                   :services="services"
                   :levels="levels"
                   :urgencies="urgencies"
-                  :spacings="spacings"                 
+                  :spacings="spacings"
                   :user_id="user_id"
-                  :restricted_order_page_url="restricted_order_page_url"                  
-                  :create_account_url="create_account_url" 
-                  :additional_services_by_service_id_url="additional_services_by_service_id_url"               
+                  :restricted_order_page_url="restricted_order_page_url"
+                  :create_account_url="create_account_url"
+                  :additional_services_by_service_id_url="additional_services_by_service_id_url"
+                  :writer_list="writer_list"
                   @changeTab="changeTab($event)"
                   @dataChanged="handleServiceSelection($event)"
                 ></ServiceSelection>
@@ -31,11 +32,11 @@
         </div>
         <div class="offset-md-1 col-md-4">
           <div class="sticky-top">
-            <OrderSummary :form="dataForOrderSummary" @dataChanged="handleCalculatedData($event)"></OrderSummary>           
+            <OrderSummary :form="dataForOrderSummary" @dataChanged="handleCalculatedData($event)"></OrderSummary>
           </div>
-        </div>  
+        </div>
       </div>
-    </form>   
+    </form>
   </div>
 </template>
 
@@ -119,8 +120,12 @@ export default {
       default() {
         return null;
       }
-    }
+    },
+    writer_list: {
+        default: {}
+    },
   },
+
 
   data() {
     return {
@@ -129,9 +134,9 @@ export default {
         perWord: 2,
         perPage: 3
       },
-      activeTab: 1,      
+      activeTab: 1,
       form: {},
-      dataForOrderSummary : {},      
+      dataForOrderSummary : {},
       errors : {}
     };
   },
@@ -144,7 +149,7 @@ export default {
      },
      handleSubmit($data){
        var mergedRecords = {...this.form, ...$data};
-       this.submitForm(mergedRecords);       
+       this.submitForm(mergedRecords);
      },
     changeTab(tabNumber) {
       if (tabNumber == 2 && !this.user_id) {
@@ -158,7 +163,7 @@ export default {
     },
     isActiveTab: function(tab) {
       return this.activeTab == tab;
-    },    
+    },
     submitForm(formRecords) {
       this.errors = [];
       var $scope = this;
@@ -179,7 +184,7 @@ export default {
           alert("Something went wrongs");
         });
     }
-  }
+    }
 };
 </script>
 
