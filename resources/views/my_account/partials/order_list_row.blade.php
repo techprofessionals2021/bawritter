@@ -36,10 +36,10 @@
                 <span class="text-success">
                     @if (auth()->user()->hasRole('admin'))
                         <a href="{{ route('user_profile', $order->staff_id) }}">
-                            {{ $order->assignee->full_name }}
+                            {{ $order?->assignee?->full_name }}
                         </a>
                     @else
-                        {{ $order->assignee->full_name }}
+                        {{ $order?->assignee?->full_name }}
                     @endif
                 </span>
             @else
@@ -48,7 +48,7 @@
                     None
                 @else
 
-                        {{ $order->assignee_from_client->full_name }}
+                        {{ $order?->assignee_from_client?->full_name }}
                 @endif
             @endif
         </div>
