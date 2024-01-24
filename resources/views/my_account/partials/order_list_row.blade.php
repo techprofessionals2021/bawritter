@@ -23,7 +23,7 @@
     <div class="row order-overview">
         <div class="col-md-6"><span class="font-weight-bold">Service Type</span>
             <br>
-            {{ $order->service->name }}
+            {{ @$order->service->name }}
         </div>
         <div class="col-md-6"><span class="font-weight-bold">Assigned To</span>
             <br>
@@ -35,11 +35,11 @@
             @if (isset($order->assignee))
                 <span class="text-success">
                     @if (auth()->user()->hasRole('admin'))
-                        <a href="{{ route('user_profile', $order->staff_id) }}">
-                            {{ $order?->assignee?->full_name }}
+                        <a href="{{ route('user_profile', @$order->staff_id) }}">
+                            {{ @$order->assignee->full_name }}
                         </a>
                     @else
-                        {{ $order?->assignee?->full_name }}
+                        {{ @$order->assignee->full_name }}
                     @endif
                 </span>
             @else
@@ -48,7 +48,7 @@
                     None
                 @else
 
-                        {{ $order?->assignee_from_client?->full_name }}
+                        {{ @$order->assignee_from_client->full_name }}
                 @endif
             @endif
         </div>
