@@ -9,7 +9,7 @@ trait Transactionable
     {
         return $this->morphToMany(
         	 // the related model
-        	'App\Wallet', 
+        	'App\models\Wallet', 
         	// the relationship name
         	'transactionable',
         	// the table name, 

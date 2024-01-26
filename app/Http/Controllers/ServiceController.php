@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PriceType;
+use App\models\Service;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Service;
 use App\Http\Requests\StoreServicesRequest;
 
 class ServiceController extends Controller

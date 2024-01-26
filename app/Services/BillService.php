@@ -2,10 +2,10 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use App\NumberGenerator;
-use App\Bill;
-use App\BillItem;
-use App\User;
+use App\models\NumberGenerator;
+use App\models\Bill;
+use App\models\BillItem;
+use App\models\User;
 use App\Exceptions\NoUnbilledWorkException;
 use Illuminate\Database\Eloquent\Collection;
 

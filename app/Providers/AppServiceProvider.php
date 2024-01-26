@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
-use App\Setting;
+use App\models\Setting;
 use Illuminate\Support\Facades\App;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,12 +28,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        
-        if(env('ENABLE_HTTPS') == TRUE)
-        {
-          \URL::forceScheme('https'); 
-        }   
-    }
 
-    
+        if (env('ENABLE_HTTPS') == TRUE) {
+            \URL::forceScheme('https');
+        }
+    }
 }

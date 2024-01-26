@@ -9,8 +9,8 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Order;
-use App\User;
+use App\models\Order;
+use App\models\User;
 
 class TaskSelfAssignedEvent
 {
@@ -29,6 +29,4 @@ class TaskSelfAssignedEvent
         $this->order    = $order;
         $this->user     = $user;
     }
-
-    
 }

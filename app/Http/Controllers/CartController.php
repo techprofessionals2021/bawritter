@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\models\Order;
 use App\Enums\CartType;
 use App\Services\CartService;
 use App\Services\CalculatorService;

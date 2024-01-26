@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\TaskAssignedEvent;
 use App\Notifications\TaskAssigned;
-use App\Follower;
+use App\models\Follower;
 
 class TaskAssignedListener
 {

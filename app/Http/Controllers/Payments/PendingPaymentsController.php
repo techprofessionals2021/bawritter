@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Payments;
 
-use App\User;
-use App\Service;
-use App\Urgency;
-use App\WorkLevel;
+use App\models\User;
+use App\models\Service;
+use App\models\Urgency;
+use App\models\WorkLevel;
 use App\Enums\PaymentReason;
 use Illuminate\Http\Request;
 use App\Events\PaymentApprovedEvent;

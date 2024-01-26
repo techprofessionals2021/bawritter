@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Services;
 
 use Artesaos\SEOTools\Facades\SEOMeta;
-use App\Setting;
+use App\models\Setting;
 use Artesaos\SEOTools\Facades\SEOTools;
 
 class SeoService
@@ -18,7 +19,7 @@ class SeoService
 
             if ($meta->count() > 0) {
 
-                $title = $meta['seo_title_'.$page] . ' - ' . get_company_name();
+                $title = $meta['seo_title_' . $page] . ' - ' . get_company_name();
 
                 SEOTools::setTitle($title, false);
                 SEOMeta::setDescription($meta['seo_description_' . $page], false);

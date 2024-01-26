@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\models\Order;
+use App\models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\Facades\DataTables;
-use App\Wallet;
 
 class ReportController extends Controller
 {

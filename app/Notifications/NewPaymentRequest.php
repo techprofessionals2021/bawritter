@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Bill;
+use App\models\Bill;
 
 class NewPaymentRequest extends Notification implements ShouldQueue
 {

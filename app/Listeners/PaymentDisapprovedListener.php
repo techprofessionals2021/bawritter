@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\PaymentDisapprovedEvent;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\PaymentDisapproved;
-use App\User;
+use App\models\User;
 
 class PaymentDisapprovedListener
 {
@@ -17,7 +17,7 @@ class PaymentDisapprovedListener
      */
     public function handle(PaymentDisapprovedEvent $event)
     {
-        $data = $event->data;   
+        $data = $event->data;
         // Log user's activity    
         logActivity(null, 'disapproved an offline payment', null, $data);
         // Send notification to the client

@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Comment;
+use App\models\Comment;
 
 class NewComment extends Notification implements ShouldQueue
 {
@@ -31,12 +32,9 @@ class NewComment extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        if(isset($notifiable->id) && $notifiable->hasAnyRole(['staff','admin']))
-        {
-            return ['mail','database'];
-        }
-        else
-        {
+        if (isset($notifiable->id) && $notifiable->hasAnyRole(['staff', 'admin'])) {
+            return ['mail', 'database'];
+        } else {
             return ['mail'];
         }
     }
@@ -57,9 +55,9 @@ class NewComment extends Notification implements ShouldQueue
             ->line("\n")
             ->line($this->comment->body)
             ->action('View Message', route('orders_show', [
-            $order->id,
-            'group' => 'messages'
-        ]))
+                $order->id,
+                'group' => 'messages'
+            ]))
             ->line('Thank you!');
     }
 
@@ -75,7 +73,7 @@ class NewComment extends Notification implements ShouldQueue
         $name   = $this->comment->user->full_name;
 
         return [
-            'message' => $name. ' comment on '. $order->number ,
+            'message' => $name . ' comment on ' . $order->number,
             'url' => route('orders_show', [$order->id, 'group' => 'messages'])
 
         ];

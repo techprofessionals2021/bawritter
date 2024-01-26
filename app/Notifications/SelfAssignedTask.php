@@ -6,8 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Order;
-use App\User;
+use App\models\Order;
+use App\models\User;
 
 class SelfAssignedTask extends Notification implements ShouldQueue
 {
@@ -35,12 +35,9 @@ class SelfAssignedTask extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        if(isset($notifiable->id))
-        {
-            return ['mail','database'];
-        }
-        else
-        {
+        if (isset($notifiable->id)) {
+            return ['mail', 'database'];
+        } else {
             return ['mail'];
         }
     }
@@ -54,10 +51,10 @@ class SelfAssignedTask extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Self-assigned a task')
-                    ->line($this->user->full_name . ' has self-assigned a new task')
-                    ->action('View Task', route('orders_show', $this->order->id))
-                    ->line('Thank you!');
+            ->subject('Self-assigned a task')
+            ->line($this->user->full_name . ' has self-assigned a new task')
+            ->action('View Task', route('orders_show', $this->order->id))
+            ->line('Thank you!');
     }
 
     /**

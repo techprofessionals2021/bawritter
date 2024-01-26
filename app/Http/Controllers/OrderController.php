@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\Comment;
+use App\models\Order;
+use App\models\Comment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
@@ -172,6 +172,7 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+
         $data = Order::dropdown();
         $data['title'] = 'Let\'s get started on your project!';
 

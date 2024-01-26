@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\SubmittedWork;
+use App\models\SubmittedWork;
 
 class WorkSubmitted extends Notification implements ShouldQueue
 {
@@ -32,12 +32,9 @@ class WorkSubmitted extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        if(isset($notifiable->id))
-        {
-            return ['mail','database'];
-        }
-        else
-        {
+        if (isset($notifiable->id)) {
+            return ['mail', 'database'];
+        } else {
             return ['mail'];
         }
     }
@@ -53,11 +50,11 @@ class WorkSubmitted extends Notification implements ShouldQueue
         $order  = $this->submittedWork->order;
         $name   = $this->submittedWork->user->full_name;
 
-        return (new MailMessage)      
-                    ->subject($order->number. ' - Ready for download')              
-                    ->line('Works for '. $order->number .' has been uploaded. Please login to the application and download the file')
-                    ->action('View Order',  route('orders_show', $order->id))
-                    ->line('Thank you!');
+        return (new MailMessage)
+            ->subject($order->number . ' - Ready for download')
+            ->line('Works for ' . $order->number . ' has been uploaded. Please login to the application and download the file')
+            ->action('View Order',  route('orders_show', $order->id))
+            ->line('Thank you!');
     }
 
     /**
@@ -69,9 +66,9 @@ class WorkSubmitted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         $order  = $this->submittedWork->order;
-        
+
         return [
-            'message'   => $order->number. ' - is ready for download',
+            'message'   => $order->number . ' - is ready for download',
             'url'       => route('orders_show', $order->id),
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Setting;
+use App\models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +26,7 @@ trait SystemUpgrade
 
         $success = false;
         try {
-            \Artisan::call("migrate --force");            
+            \Artisan::call("migrate --force");
             $this->save_records(['prowriters_version' => get_software_version()]);
             $success = true;
         } catch (\Exception  $e) {
@@ -38,7 +38,4 @@ trait SystemUpgrade
             return redirect()->back()->withFail('Could not upgrade the system');
         }
     }
-
-   
-    
 }

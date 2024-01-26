@@ -9,7 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Payment;
+use App\models\Payment;
 
 class PaymentApprovedEvent
 {
@@ -25,5 +25,5 @@ class PaymentApprovedEvent
     public function __construct(Payment $payment)
     {
         $this->payment    = $payment;
-    }    
+    }
 }

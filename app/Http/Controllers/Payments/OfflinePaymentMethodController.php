@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\OfflinePaymentMethod;
+use App\models\OfflinePaymentMethod;
 use Illuminate\Support\Str;
 
 class OfflinePaymentMethodController extends Controller

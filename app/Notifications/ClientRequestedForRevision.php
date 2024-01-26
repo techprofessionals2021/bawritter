@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Order;
+use App\models\Order;
 
 class ClientRequestedForRevision extends Notification implements ShouldQueue
 {
@@ -21,7 +21,7 @@ class ClientRequestedForRevision extends Notification implements ShouldQueue
      */
     public function __construct(Order $order)
     {
-        $this->order    = $order;      
+        $this->order    = $order;
     }
 
     /**
@@ -32,12 +32,9 @@ class ClientRequestedForRevision extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        if(isset($notifiable->id))
-        {
-            return ['mail','database'];
-        }
-        else
-        {
+        if (isset($notifiable->id)) {
+            return ['mail', 'database'];
+        } else {
             return ['mail'];
         }
     }
@@ -51,10 +48,10 @@ class ClientRequestedForRevision extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject($this->order->number. ' - Revision Request') 
-                    ->line($this->order->number. ' Client has requested for a revision')
-                    ->action('View Order', route('orders_show', $this->order->id))
-                    ->line('Thank you!');
+            ->subject($this->order->number . ' - Revision Request')
+            ->line($this->order->number . ' Client has requested for a revision')
+            ->action('View Order', route('orders_show', $this->order->id))
+            ->line('Thank you!');
     }
 
     /**

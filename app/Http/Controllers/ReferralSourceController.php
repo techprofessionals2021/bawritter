@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ReferralSource;
+use App\models\ReferralSource;
 use Illuminate\Http\Request;
 
 class ReferralSourceController extends Controller

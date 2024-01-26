@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\PaymentGateway;
+use App\models\PaymentGateway;
 use Illuminate\Console\Command;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 
@@ -54,19 +54,19 @@ class CreateDummyData extends Command
         config()->set('mail', array_merge(config('mail'), [
             'driver' => 'log',
         ]));
-        
+
         \Artisan::call("db:seed --class=AdditionalServicesTableSeeder");
         \Artisan::call("db:seed --class=ServicesTableSeeder");
         \Artisan::call("db:seed --class=UrgenciesTableSeeder");
         \Artisan::call("db:seed --class=WorkLevelsTableSeeder");
-        
+
 
         \Artisan::call("db:seed --class=DummyUserSeeder");
         \Artisan::call("db:seed --class=OrderTableSeeder");
         \Artisan::call("db:seed --class=BillsTableSeeder");
 
-        $this->paymentGateways();       
-        
+        $this->paymentGateways();
+
         \Artisan::call("db:seed --class=OfflinePaymentMethodTableSeeder");
         \Artisan::call("db:seed --class=PendingForApprovalPaymentTableSeeder");
         \Artisan::call("db:seed --class=ApplicantsTableSeeder");
@@ -80,7 +80,7 @@ class CreateDummyData extends Command
             // Paypal Checkout
             [
                 'unique_name' => 'paypal_checkout',
-                'name' => 'Paypal Smart Checkout',                
+                'name' => 'Paypal Smart Checkout',
                 'keys' => json_encode([
                     'client_id' => "ASurpZzLelJpjJCwFSCaStoV71rjInqmmEWkDnd2mWk8bxGVZiUgW_Y59tWRCFyx-no7AUW8ozjzGb6Cc",
                     'client_secret' => "EDta8P64QXuKQYoD8GwhlNaROaySGai0pYwoJXGzBjCBc-5BZ6Ud_pgBQmlWb6WQyFMQvhjJh6noxsqh",
@@ -91,8 +91,8 @@ class CreateDummyData extends Command
             // Braintree
             [
                 'unique_name' => 'braintree',
-                'name' => 'Braintree',                
-                'keys' => json_encode([                    
+                'name' => 'Braintree',
+                'keys' => json_encode([
                     'merchant_id' => 'z5sjjhbgrbzfgnw6',
                     'public_key' => 'n6srpqmqn6mq5sdv',
                     'private_key' => '59f9e4bf4b149fd54fa553fb9c7f7c137',
@@ -104,8 +104,8 @@ class CreateDummyData extends Command
             // Stipe
             [
                 'unique_name' => 'stripe',
-                'name' => 'Stripe',           
-                'keys' => json_encode([                    
+                'name' => 'Stripe',
+                'keys' => json_encode([
                     'publishable_key' => 'pk_test_JBnqGXZs3sHVpaR4bBwPFXoTm',
                     'secret_key' => 'sk_test_9rRMThBsLosdJuBIbTIVuP4Q',
                 ]),

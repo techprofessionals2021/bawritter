@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Payment;
-use App\NumberGenerator;
+use App\models\Payment;
+use App\models\NumberGenerator;
 
 class PaymentRecordService
 {

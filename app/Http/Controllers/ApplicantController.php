@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Applicant;
-use App\ApplicantStatus;
+use App\models\User;
+use App\models\Applicant;
+use App\models\ApplicantStatus;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\UserService;
