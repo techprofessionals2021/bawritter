@@ -233,7 +233,7 @@ function user_photo($photo)
 }
 
 
-function logActivity($performedOn = NULL, $log, $user = NULL, $properties = NULL)
+function logActivity($performedOn = NULL, $log = NULL, $user = NULL, $properties = NULL)
 {
     $user = (empty($user)) ? auth()->user() : $user;
     $activity = activity()->causedBy($user);
@@ -276,7 +276,7 @@ function isRevisionAllowed($order)
 
 function pushNotification($user_id)
 {
-    $notification = \App\PushNotification::updateOrCreate([
+    $notification = \App\models\PushNotification::updateOrCreate([
         'user_id' => $user_id
     ]);
     $notification->number++;

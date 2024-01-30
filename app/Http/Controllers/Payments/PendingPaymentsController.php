@@ -10,7 +10,7 @@ use App\Enums\PaymentReason;
 use Illuminate\Http\Request;
 use App\Events\PaymentApprovedEvent;
 use App\Events\PaymentDisapprovedEvent;
-use App\PendingForApprovalPayment;
+use App\models\PendingForApprovalPayment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\PaymentRecordService;
