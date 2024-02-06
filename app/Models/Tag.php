@@ -1,4 +1,5 @@
 <?php
+
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -9,8 +10,8 @@ class Tag extends Model
 
     use SoftDeletes;
 
-    protected $dates = [
-        'deleted_at'
+    protected $casts = [
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [

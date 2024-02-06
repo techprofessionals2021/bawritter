@@ -19,10 +19,11 @@ class Order extends Model
     use \App\Traits\TagOperation;
     use Transactionable;
 
-    protected $dates = [
-        'deleted_at',
-        'created_at',
-        'dead_line'
+
+    protected $casts = [
+        'deleted_at' => 'datetime',
+        'created_at' => 'datetime',
+        'dead_line' => 'datetime',
     ];
 
     protected $fillable = [
