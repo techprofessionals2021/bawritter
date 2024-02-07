@@ -8,7 +8,7 @@ class Comment extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo('App\models\User', 'user_id', 'id');
     }
 
     public function order()

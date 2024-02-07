@@ -17,6 +17,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletTransactionController;
 use App\Http\Controllers\WorkLevelController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
+use Symfony\Component\Routing\Route as RoutingRoute;
 
 Route::post('dashboard/statistics', [DashboardController::class, 'statistics'])
 ->name('dashboard_statistics');
@@ -47,7 +49,6 @@ Route::post('task/assign/{order}', [TaskController::class, 'assign_task'])
 
 Route::get('orders/{order}/destroy', [OrderController::class, 'destroy'])
 ->name('orders_destroy');
-
 
 Route::get('/report/wallet/balance', [ReportController::class, 'totalWalletBlance'])
 ->name('total_wallet_balance');
@@ -206,133 +207,133 @@ Route::get('recruitment', [SettingsController::class, 'recruitment'])
 Route::patch('recruitment', [SettingsController::class, 'updateRecruitment'])
     ->name('patch_settings_recruitment');
 
-	// Services    
+	// Services
 	Route::prefix('services')->group(function () {
 		Route::get('/', [ServiceController::class, 'index'])
 			->name('services_list');
-	
+
 		Route::post('/paginate', [ServiceController::class, 'datatable'])
 			->name('datatable_services');
-	
+
 		Route::get('/create', [ServiceController::class, 'create'])
 			->name('services_create');
-	
+
 		Route::post('/', [ServiceController::class, 'store'])
 			->name('services_store');
-	
+
 		Route::get('/{service}/edit', [ServiceController::class, 'edit'])
 			->name('services_edit')
 			->where('service', '[0-9]+');
-	
+
 		Route::patch('/{service}/edit', [ServiceController::class, 'update'])
 			->name('services_update');
-	
+
 		Route::get('/{service}', [ServiceController::class, 'destroy'])
 			->name('services_delete')
 			->where('service', '[0-9]+');
-	
+
 		// Additional Services
 		Route::prefix('additional')->group(function () {
 			Route::get('/', [AdditionalServiceController::class, 'index'])
 				->name('additional_services_list');
-	
+
 			Route::post('/paginate', [AdditionalServiceController::class, 'datatable'])
 				->name('datatable_additional_services');
-	
+
 			Route::get('/create', [AdditionalServiceController::class, 'create'])
 				->name('additional_services_create');
-	
+
 			Route::post('/', [AdditionalServiceController::class, 'store'])
 				->name('additional_services_store');
-	
+
 			Route::get('/{additional_service}/edit', [AdditionalServiceController::class, 'edit'])
 				->name('additional_services_edit');
-	
+
 			Route::patch('/{additional_service}/edit', [AdditionalServiceController::class, 'update'])
 				->name('additional_services_update')
 				->where('additional_service', '[0-9]+');
-	
+
 			Route::get('/{additional_service}', [AdditionalServiceController::class, 'destroy'])
 				->name('additional_services_delete')
 				->where('additional_service', '[0-9]+');
 		});
 		// End of Additional Services
 	});
-	// End of Services 
+	// End of Services
 
 
-	// Urgencies    
+	// Urgencies
 	Route::prefix('urgencies')->group(function () {
 		Route::get('/', [UrgencyController::class, 'index'])
 			->name('urgencies_list');
-	
+
 		Route::post('/paginate', [UrgencyController::class, 'datatable'])
 			->name('datatable_urgencies');
-	
+
 		Route::get('/create', [UrgencyController::class, 'create'])
 			->name('urgencies_create');
-	
+
 		Route::post('/', [UrgencyController::class, 'store'])
 			->name('urgencies_store');
-	
+
 		Route::get('/{urgency}/edit', [UrgencyController::class, 'edit'])
 			->name('urgencies_edit');
-	
+
 		Route::patch('/{urgency}/edit', [UrgencyController::class, 'update'])
 			->name('urgencies_update');
-	
+
 		Route::get('/{urgency}', [UrgencyController::class, 'destroy'])
 			->name('urgencies_delete');
 	});
-	// End of Services 
+	// End of Services
 
 
-	// Work Levels    
+	// Work Levels
 	Route::prefix('work-levels')->group(function () {
 		Route::get('/', [WorkLevelController::class, 'index'])
 			->name('work_levels_list');
-	
+
 		Route::post('/paginate', [WorkLevelController::class, 'datatable'])
 			->name('datatable_work_levels');
-	
+
 		Route::get('/create', [WorkLevelController::class, 'create'])
 			->name('work_levels_create');
-	
+
 		Route::post('/create', [WorkLevelController::class, 'store'])
 			->name('work_levels_store');
-	
+
 		Route::get('/{work_level}/edit', [WorkLevelController::class, 'edit'])
 			->name('work_levels_edit');
-	
+
 		Route::patch('/{work_level}/edit', [WorkLevelController::class, 'update'])
 			->name('work_levels_update');
-	
+
 		Route::get('/{work_level}', [WorkLevelController::class, 'destroy'])
 			->name('work_levels_delete');
 	});
-	// End of Work Levels  	
+	// End of Work Levels
 
 
 	// Tags
 	Route::prefix('tags')->group(function () {
 		Route::get('/', [TagController::class, 'index'])
 			->name('tags_list');
-	
+
 		Route::post('/paginate', [TagController::class, 'datatable'])
 			->name('datatables_tags');
-	
+
 		Route::get('/create', [TagController::class, 'create'])
 			->name('tags_create');
-	
+
 		Route::post('/', [TagController::class, 'store'])
 			->name('tags_store');
-	
+
 		Route::get('/{tag}/edit', [TagController::class, 'edit'])
 			->name('tags_edit');
-	
+
 		Route::patch('/{tag}/edit', [TagController::class, 'update'])
 			->name('tags_update');
-	
+
 		Route::get('/{tag}', [TagController::class, 'destroy'])
 			->name('tags_delete');
 	});
@@ -384,9 +385,8 @@ Route::prefix('wallet/transactions')->group(function () {
         ->name('pending_payment_approve');
 
     Route::get('pending/approvals/{disapprovedPayment}/disapprove', [PendingPaymentsController::class, 'disapprovePendingPayment'])
-        ->name('pending_payment_disapprove');
+     ->name('pending_payment_disapprove');
 });
-
 
 Route::prefix('job')->group(function () {
     Route::get('applicants', [ApplicantController::class, 'index'])

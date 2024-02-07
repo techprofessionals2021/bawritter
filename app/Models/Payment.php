@@ -15,7 +15,7 @@ class Payment extends Model
         'method',
         'amount',
         'reference',
-        'attachment'     
+        'attachment'
     ];
 
 
@@ -24,5 +24,5 @@ class Payment extends Model
         return $this->belongsTo('App\models\User', 'user_id', 'id');
     }
 
-    
+
 }

@@ -16,7 +16,7 @@ class Rating extends Model
 
     function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\models\User');
     }
 
     function order()
