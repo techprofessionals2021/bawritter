@@ -14,6 +14,7 @@ class ReportController extends Controller
 
     function income_statement(Request $request)
     {
+        
         $data = NULL;
         if ($request->date) {
             try {
@@ -113,7 +114,7 @@ class ReportController extends Controller
 
     public function totalWalletBlance()
     {
-        $data['balance'] = Wallet::sum('balance');     
+        $data['balance'] = Wallet::sum('balance');
         return view('report.total_wallet_balance', compact('data'));
     }
 }

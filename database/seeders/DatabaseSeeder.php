@@ -1,5 +1,9 @@
 <?php
 
+use Database\Seeders\OrderStatusesTableSeeder;
+use Database\Seeders\RecruitmentSettingsSeeder;
+use Database\Seeders\RolesTableSeeder;
+use Database\Seeders\SettingsTableSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 

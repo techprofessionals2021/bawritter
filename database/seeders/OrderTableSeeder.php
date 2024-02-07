@@ -90,8 +90,8 @@ class OrderTableSeeder extends Seeder
         $services = Service::pluck('id');
         $urgencies = Urgency::pluck('id');
         $workLevels = WorkLevel::pluck('id');
-        $users = User::doesntHave('roles')->pluck('id');     
-        
+        $users = User::doesntHave('roles')->pluck('id');
+
 
         $calculator = new CalculatorService();
         if ($customer_id) {
@@ -120,7 +120,7 @@ class OrderTableSeeder extends Seeder
         {
             $data['added_services'] = [];
         }
-        
+
 
         if ($service->price_type_id == PriceType::Fixed) {
             $data['quantity'] = 1;
@@ -544,12 +544,12 @@ class OrderTableSeeder extends Seeder
         }
     }
 
-    private function insertNotification($type, $notifiable_id, $message, $url, $date)
-    {
+     private function insertNotification($type, $notifiable_id, $message, $url, $date)
+     {
         $data = [
             'id' => $this->faker->regexify('[A-Za-z0-9]{20}'),
             'type' => 'App\Notifications\\' . $type,
-            'notifiable_type' => 'App\User',
+            'notifiable_type' => 'App\models\User',
             'notifiable_id' => $notifiable_id,
             'data' => json_encode(['message' => $message, 'url' => $url]),
             'created_at' => $date

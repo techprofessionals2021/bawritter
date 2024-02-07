@@ -27,6 +27,6 @@ class PendingForApprovalPayment extends Model
 
     function from()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 }

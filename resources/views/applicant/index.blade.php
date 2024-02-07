@@ -41,7 +41,8 @@
                 processing: true,
                 serverSide: true,
                 "ajax": {
-                    "url": "{!! route('datatable_job_applicannts') !!}",
+
+                    "url": "{!! route('datatable_job_applicants') !!}",
                     "type": "POST",
                     'headers': {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -49,13 +50,13 @@
                     "data": function(d) {
                         d.general_text_search = $("input[name=general_text_search]").val();
                         d.applicant_status_id = $('select[name=applicant_status_id]').val();
-                        d.referral_source_id = $('select[name=referral_source_id]').val();                        
+                        d.referral_source_id = $('select[name=referral_source_id]').val();
                     }
                 },
                 columns: [{
                         data: 'applicant_html',
                         name: 'applicant_html'
-                    }                    
+                    }
                 ]
             });
 

@@ -5,10 +5,10 @@ namespace App\models;
 use Illuminate\Database\Eloquent\Model;
 
 class Wallet extends Model
-{	
+{
 	protected $fillable = [
         'user_id',
-        'balance'        
+        'balance'
     ];
 
     /**
@@ -16,7 +16,7 @@ class Wallet extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\models\User');
     }
 
     public function transactions()

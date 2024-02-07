@@ -10,10 +10,12 @@ use App\Enums\PaymentReason;
 use Illuminate\Http\Request;
 use App\Events\PaymentApprovedEvent;
 use App\Events\PaymentDisapprovedEvent;
-use App\PendingForApprovalPayment;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\models\PendingForApprovalPayment;
 use App\Services\PaymentRecordService;
+use Stripe\Event;
 use Yajra\DataTables\Facades\DataTables;
 
 class PendingPaymentsController extends Controller
@@ -83,12 +85,12 @@ class PendingPaymentsController extends Controller
             // Store the payment
             $payment = $paymentRecordService->store($approvedPayment->user_id, $approvedPayment->method, $approvedPayment->amount, $approvedPayment->reference, $approvedPayment->attachment);
 
-            // Trigger event
+             // Trigger event
             event(new PaymentApprovedEvent($payment));
 
-            // If the reason for payment was order, then confirm the order
+                        // If the reason for payment was order, then confirm the order
             if (($approvedPayment->payment_reason == PaymentReason::order) && !empty($approvedPayment->cart)) {
-                // Confirm Order          
+                // Confirm Order
                 $this->getOrderService()->confirmOrderPayment($approvedPayment->cart->order_id);
             }
             // Now delete the record
@@ -99,9 +101,8 @@ class PendingPaymentsController extends Controller
             $success = false;
             DB::rollback();
         }
-
         if ($success) {
-            // the transaction worked ...            
+            // the transaction worked ...
             return redirect()->route('pending_payment_approvals')->withSuccess('Payment Approved');
         } else {
 

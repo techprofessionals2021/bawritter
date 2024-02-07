@@ -8,7 +8,7 @@ use App\models\ReferralSource;
 
 class Applicant extends Model
 {
-    protected $fillable = [        
+    protected $fillable = [
         'number',
         'first_name',
         'last_name',
@@ -25,20 +25,20 @@ class Applicant extends Model
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
     }
-    
+
     public function status()
     {
-        return $this->belongsTo('App\ApplicantStatus', 'applicant_status_id');
+        return $this->belongsTo('App\Models\ApplicantStatus', 'applicant_status_id');
     }
 
     public function referral_source()
-    {        
-        return $this->belongsTo('App\ReferralSource');
+    {
+        return $this->belongsTo('App\Models\ReferralSource');
     }
 
     public function country()
     {
-        return $this->belongsTo('App\Country');
+        return $this->belongsTo('App\Models\Country');
     }
 
     static function applyAsCandidateDropdown()
