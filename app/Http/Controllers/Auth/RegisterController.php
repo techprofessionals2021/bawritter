@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
-use App\models\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +33,7 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
-    
+
     /**
      * Create a new controller instance.
      *
@@ -53,17 +53,15 @@ class RegisterController extends Controller
     {
         $data = [];
 
-        if(isset($request->c))
-        {
+        if (isset($request->c)) {
             $token = $request->c;
 
-            if(!Invite::isValid($token))
-            {
-                abort(404);        
-            } 
-            
-            $invitation = Invite::get($token); 
-            
+            if (!Invite::isValid($token)) {
+                abort(404);
+            }
+
+            $invitation = Invite::get($token);
+
             $request->session()->put('email', $invitation->email);
             $data['user_token'] = $request->c;
             $data['user_role']  = ($invitation->role_name == 'admin') ? 'as an admin' : 'as a writer';
@@ -87,20 +85,15 @@ class RegisterController extends Controller
             'password'      => ['required', 'string', 'min:1', 'confirmed'],
         ];
 
-        if(isset($data['user_token']) && (!empty($data['user_token'])) )
-        {
+        if (isset($data['user_token']) && (!empty($data['user_token']))) {
             $token = $data['user_token'];
 
-            if(Invite::isValid($token))
-            {
-                $invitation = Invite::get($token); 
-                array_push($rules['email'], 'in:'. $invitation->email);            
-            }
-            else
-            {
+            if (Invite::isValid($token)) {
+                $invitation = Invite::get($token);
+                array_push($rules['email'], 'in:' . $invitation->email);
+            } else {
                 abort(404);
-            }   
-            
+            }
         }
 
         $messages = [
@@ -116,9 +109,9 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    
+
     protected function create(array $data)
-    {        
+    {
         $user = User::create([
             'first_name'    => $data['first_name'],
             'last_name'     => $data['last_name'],
@@ -126,24 +119,18 @@ class RegisterController extends Controller
             'password'      => Hash::make($data['password']),
         ]);
 
-        if(isset($data['user_token']))
-        {
+        if (isset($data['user_token'])) {
             $invitation = Invite::get($data['user_token']);
 
             // Assign the role
             $user->assignRole($invitation->role_name);
-            
+
             // Delete the invitation            
             $invitation->delete();
-        }
-        else
-        {
+        } else {
             $user->sendEmailVerificationNotification();
         }
         //$this->redirectTo = '/url-after-register';
         return $user;
     }
-
-    
-   
 }

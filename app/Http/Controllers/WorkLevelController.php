@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\models\WorkLevel;
+use App\Models\WorkLevel;
 
 class WorkLevelController extends Controller
 {
@@ -23,7 +24,7 @@ class WorkLevelController extends Controller
     {
         $work_levels = WorkLevel::orderBy('name', 'ASC');
 
-        if (! $request->include_inactive_items) {
+        if (!$request->include_inactive_items) {
             $work_levels->whereNull('inactive');
         }
 
@@ -32,21 +33,21 @@ class WorkLevelController extends Controller
             return '<a href="' . route('work_levels_edit', $work_level->id) . '">' . $work_level->name . '</a>';
         })
             ->editColumn('percentage_to_add', function ($work_level) {
-            return $work_level->percentage_to_add . '%';
-        })
+                return $work_level->percentage_to_add . '%';
+            })
             ->addColumn('status', function ($work_level) {
-            return ($work_level->inactive) ? 'Inactive' : 'Active';
-        })
+                return ($work_level->inactive) ? 'Inactive' : 'Active';
+            })
             ->addColumn('action', function ($work_level) {
 
-            return '<a class="btn btn-sm btn-danger delete-item" href="' . route('work_levels_delete', $work_level->id) . '"><i class="fas fa-minus-circle"></i></a>';
-        })
+                return '<a class="btn btn-sm btn-danger delete-item" href="' . route('work_levels_delete', $work_level->id) . '"><i class="fas fa-minus-circle"></i></a>';
+            })
             ->rawColumns([
-            'name',
-            'percentage_to_add',
-            'status',
-            'action'
-        ])
+                'name',
+                'percentage_to_add',
+                'status',
+                'action'
+            ])
             ->make(true);
     }
 

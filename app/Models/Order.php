@@ -1,16 +1,16 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use App\models\Service;
-use App\models\WorkLevel;
-use App\models\Urgency;
+use App\Models\Service;
+use App\Models\WorkLevel;
+use App\Models\Urgency;
 use Carbon\Carbon;
-use App\models\OrderStatus;
-use App\models\User;
+use App\Models\OrderStatus;
+use App\Models\User;
 use App\Traits\Wallet\Transactionable;
 
 class Order extends Model
@@ -67,17 +67,17 @@ class Order extends Model
 
     function status()
     {
-        return $this->hasOne('App\models\OrderStatus', 'id', 'order_status_id');
+        return $this->hasOne('App\Models\OrderStatus', 'id', 'order_status_id');
     }
 
     public function attachments()
     {
-        return $this->hasMany('App\models\Attachment');
+        return $this->hasMany('App\Models\Attachment');
     }
 
     function comments()
     {
-        return $this->hasMany('App\models\Comment');
+        return $this->hasMany('App\Models\Comment');
     }
 
     function followers()
@@ -92,46 +92,46 @@ class Order extends Model
 
     function added_services()
     {
-        return $this->hasMany('App\models\OrderAdditionalService');
+        return $this->hasMany('App\Models\OrderAdditionalService');
     }
 
     function service()
     {
-        return $this->hasOne('App\models\Service', 'id', 'service_id');
+        return $this->hasOne('App\Models\Service', 'id', 'service_id');
     }
 
     function work_level()
     {
-        return $this->hasOne('App\models\WorkLevel', 'id', 'work_level_id');
+        return $this->hasOne('App\Models\WorkLevel', 'id', 'work_level_id');
     }
 
     function urgency()
     {
-        return $this->hasOne('App\models\Urgency', 'id', 'urgency_id');
+        return $this->hasOne('App\Models\Urgency', 'id', 'urgency_id');
     }
 
     function assignee()
     {
-        return $this->belongsTo('App\models\User', 'staff_id', 'id');
+        return $this->belongsTo('App\Models\User', 'staff_id', 'id');
     }
     function assignee_from_client()
     {
-        return $this->belongsTo('App\models\User', 'staff_id_from_client', 'id');
+        return $this->belongsTo('App\Models\User', 'staff_id_from_client', 'id');
     }
 
     function customer()
     {
-        return $this->belongsTo('App\models\User', 'customer_id', 'id');
+        return $this->belongsTo('App\Models\User', 'customer_id', 'id');
     }
 
     public function rating()
     {
-        return $this->hasOne('App\models\Rating');
+        return $this->hasOne('App\Models\Rating');
     }
 
     function submitted_works()
     {
-        return $this->hasMany('App\models\SubmittedWork');
+        return $this->hasMany('App\Models\SubmittedWork');
     }
 
     function latest_submitted_work()

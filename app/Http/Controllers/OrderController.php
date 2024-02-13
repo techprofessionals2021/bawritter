@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Order;
-use App\models\Comment;
+use App\Models\Order;
+use App\Models\Comment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
@@ -57,16 +57,13 @@ class OrderController extends Controller
         (empty($request->show_by_nearest_due_date)) ? $orders->orderBy('id', 'DESC') : $orders->orderBy('dead_line', 'DESC');
 
         // Show archived orders
-        (empty($request->show_archived)) ? $orders->whereNull('archived'): $orders->whereNotNull('archived');
+        (empty($request->show_archived)) ? $orders->whereNull('archived') : $orders->whereNotNull('archived');
 
         // Show show_pending_payment_orders
-        if($request->show_pending_payment_orders)
-        {
-            $orders->where('order_status_id',ORDER_STATUS_PENDING_PAYMENT);
-        }
-        else
-        {
-            $orders->where('order_status_id','<>', ORDER_STATUS_PENDING_PAYMENT);
+        if ($request->show_pending_payment_orders) {
+            $orders->where('order_status_id', ORDER_STATUS_PENDING_PAYMENT);
+        } else {
+            $orders->where('order_status_id', '<>', ORDER_STATUS_PENDING_PAYMENT);
         }
 
         return Datatables::eloquent($orders)->addColumn('customer_html', function ($order) {
@@ -361,14 +358,10 @@ class OrderController extends Controller
 
     public function destroy(OrderService $orderService, Order $order)
     {
-        if($orderService->destroy($order))
-        {
+        if ($orderService->destroy($order)) {
             return redirect()->route('orders_list')->withSuccess('Order deleted');
-        }
-        else
-        {
+        } else {
             return redirect()->back()->withFail('Sorry, could not delete the order');
         }
-
     }
 }

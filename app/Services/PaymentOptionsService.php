@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\models\OfflinePaymentMethod;
-use App\models\PaymentGateway;
+use App\Models\OfflinePaymentMethod;
+use App\Models\PaymentGateway;
 
 class PaymentOptionsService
 {

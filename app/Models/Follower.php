@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +10,6 @@ class Follower extends Model
 
     protected $fillable = [
         'order_id',
-        'user_id',        
+        'user_id',
     ];
-
 }

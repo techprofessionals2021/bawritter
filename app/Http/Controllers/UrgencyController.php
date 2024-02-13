@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\models\Urgency;
+use App\Models\Urgency;
 use Illuminate\Validation\Rule;
 
 class UrgencyController extends Controller
@@ -24,7 +25,7 @@ class UrgencyController extends Controller
     {
         $urgency = Urgency::orderBy('type', 'DESC')->orderBy('value', 'ASC')->orderBy('percentage_to_add', 'ASC');
 
-        if (! $request->include_inactive_items) {
+        if (!$request->include_inactive_items) {
             $urgency->whereNull('inactive');
         }
 
@@ -32,20 +33,20 @@ class UrgencyController extends Controller
             return '<a href="' . route('urgencies_edit', $urgency->id) . '">' . $urgency->value . ' ' . $urgency->type . '</a>';
         })
             ->addColumn('percentage', function ($urgency) {
-            return $urgency->percentage_to_add . '%';
-        })
+                return $urgency->percentage_to_add . '%';
+            })
             ->addColumn('status', function ($urgency) {
-            return ($urgency->inactive) ? 'Inactive' : 'Active';
-        })
+                return ($urgency->inactive) ? 'Inactive' : 'Active';
+            })
             ->addColumn('action', function ($urgency) {
 
-            return '<a class="btn btn-sm btn-danger delete-item" href="' . route('urgencies_delete', $urgency->id) . '"><i class="fas fa-minus-circle"></i></a>';
-        })
+                return '<a class="btn btn-sm btn-danger delete-item" href="' . route('urgencies_delete', $urgency->id) . '"><i class="fas fa-minus-circle"></i></a>';
+            })
             ->rawColumns([
-            'type',
-            'percentage',
-            'action'
-        ])
+                'type',
+                'percentage',
+                'action'
+            ])
             ->make(true);
     }
 

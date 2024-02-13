@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\models\Service;
+use App\Models\Service;
 use App\Enums\PriceType;
 use App\Enums\SpacingType;
 use Mews\Purifier\Facades\Purifier;

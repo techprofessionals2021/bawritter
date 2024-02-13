@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\BillReceivedEvent;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewPaymentRequest;
-use App\models\User;
+use App\Models\User;
 
 class BillReceivedListener
 {

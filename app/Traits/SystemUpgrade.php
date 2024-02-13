@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\models\Setting;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

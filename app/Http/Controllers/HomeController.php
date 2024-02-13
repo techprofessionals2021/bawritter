@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
-use App\models\Service;
-use App\models\Content;
+use App\Models\Service;
+use App\Models\Content;
 use App\Services\CalculatorService;
 use App\Services\SeoService;
 use App\Mail\CustomerQuery;
@@ -23,10 +24,10 @@ class HomeController extends Controller
     public function index()
     {
 
-    //    if(env('ENABLE_APP_SETUP_CONFIG') != TRUE)
-    //    {
-    //       return redirect()->route('installer_page');
-    //    }
+        //    if(env('ENABLE_APP_SETUP_CONFIG') != TRUE)
+        //    {
+        //       return redirect()->route('installer_page');
+        //    }
         $this->seoService->load('home');
 
 

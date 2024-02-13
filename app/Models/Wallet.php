@@ -1,12 +1,12 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Wallet extends Model
 {
-	protected $fillable = [
+    protected $fillable = [
         'user_id',
         'balance'
     ];
@@ -16,11 +16,11 @@ class Wallet extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function transactions()
     {
-        return $this->hasMany('App\models\WalletTransaction', 'wallet_id')->with('relatedTable');
+        return $this->hasMany('App\Models\WalletTransaction', 'wallet_id')->with('relatedTable');
     }
 }

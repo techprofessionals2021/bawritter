@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\models\User;
-use App\models\Applicant;
-use App\models\ApplicantStatus;
+use App\Models\User;
+use App\Models\Applicant;
+use App\Models\ApplicantStatus;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\UserService;
@@ -83,7 +83,7 @@ class ApplicantController extends Controller
             'referral_source_id' => 'required',
             'resume' => 'required|mimes:pdf|max:5000',
         ], [
-            'email.unique'=> 'Looks like we already have your application'
+            'email.unique' => 'Looks like we already have your application'
         ]);
 
         if ($validator->fails()) {
@@ -148,7 +148,7 @@ class ApplicantController extends Controller
         return redirect()->route('job_applicants')->withSuccess('Applicant Deleted');
     }
 
-     /**
+    /**
      * Hire  applicant and invite to join
      *
      * @param  \App\Applicant  $applicant
@@ -162,10 +162,9 @@ class ApplicantController extends Controller
         if ($users->count() > 0) {
             // if already a user then check the role
             $user = $users->first();
-            if ($user->hasRole('admin')) {               
+            if ($user->hasRole('admin')) {
                 return redirect()->back()->withFail('The profile is already registerd as an admin');
-            }
-            elseif (!$user->hasRole('staff')) {
+            } elseif (!$user->hasRole('staff')) {
                 // Assign the role
                 $user->assignRole('staff');
             }

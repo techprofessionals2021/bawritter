@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\models\User;
-use App\models\PushNotification;
+use App\Models\User;
+use App\Models\PushNotification;
 use Yajra\DataTables\Facades\DataTables;
 
 class NotificationController extends Controller

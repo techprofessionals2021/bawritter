@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use App\models\User;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -44,11 +44,11 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         // Get the user details from database and check if user is inactive
-        $user = User::where('email',$request->email)->first();
-        if($user && $user->inactive)
-        {
+        $user = User::where('email', $request->email)->first();
+        if ($user && $user->inactive) {
             throw ValidationException::withMessages([
-                $this->username() => __('The account in suspended')]);
+                $this->username() => __('The account in suspended')
+            ]);
         }
 
         // Then, validate input.
@@ -59,21 +59,19 @@ class LoginController extends Controller
     }
 
 
-    protected function authenticated(Request $request, $user) 
+    protected function authenticated(Request $request, $user)
     {
         $intended_url = redirect()->intended()->getTargetUrl();
 
-        if($intended_url == route('order_page'))
-        {
+        if ($intended_url == route('order_page')) {
             return redirect()->route('order_page');
-        }       
+        }
 
         return redirect()->route(get_default_route_by_user($user));
-        
     }
 
-    protected function loggedOut(Request $request) {
+    protected function loggedOut(Request $request)
+    {
         return redirect()->route('login');
     }
-
 }

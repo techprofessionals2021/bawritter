@@ -2,8 +2,8 @@
 
 namespace App\Traits\Wallet;
 
-use App\models\Wallet;
-use App\models\NumberGenerator;
+use App\Models\Wallet;
+use App\Models\NumberGenerator;
 
 trait WalletServiceHelper
 {
@@ -14,7 +14,7 @@ trait WalletServiceHelper
         $wallet->save();
 
         $transactionableEntity->walletTransactions()->attach($wallet->id, [
-            'number' => NumberGenerator::gen('App\models\Wallet'),
+            'number' => NumberGenerator::gen('App\Models\Wallet'),
             'description' => $description,
             'amount' => $amount,
             'balance' => $wallet->balance,
@@ -30,7 +30,7 @@ trait WalletServiceHelper
         $wallet->save();
 
         $transactionableEntity->walletTransactions()->attach($wallet->id, [
-            'number' => NumberGenerator::gen('App\models\Wallet'),
+            'number' => NumberGenerator::gen('App\Models\Wallet'),
             'description' => $description,
             'amount' => -$amount,
             'balance' => $wallet->balance,

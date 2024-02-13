@@ -1,6 +1,6 @@
 <?php
 namespace Database\Seeders;
-use App\models\PriceType;
+use App\Models\PriceType;
 use Illuminate\Database\Seeder;
 
 class PriceTypeSeeder extends Seeder

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Order;
+use App\Models\Order;
 use App\Enums\CartType;
 use App\Services\CartService;
 use App\Services\CalculatorService;
@@ -51,7 +51,5 @@ class CartController extends Controller
 
             return redirect()->route('choose_payment_method');
         }
-
-
     }
 }
