@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Service;
-use App\WorkLevel;
-use App\Urgency;
-use App\AdditionalService;
-use App\Setting;
+use App\models\Service;
+use App\models\WorkLevel;
+use App\models\Urgency;
+use App\models\AdditionalService;
+use App\models\Setting;
 use App\Enums\PriceType;
 use App\Enums\SpacingType;
 

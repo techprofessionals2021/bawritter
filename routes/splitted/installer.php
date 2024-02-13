@@ -1,34 +1,35 @@
 <?php
 
-Route::prefix('install')->group(function (){
+use App\Http\Controllers\SystemController;
+use Illuminate\Support\Facades\Route;
 
-    Route::get('/', 'SystemController@index');
+Route::prefix('install')->group(function () {
+    Route::get('/', [SystemController::class, 'index']);
 
-    Route::get('/system-check', 'SystemController@index')
-    ->name('installer_page');
+    Route::get('/system-check', [SystemController::class, 'index'])
+        ->name('installer_page');
 
-    Route::get('/database', 'SystemController@database_information')
-    ->name('run_installation_step_2_page');
+    Route::get('/database', [SystemController::class, 'database_information'])
+        ->name('run_installation_step_2_page');
 
-    Route::post('/database', 'SystemController@setup_database_connection')
-    ->name('run_installation_step_2');
+    Route::post('/database', [SystemController::class, 'setup_database_connection'])
+        ->name('run_installation_step_2');
 
-    Route::get('/database/connected', 'SystemController@db_connected')
-    ->name('db_connected');
-    
-    Route::post('/run', 'SystemController@run_page')
-    ->name('run_installation_step_4_page');
+    Route::get('/database/connected', [SystemController::class, 'db_connected'])
+        ->name('db_connected');
 
-    Route::post('/setup/db', 'SystemController@setup_database')
-    ->name('run_installation_step_4');
+    Route::post('/run', [SystemController::class, 'run_page'])
+        ->name('run_installation_step_4_page');
 
-    Route::get('/status', 'SystemController@installation_result')
-    ->name('installation_result');
+    Route::post('/setup/db', [SystemController::class, 'setup_database'])
+        ->name('run_installation_step_4');
 
-    Route::get('/failed', 'SystemController@installation_failed')
-    ->name('installation_failed');
+    Route::get('/status', [SystemController::class, 'installation_result'])
+        ->name('installation_result');
 
-     Route::get('/download/{path}', 'SystemController@download')
-     ->name('download_error_log');
+    Route::get('/failed', [SystemController::class, 'installation_failed'])
+        ->name('installation_failed');
 
+    Route::get('/download/{path}', [SystemController::class, 'download'])
+        ->name('download_error_log');
 });

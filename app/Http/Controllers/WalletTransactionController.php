@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\WalletTransaction;
+use App\models\WalletTransaction;
 use Yajra\DataTables\Facades\DataTables;
 
 class WalletTransactionController extends Controller

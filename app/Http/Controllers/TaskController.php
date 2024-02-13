@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Order;
-use App\SubmittedWork;
-use App\Service;
+use App\models\Order;
+use App\models\SubmittedWork;
+use App\models\Service;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
 use App\Events\TaskSelfAssignedEvent;

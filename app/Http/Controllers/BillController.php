@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Bill;
+use App\models\Bill;
 use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 use App\Events\BillReceivedEvent;

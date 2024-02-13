@@ -12,16 +12,22 @@
 */
 
 // load_route('installer');
+
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
+
 load_route('website');
 
- Route::post('additional/services', 'ServiceController@getAdditionalServicesByServiceId')
- ->name('additional_services_by_service_id');
+Route::post('additional/services', [ServiceController::class, 'getAdditionalServicesByServiceId'])
+    ->name('additional_services_by_service_id');
 
- Route::get('writer/apply', 'ApplicantController@create')
- ->name('writer_application_page');
+Route::get('writer/apply', [ApplicantController::class, 'create'])
+    ->name('writer_application_page');
 
- Route::post('writer/apply', 'ApplicantController@store')
- ->name('store_writer_application');
+Route::post('writer/apply', [ApplicantController::class, 'store'])
+    ->name('store_writer_application');
 
 
 Auth::routes(['verify' => true]);
@@ -49,10 +55,10 @@ Route::group(['middleware' => ['auth','verified'] ], function () {
     // Admin and staff
     Route::group(['middleware' => ['role:admin|staff']], function () {
 
-        Route::get('tasks', 'TaskController@index')->name('tasks_list');
-        Route::post('/tasks/datatable/', 'TaskController@datatable')->name('tasks_datatable');
-        Route::post('task/submit/{order}', 'TaskController@submit_work')->name('submit_work');
-        Route::post('task/start/{order}', 'TaskController@start_working')->name('start_working');
+        Route::get('tasks', [TaskController::class, 'index'])->name('tasks_list');
+        Route::post('/tasks/datatable/', [TaskController::class, 'datatable'])->name('tasks_datatable');
+        Route::post('task/submit/{order}', [TaskController::class, 'submit_work'])->name('submit_work');
+        Route::post('task/start/{order}', [TaskController::class, 'start_working'])->name('start_working');
 
     });
     // End of Admin and staff

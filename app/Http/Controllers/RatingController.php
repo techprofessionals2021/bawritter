@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Rating;
-use App\Order;
+use App\models\Rating;
+use App\models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

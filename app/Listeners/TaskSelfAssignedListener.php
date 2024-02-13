@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\TaskSelfAssignedEvent;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\SelfAssignedTask;
-use App\User;
+use App\models\User;
 
 class TaskSelfAssignedListener
 {

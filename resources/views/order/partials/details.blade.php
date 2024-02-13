@@ -24,7 +24,7 @@
          <div class="row mt-4">
             @role('admin')
             <div class="col-md-8">
-               Client : <a href="{{ route('user_profile', $order->customer_id) }}">{{ $order?->customer?->full_name }}</a>
+               Client : <a href="{{ route('user_profile', $order->customer_id) }}">{{ @$order->customer->full_name }}</a>
             </div>
             <div class="col-md-4 text-right">
                Total {{ format_money($order->total) }}
@@ -54,10 +54,10 @@
                <span class="text-success">
                   @if(auth()->user()->hasRole('admin'))
                      <a href="{{ route('user_profile', $order->staff_id) }}">
-                        {{ $order?->assignee?->full_name }}
+                        {{ @$order->assignee->full_name }}
                      </a>
                   @else
-                     {{ $order?->assignee?->full_name }}
+                     {{ @$order->assignee->full_name }}
                   @endif
                </span>
                @else
@@ -67,7 +67,7 @@
 
                     None
                @else
-                  {{ $order?->assignee_from_client?->full_name }}
+                  {{ @$order->assignee_from_client->full_name }}
                @endif
                @endif
             </div>
@@ -129,7 +129,7 @@
             @if(auth()->user()->hasRole('admin'))
             <div class="col-md-6"><span class="font-weight-bold">Client Assigned To</span>
                 <br>
-                   {{ $order?->assignee_from_client?->full_name }}
+                   {{ @$order->assignee_from_client->full_name }}
             </div>
             @endif
             {{--  --}}

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Controller;
-use App\PaymentGateway;
+use App\models\PaymentGateway;
 use Illuminate\Support\Facades\Log;
 class PaymentGatewayController extends Controller
 {

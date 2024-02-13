@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\PaymentGateway;
+use App\models\PaymentGateway;
 
 class PaymentGatewaySettingsService
 {
@@ -42,7 +42,7 @@ class PaymentGatewaySettingsService
             $settings->keys = new \stdClass();
             $data['settings'] = $settings;
         }
-      
+
         // $gatewayConfig = $config['gateways'][$current_gateway];
         $data['options'] = $config['generic_options'];
         $data['view_name'] = $current_gateway . DIRECTORY_SEPARATOR . $config['settings_view'];

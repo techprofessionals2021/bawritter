@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Payment;
+use App\models\Payment;
 
 class PaymentApproved extends Notification implements ShouldQueue
 {
@@ -50,7 +50,7 @@ class PaymentApproved extends Notification implements ShouldQueue
 
         return (new MailMessage)
             ->subject('Your payment has been approved')
-            ->greeting('Hi, '.$notifiable->first_name )
+            ->greeting('Hi, ' . $notifiable->first_name)
             ->line($message)
             ->line('Thank you!');
     }

@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Traits;
 
-use App\Tag;
+use App\models\Tag;
 use Illuminate\Support\Arr;
 
 trait TagOperation

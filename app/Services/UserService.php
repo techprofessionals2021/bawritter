@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\User;
-use App\UserRecord;
+use App\models\User;
+use App\models\UserRecord;
 use Illuminate\Support\Arr;
 
 class UserService
@@ -79,7 +79,7 @@ class UserService
                 'bio',
                 'address',
                 'country',
-                'referral_source',                
+                'referral_source',
             ];
         } else {
             $keys = [

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\WorkLevel;
+use App\models\WorkLevel;
 
 class WorkLevelController extends Controller
 {

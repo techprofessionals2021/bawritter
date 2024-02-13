@@ -9,12 +9,12 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Order;
+use App\models\Order;
 
 class RequestedForRevisionEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    
+
     public $order;
 
     /**
@@ -25,5 +25,5 @@ class RequestedForRevisionEvent
     public function __construct(Order $order)
     {
         $this->order    = $order;
-    }    
+    }
 }

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Content;
+use App\models\Content;
 use Carbon\Carbon;
 
 class SitemapController extends Controller

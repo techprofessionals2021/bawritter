@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Order;
+use App\models\Order;
 
 class StartedWorking extends Notification implements ShouldQueue
 {
@@ -32,15 +32,11 @@ class StartedWorking extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        if(isset($notifiable->id))
-        {
-            return ['mail','database'];
-        }
-        else
-        {
+        if (isset($notifiable->id)) {
+            return ['mail', 'database'];
+        } else {
             return ['mail'];
         }
-        
     }
 
     /**
@@ -50,14 +46,14 @@ class StartedWorking extends Notification implements ShouldQueue
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
-    { 
+    {
         $data = $this->getMessage();
 
         return (new MailMessage)
-                    ->subject($this->order->number. ' - In Progress ') 
-                    ->line($data['message'])
-                    ->action('View Order', $data['url'])
-                    ->line('Thank you!');
+            ->subject($this->order->number . ' - In Progress ')
+            ->line($data['message'])
+            ->action('View Order', $data['url'])
+            ->line('Thank you!');
     }
 
     /**
@@ -69,7 +65,7 @@ class StartedWorking extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->order->assignee->full_name. ' has started working on ' . $this->order->number,
+            'message' => $this->order->assignee->full_name . ' has started working on ' . $this->order->number,
             'url' => route('orders_show', $this->order->id)
 
         ];
@@ -78,7 +74,7 @@ class StartedWorking extends Notification implements ShouldQueue
     private function getMessage()
     {
         return [
-            'message' => $this->order->assignee->full_name. ' has started working on ' . $this->order->number,
+            'message' => $this->order->assignee->full_name . ' has started working on ' . $this->order->number,
             'url' => route('orders_show', $this->order->id)
 
         ];

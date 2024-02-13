@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\Urgency;
+use App\models\Urgency;
 use Illuminate\Validation\Rule;
 
 class UrgencyController extends Controller

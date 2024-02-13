@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Bill;
+use App\models\Bill;
 
 class PayoutProcessed extends Notification implements ShouldQueue
 {
@@ -46,10 +46,10 @@ class PayoutProcessed extends Notification implements ShouldQueue
         $total = format_money($this->bill->total);
 
         return (new MailMessage)
-                    ->greeting('Hi '. $this->bill->from->full_name.',')
-                    ->line('We sent you money!')
-                    ->line('We just processed your payout for ' . $total .', against '. $this->bill->number)           
-                    ->line('Thank you!');
+            ->greeting('Hi ' . $this->bill->from->full_name . ',')
+            ->line('We sent you money!')
+            ->line('We just processed your payout for ' . $total . ', against ' . $this->bill->number)
+            ->line('Thank you!');
     }
 
     /**

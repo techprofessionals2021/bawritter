@@ -9,8 +9,8 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\User;
-use App\Order;
+use App\models\User;
+use App\models\Order;
 
 class TaskAssignedEvent
 {
@@ -31,6 +31,4 @@ class TaskAssignedEvent
         $this->assigned_to      = $order->assignee;
         $this->order            = $order;
     }
-
-   
 }

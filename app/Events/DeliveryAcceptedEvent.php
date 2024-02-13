@@ -9,14 +9,14 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Order;
+use App\models\Order;
 
 class DeliveryAcceptedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $order;  
-    
+    public $order;
+
     /**
      * Create a new event instance.
      *
@@ -24,6 +24,6 @@ class DeliveryAcceptedEvent
      */
     public function __construct(Order $order)
     {
-        $this->order    = $order;  
+        $this->order    = $order;
     }
 }

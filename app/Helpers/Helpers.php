@@ -1,4 +1,10 @@
 <?php
+
+use App\models\Setting;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Mews\Purifier\Facades\Purifier;
+
 include_once 'form_helper.php';
 include_once 'currency_helper.php';
 
@@ -8,7 +14,7 @@ function settings($key)
     $record =  NULL;
 
     $setting =  Cache::rememberForever('settings', function () {
-        return \App\Setting::whereNull('auto_load_disabled')->get();
+        return Setting::whereNull('auto_load_disabled')->get();
     });
 
     if ($setting && $setting->count() > 0) {
@@ -18,7 +24,7 @@ function settings($key)
     if (!empty($record) && !empty(optional($record->first())->option_value)) {
         return $record->first()->option_value;
     } else {
-        return \App\Setting::get_setting($key);
+        return Setting::get_setting($key);
     }
 }
 
@@ -27,8 +33,8 @@ function homepage($key)
     $record =  NULL;
 
     $setting = Cache::rememberForever('homepage', function () {
-        $fields = array_keys(\App\Setting::homepage_form_elements());
-        return \App\Setting::whereIn('option_key', $fields)->get();
+        $fields = array_keys(Setting::homepage_form_elements());
+        return Setting::whereIn('option_key', $fields)->get();
     });
 
     if ($setting && $setting->count() > 0) {
@@ -38,7 +44,7 @@ function homepage($key)
     if (!empty($record) && !empty(optional($record->first())->option_value)) {
         return Purifier::clean($record->first()->option_value);
     } else {
-        return Purifier::clean(\App\Setting::get_setting($key));
+        return Purifier::clean(Setting::get_setting($key));
     }
 }
 
@@ -227,7 +233,7 @@ function user_photo($photo)
 }
 
 
-function logActivity($performedOn = NULL, $log, $user = NULL, $properties = NULL)
+function logActivity($performedOn = NULL, $log = NULL, $user = NULL, $properties = NULL)
 {
     $user = (empty($user)) ? auth()->user() : $user;
     $activity = activity()->causedBy($user);
@@ -270,7 +276,7 @@ function isRevisionAllowed($order)
 
 function pushNotification($user_id)
 {
-    $notification = \App\PushNotification::updateOrCreate([
+    $notification = \App\models\PushNotification::updateOrCreate([
         'user_id' => $user_id
     ]);
     $notification->number++;

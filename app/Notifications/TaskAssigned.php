@@ -6,14 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\User;
-use App\Order;
+use App\models\User;
+use App\models\Order;
 
 class TaskAssigned extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $assigned_by;    
+    public $assigned_by;
     public $order;
 
     /**
@@ -23,7 +23,7 @@ class TaskAssigned extends Notification implements ShouldQueue
      */
     public function __construct(User $assigned_by, Order $order)
     {
-        $this->assigned_by      = $assigned_by;      
+        $this->assigned_by      = $assigned_by;
         $this->order            = $order;
     }
 
@@ -35,7 +35,7 @@ class TaskAssigned extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database','mail'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -47,11 +47,11 @@ class TaskAssigned extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('You have a new task')
-                    ->greeting('Hi, '.$notifiable->first_name )
-                    ->line('You have been assigned a new task by ' . $this->assigned_by->full_name)
-                    ->action('View Task', route('orders_show', $this->order->id))
-                    ->line('Thank you!');
+            ->subject('You have a new task')
+            ->greeting('Hi, ' . $notifiable->first_name)
+            ->line('You have been assigned a new task by ' . $this->assigned_by->full_name)
+            ->action('View Task', route('orders_show', $this->order->id))
+            ->line('Thank you!');
     }
 
     /**
@@ -61,7 +61,7 @@ class TaskAssigned extends Notification implements ShouldQueue
      * @return array
      */
     public function toArray($notifiable)
-    {        
+    {
         return [
             'message'   => 'You have a new task',
             'url'       => route('orders_show', $this->order->id),
