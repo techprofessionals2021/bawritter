@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\models\Rating;
-use App\models\Order;
+use App\Models\Rating;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -65,7 +66,7 @@ class RatingController extends Controller
 
         // Log user's activity
         $subject = anchor($order->number, route('orders_show', $order->id));
-        logActivity($order, 'submited review on '. $subject);
+        logActivity($order, 'submited review on ' . $subject);
 
         Rating::create($request->all());
 
@@ -79,7 +80,8 @@ class RatingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Rating $rating)
-    {}
+    {
+    }
 
     /**
      * Show the form for editing the specified resource.

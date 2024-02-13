@@ -1,5 +1,6 @@
 <?php
-namespace App\models;
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,7 +17,7 @@ class Rating extends Model
 
     function user()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     function order()

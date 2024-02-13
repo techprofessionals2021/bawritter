@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\models\Tag;
+use App\Models\Tag;
 use Illuminate\Support\Arr;
 
 trait TagOperation

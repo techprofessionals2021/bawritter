@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\ApplicantStatus;
+use App\Models\ApplicantStatus;
 use Illuminate\Http\Request;
 
 class ApplicantStatusController extends Controller

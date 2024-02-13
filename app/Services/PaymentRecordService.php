@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\models\Payment;
-use App\models\NumberGenerator;
+use App\Models\Payment;
+use App\Models\NumberGenerator;
 
 class PaymentRecordService
 {
@@ -15,7 +15,7 @@ class PaymentRecordService
     public function store($payerUserId, $paymetMethod, $amount, $transactionReference, $attachment = null)
     {
         $payment = Payment::create([
-            'number' => NumberGenerator::gen('App\models\Payment'),
+            'number' => NumberGenerator::gen('App\Models\Payment'),
             'user_id' => $payerUserId,
             'method' => $paymetMethod,
             'amount' => $amount,

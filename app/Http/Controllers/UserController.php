@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Tag;
-use App\models\User;
+use App\Models\Tag;
+use App\Models\User;
 use Carbon\Carbon;
 use App\Mail\InviteUser;
 use Illuminate\Http\Request;

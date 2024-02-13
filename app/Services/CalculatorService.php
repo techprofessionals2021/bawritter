@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\models\Service;
-use App\models\WorkLevel;
-use App\models\Urgency;
-use App\models\AdditionalService;
-use App\models\Setting;
+use App\Models\Service;
+use App\Models\WorkLevel;
+use App\Models\Urgency;
+use App\Models\AdditionalService;
+use App\Models\Setting;
 use App\Enums\PriceType;
 use App\Enums\SpacingType;
 
@@ -51,9 +51,7 @@ class CalculatorService
                 $base_price = $request['base_price'];
             }
             $unit_name = PriceType::PerPagePriceUnit;
-        }
-        else
-        {
+        } else {
             $request['spacing_type'] = null;
         }
 

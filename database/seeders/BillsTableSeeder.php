@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Services\BillService;
-use App\models\User;
+use App\Models\User;
 
 class BillsTableSeeder extends Seeder
 {

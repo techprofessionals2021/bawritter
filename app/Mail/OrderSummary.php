@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\models\Order;
+use App\Models\Order;
 
 class OrderSummary extends Mailable implements ShouldQueue
 {

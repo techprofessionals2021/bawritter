@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\models\Setting;
+use App\Models\Setting;
 
 class LogoUploadService
 {

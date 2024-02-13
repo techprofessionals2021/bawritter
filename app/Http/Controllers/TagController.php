@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Validation\Rule;
-use App\models\Tag;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
@@ -27,16 +28,16 @@ class TagController extends Controller
         return Datatables::eloquent($tags)->addIndexColumn()
             ->editColumn('name', function ($tag) {
 
-            return '<a href="' . route('tags_edit', $tag->id) . '">' . $tag->name . '</a>';
-        })
+                return '<a href="' . route('tags_edit', $tag->id) . '">' . $tag->name . '</a>';
+            })
             ->addColumn('action', function ($tag) {
 
-            return '<a class="btn btn-sm btn-danger delete-item" href="' . route('tags_delete', $tag->id) . '"><i class="fas fa-minus-circle"></i></a>';
-        })
+                return '<a class="btn btn-sm btn-danger delete-item" href="' . route('tags_delete', $tag->id) . '"><i class="fas fa-minus-circle"></i></a>';
+            })
             ->rawColumns([
-            'name',
-            'action'
-        ])
+                'name',
+                'action'
+            ])
             ->make(true);
     }
 

@@ -1,5 +1,6 @@
 <?php
-namespace App\models;
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DateTimeZone;
@@ -81,19 +82,19 @@ class Setting extends Model
             'section_4_para_3_content' => 'textarea',
             'section_4_para_4_title' => 'input',
             'section_4_para_4_content' => 'textarea',
-            'order_page_link_text' => 'input',            
-            'footer_text'=> 'input',
-            'company_about' => 'textarea', 
+            'order_page_link_text' => 'input',
+            'footer_text' => 'input',
+            'company_about' => 'textarea',
         ];
     }
 
     static function socialNetworks()
     {
         return [
-            'facebook'=> 'input',
-            'twitter'=> 'input',
-            'instagram'=> 'input',
-            'linkedin'=> 'input',
+            'facebook' => 'input',
+            'twitter' => 'input',
+            'instagram' => 'input',
+            'linkedin' => 'input',
         ];
     }
 
@@ -121,7 +122,7 @@ class Setting extends Model
 
     static function save_settings($data, $auto_load_disabled = NULL)
     {
-        
+
         foreach ($data as $key => $value) {
             $obj = self::updateOrCreate([
                 'option_key' => $key
@@ -195,9 +196,7 @@ class Setting extends Model
     static function getSeoFieldsByPage($page)
     {
         $pages = self::seoInputFields('grouped');
-        
+
         return optional($pages)[$page];
     }
-
-
 }

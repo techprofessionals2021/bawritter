@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\models\Content;
+use App\Models\Content;
 
 class ContentsTableSeeder extends Seeder
 {
@@ -13,8 +13,8 @@ class ContentsTableSeeder extends Seeder
     public function run()
     {
         Content::insert([
-        	$this->get_how_it_works(),
-        	$this->get_faq(),
+            $this->get_how_it_works(),
+            $this->get_faq(),
             $this->get_money_back_guarantee(),
             $this->get_privacy_policy(),
             $this->get_revision_policy(),
@@ -26,11 +26,11 @@ class ContentsTableSeeder extends Seeder
 
     function get_how_it_works()
     {
-    	$data['type'] 	= 'regular';
-    	$data['title'] 	= 'How it works';
-    	$data['slug'] 	= 'how-it-works';
+        $data['type']     = 'regular';
+        $data['title']     = 'How it works';
+        $data['slug']     = 'how-it-works';
 
-    	$data['description'] = '<h5>1. FILL IN OUR SIMPLE ORDER FORM</h5>
+        $data['description'] = '<h5>1. FILL IN OUR SIMPLE ORDER FORM</h5>
                         <p>It has never been easier to place your order. Fill in the initial requirements in the small order form located on the home page and press “continue” button to proceed to the main order form or press “order” button in the header menu. Starting from there let our system intuitively guide you through all steps of ordering process. Submit detailed paper instructions, upload necessary files if needed and provide your contact information – you are almost done!</p>
                         <br><br>
  <h5>2. PROCEED WITH THE PAYMENT</h5>
@@ -45,19 +45,19 @@ class ContentsTableSeeder extends Seeder
                         <h5>5. DELIVERY</h5>
                         <p>Once finished, your final paper will be available for download through your personal dashboard. You will also receive an email notification with a copy of your paper attached to it. Sometimes, the writer may leave a note for you about the order in case there is any additional information that they need to give you.</p>';
 
-       return $data;
+        return $data;
     }
 
 
     function get_faq()
     {
-    	$data['type'] 	= 'regular';
-    	$data['title'] 	= 'F.A.Q. — Frequently Asked Questions';
-    	$data['slug'] 	= 'faq';
+        $data['type']     = 'regular';
+        $data['title']     = 'F.A.Q. — Frequently Asked Questions';
+        $data['slug']     = 'faq';
 
-    	$data['description'] = '<h5>How does ProWriter service work?</h5>
+        $data['description'] = '<h5>How does ProWriter service work?</h5>
 <div>
-To learn about how our service works, please visit <a href="'.route('how_it_works').'">How It Works</a> page where you can read a detailed explanation of our features, along with a step-by-step guide.
+To learn about how our service works, please visit <a href="' . route('how_it_works') . '">How It Works</a> page where you can read a detailed explanation of our features, along with a step-by-step guide.
 </div>
 
 <br><br>
@@ -66,7 +66,7 @@ To learn about how our service works, please visit <a href="'.route('how_it_work
 <div>To place an order, simply navigate over to the Order page and fill in the required information concerning your particular order. Alternatively, you can place your order over the phone or by using either the Live Chat or Email feature at the top of the website or Contacts section.</div>
 ';
 
-    	return $data;
+        return $data;
     }
 
 
@@ -134,7 +134,6 @@ To learn about how our service works, please visit <a href="'.route('how_it_work
 
         $data['description'] = '<p>Thank you for choosing our writing services. We also want to make sure you have a rewarding experience while you’re exploring, evaluating, and purchasing our products. The main thing to remember is that by placing an order at <a href="/" target="_blank">prowriters.com</a>, you agree to the terms set forth below along with <a href="/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>.</p><p>We understand, however, that sometimes a product may not be what you expected it to be. In this unlikely event, we invite you to review the following terms related to returning a product:</p><p><br></p><ol><li>There is a payment issue (identical orders, double payment, etc.);</li><li>We are not able to find a writer for your order;</li><li>In case the order is late, it can be cancelled. Customer gives up all rights to use any material delivered during the order progress. Writer stops working on the paper. (Does not apply to revisions)</li><li>Substantial level of plagiarized material (more than 10%) is detected in the paper and an official plagiarism report is presented;</li><li>The research is off-topic or does not match the requirements that were clearly stated by the client in the order description (such cases fall under QAD jurisdiction).</li></ol><p><br></p><p>Kindly be informed that if you are not satisfied with the overall quality of the paper you have received, you may request a partial or full refund. All the refund requests are processed on the case-to-case basis, which means that every paper is unique and demands a flexible approach. In this case, we will send your paper to our independent Quality Assurance Department to have it graded and proofread.You may only apply for a refund within 14 days after the deadline chosen in the order if your paper is less than 30 pages, or 30 days if the paper is 30+ pages long. The grading process takes up to 48 hours. Our Quality Assurance Department calculates the percentage of incorrect content and evaluates an amount of refund respectively.</p><p><br></p><p>There are several important points you need to consider when setting the order on dispute:</p><p><br></p><ol><li>In case of a dispute, you have to provide strong reasons, facts, and examples to back up your claim;</li><li>It may take up to 48 hours for us to resolve the dispute: communicate with the writer, send the paper for evaluation, etc. Sometimes we may ask for additional materials or evidence to support your request;</li><li>Each case is reviewed individually; every decision concerning refund is taken after careful consideration. The refund percentage is suggested independently in each case.</li></ol><p><br></p><p>In case you cancel your order when the writer has already been assigned to it, we will request the completed draft from the writer (which is provided within 3 hours after your request is made) and decide on the refund amount based on the latter. Please note, that the exact percentage of refund is decided individually for every order depending on the level of completion. Along with a refund, a client is eligible to receive an unfinished paper that had been written by the time a cancellation request was received.Please note that as soon as we assign the writer to your order, you cannot ask for any changes to the initial instructions. If you do come up with any kind of changes to the initial instructions, we reserve ourselves the right to take a decision on taking into account those changes or not. When asking for full refund, you don\'t have the right to use the paper and all the additional materials we provided in the course of work. All these materials become the property of our company, and we reserve the right to publish the paper online for commercial purposes. We do not keep any kind of essay databases and ‘publish on-line\' means that if the paper is Googled or checked with any kind of plagiarism software, it will link back to our website. It may also be published as content or as a sample essay. This is done to protect our writers’ work in those cases when a customer claims a refund for the paper that has already been completed. Please, be aware that we do not guarantee any particular grade, which is why you are not eligible for a refund in case you were poorly assessed.</p><p><br></p><p>We encourage our customers to contact our Customer Support Team VIA the Phone (toll free), Live Chat or Email in case you believe you can qualify for a refund or have other issues concerning your order. We shall review your case carefully and come up with the most justified solution.</p><p><br></p><p>Please note that if you live on the territory of the European Union and paid VAT in the process of payment transaction, you do not receive it back with a refund. You get back only the money or a percent of the price stated in the Prices section of the website. VAT is non-refundable.</p>';
 
-       return $data;
+        return $data;
     }
-
 }

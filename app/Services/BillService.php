@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
-use App\models\NumberGenerator;
-use App\models\Bill;
-use App\models\BillItem;
-use App\models\User;
+use App\Models\NumberGenerator;
+use App\Models\Bill;
+use App\Models\BillItem;
+use App\Models\User;
 use App\Exceptions\NoUnbilledWorkException;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -40,10 +41,11 @@ class BillService
             $data['number'] = NumberGenerator::gen('App\Bill');
 
             if (
-            // (isProvided() but isEmpty()) OR
-            (isset($data['staff_invoice_number']) && empty($data['staff_invoice_number'])) || 
-            // isNotProvided()
-            ! isset($data['staff_invoice_number'])) {
+                // (isProvided() but isEmpty()) OR
+                (isset($data['staff_invoice_number']) && empty($data['staff_invoice_number'])) ||
+                // isNotProvided()
+                !isset($data['staff_invoice_number'])
+            ) {
                 // If staff invoice number is not provided use the bill number instead
                 $data['staff_invoice_number'] = str_replace('BILL-', '', $data['number']);
             }

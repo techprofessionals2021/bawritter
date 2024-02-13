@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\models\PaymentGateway;
+use App\Models\PaymentGateway;
 use Illuminate\Console\Command;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 

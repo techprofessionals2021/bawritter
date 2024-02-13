@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,7 +12,7 @@ use App\Traits\Wallet\HasWallet;
 use App\Traits\Wallet\Transactionable;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Permission\Models\Role;
-use App\models\Setting;
+use App\Models\Setting;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -59,22 +59,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function my_orders()
     {
-        return $this->hasMany('App\models\Order', 'customer_id', 'id');
+        return $this->hasMany('App\Models\Order', 'customer_id', 'id');
     }
 
     public function tasks()
     {
-        return $this->hasMany('App\models\Order', 'staff_id', 'id');
+        return $this->hasMany('App\Models\Order', 'staff_id', 'id');
     }
 
     public function staff_price()
     {
-        return $this->hasOne('App\models\StaffPrice');
+        return $this->hasOne('App\Models\StaffPrice');
     }
 
     public function ratings_received()
     {
-        return $this->hasManyThrough('App\models\Rating', 'App\models\Order', 'staff_id');
+        return $this->hasManyThrough('App\Models\Rating', 'App\Models\Order', 'staff_id');
     }
 
     public function unbilled_tasks()
@@ -86,12 +86,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function bills()
     {
-        return $this->hasMany('App\models\Bill');
+        return $this->hasMany('App\Models\Bill');
     }
 
     public function pushNotification()
     {
-        return $this->hasOne('App\models\PushNotification');
+        return $this->hasOne('App\Models\PushNotification');
     }
 
 
@@ -109,7 +109,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function records()
     {
-        return $this->hasMany('App\models\UserRecord');
+        return $this->hasMany('App\Models\UserRecord');
     }
 
     public function setMetaData()

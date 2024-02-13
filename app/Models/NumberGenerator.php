@@ -1,5 +1,6 @@
 <?php
-namespace App\models;
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,7 @@ class NumberGenerator extends Model
         $obj = self::where('generatable_type', $generatable_type)->get()->first();
 
         if ($obj) {
-            $obj->last_generated_value ++;
+            $obj->last_generated_value++;
             $generated_number = sprintf('%06d', $obj->last_generated_value);
         } else {
             $obj = new NumberGenerator();
@@ -30,10 +31,10 @@ class NumberGenerator extends Model
     private static function get_prefix($generatable_type)
     {
         $prefix_list = [
-            'App\models\Bill' => 'BILL',
-            'App\models\Order' => 'BAW',
-            'App\models\Payment' => 'PMT',
-            'App\models\Wallet' => 'WAL',
+            'App\Models\Bill' => 'BILL',
+            'App\Models\Order' => 'BAW',
+            'App\Models\Payment' => 'PMT',
+            'App\Models\Wallet' => 'WAL',
         ];
 
         return (isset($prefix_list[$generatable_type])) ? $prefix_list[$generatable_type] : NULL;

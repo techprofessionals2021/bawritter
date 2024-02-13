@@ -1,7 +1,9 @@
 <?php
+
 namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
-use App\models\WorkLevel;
+use App\Models\WorkLevel;
 
 class WorkLevelsTableSeeder extends Seeder
 {
@@ -13,11 +15,11 @@ class WorkLevelsTableSeeder extends Seeder
     public function run()
     {
         WorkLevel::insert([
-        	['name' => 'High School', 'percentage_to_add' => 2.3],
-        	['name' => 'College', 'percentage_to_add' => 3.3],
-        	['name' => 'Undergraduate', 'percentage_to_add' => 4.3],
-        	['name' => 'Masters', 'percentage_to_add' => 8.3],
-        	['name' => 'Ph.D.', 'percentage_to_add' => 10.3],
+            ['name' => 'High School', 'percentage_to_add' => 2.3],
+            ['name' => 'College', 'percentage_to_add' => 3.3],
+            ['name' => 'Undergraduate', 'percentage_to_add' => 4.3],
+            ['name' => 'Masters', 'percentage_to_add' => 8.3],
+            ['name' => 'Ph.D.', 'percentage_to_add' => 10.3],
         ]);
     }
 }

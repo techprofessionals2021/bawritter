@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Http\Controllers\Controller;
-use App\models\PaymentGateway;
+use App\Models\PaymentGateway;
 use Illuminate\Support\Facades\Log;
+
 class PaymentGatewayController extends Controller
 {
 
@@ -34,12 +35,11 @@ class PaymentGatewayController extends Controller
             'when'  => $when,
             'message' => $error
         ]);
-     
     }
 
     protected function getPaymentView()
     {
-        return $this->gatewayUniqueName .'.views.checkout';
+        return $this->gatewayUniqueName . '.views.checkout';
     }
 
     protected function redirectOnFailedTokenGeneration()
@@ -74,7 +74,7 @@ class PaymentGatewayController extends Controller
         $paymentRecordService = app()->make('App\Services\PaymentRecordService');
 
         // Record the Payment Information        
-        $paymentRecordService->store(auth()->user()->id , $this->gateway->name, $amount, $transactionReference);
+        $paymentRecordService->store(auth()->user()->id, $this->gateway->name, $amount, $transactionReference);
 
         // Mark in the cart that payment has been made
         $payment_unique_identifier = bin2hex(random_bytes(5));

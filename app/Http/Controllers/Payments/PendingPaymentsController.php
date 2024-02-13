@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Payments;
 
-use App\models\User;
-use App\models\Service;
-use App\models\Urgency;
-use App\models\WorkLevel;
+use App\Models\User;
+use App\Models\Service;
+use App\Models\Urgency;
+use App\Models\WorkLevel;
 use App\Enums\PaymentReason;
 use Illuminate\Http\Request;
 use App\Events\PaymentApprovedEvent;
 use App\Events\PaymentDisapprovedEvent;
-use App\models\PendingForApprovalPayment;
+use App\Models\PendingForApprovalPayment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\PaymentRecordService;
@@ -84,10 +84,10 @@ class PendingPaymentsController extends Controller
             // Store the payment
             $payment = $paymentRecordService->store($approvedPayment->user_id, $approvedPayment->method, $approvedPayment->amount, $approvedPayment->reference, $approvedPayment->attachment);
 
-             // Trigger event
+            // Trigger event
             event(new PaymentApprovedEvent($payment));
 
-                        // If the reason for payment was order, then confirm the order
+            // If the reason for payment was order, then confirm the order
             if (($approvedPayment->payment_reason == PaymentReason::order) && !empty($approvedPayment->cart)) {
                 // Confirm Order
                 $this->getOrderService()->confirmOrderPayment($approvedPayment->cart->order_id);

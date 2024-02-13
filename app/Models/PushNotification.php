@@ -1,16 +1,15 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class PushNotification extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
-        'number',        
-        'user_id',        
+        'number',
+        'user_id',
     ];
-
 }

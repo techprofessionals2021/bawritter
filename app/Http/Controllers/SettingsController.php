@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use App\Services\PaymentGatewaySettingsService;
-use App\models\Content;
-use App\models\Setting;
+use App\Models\Content;
+use App\Models\Setting;
 use Carbon\Carbon;
 use App\Services\LogoUploadService;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
@@ -63,7 +63,7 @@ class SettingsController extends Controller
                 ->withInput();
         }
 
-        $request['hide_website'] = (isset($request->hide_website)) ? TRUE: NULL;
+        $request['hide_website'] = (isset($request->hide_website)) ? TRUE : NULL;
 
         $this->updateEnvKeys([
             ['key' => 'APP_NAME', 'value' => $request['company_name']],

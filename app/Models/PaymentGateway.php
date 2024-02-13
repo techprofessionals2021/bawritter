@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,7 +8,7 @@ class PaymentGateway extends Model
 {
     protected $casts = [
         'keys' => 'object',
-        'inactive'=> 'boolean'
+        'inactive' => 'boolean'
     ];
 
     protected $fillable = [
@@ -20,13 +20,10 @@ class PaymentGateway extends Model
     ];
 
     static function getByUniqueName($unique_name)
-    {  	
+    {
         $records = self::where('unique_name', $unique_name)
-        ->whereNull('inactive')->get();
+            ->whereNull('inactive')->get();
 
         return ($records->count() > 0) ? $records->first() : NULL;
-        
     }
-
-
 }

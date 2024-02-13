@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Artesaos\SEOTools\Facades\SEOMeta;
-use App\models\Setting;
+use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOTools;
 
 class SeoService

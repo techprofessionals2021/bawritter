@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\Content;
+use App\Models\Content;
 use Carbon\Carbon;
 
 class SitemapController extends Controller
