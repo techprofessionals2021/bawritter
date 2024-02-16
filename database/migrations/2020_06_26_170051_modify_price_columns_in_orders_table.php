@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 use App\Enums\PriceType;
-use \App\Order;
+use \App\models\Order;
 class ModifyPriceColumnsInOrdersTable extends Migration
 {
     /**
@@ -85,7 +85,7 @@ class ModifyPriceColumnsInOrdersTable extends Migration
             DB::table('orders')->orderBy('id')->chunk(10, function ($orders) {
                 $data = [];
                 foreach ($orders as $order) {
-                    $order = \App\Order::find($order->id);
+                    $order = \App\models\Order::find($order->id);
                     $order->work_level_price = $this->findPercentage($order->base_price, $order->work_level_percentage);
                     $order->urgency_price = $this->findPercentage($order->base_price, $order->urgency_percentage);
                     $order->unit_price = $order->base_price + $order->work_level_price + $order->urgency_price;

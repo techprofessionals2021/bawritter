@@ -28,8 +28,8 @@ class WalletServiceProvider extends ServiceProvider
     public function boot()
     {
         Relation::morphMap([
-            'payment'           => 'App\Payment',
-            'order'             => 'App\Order',
+            'payment'           => 'App\models\Payment',
+            'order'             => 'App\models\Order',
             // We cannot add App\User as it is being used in Spatie Permission                 
         ]);
     }
