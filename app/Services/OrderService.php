@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\DB;
 class OrderService
 {
     function create(array $data)
-    {
 
+    {
         $data['number'] = NumberGenerator::gen('App\models\Order');
 
         if (!isset($data['order_status_id']) && empty($data['order_status_id'])) {
             $data['order_status_id'] = ORDER_STATUS_PENDING_PAYMENT;
         }
+
         // Get the datetime based on the urgency
-        $urgency            = Urgency::find($data['urgency_id']);
+        $urgency = Urgency::find($data['urgency_id']);
         if ($urgency->type == 'hours') {
             $data['dead_line']  = get_urgency_date($urgency->type, $urgency->value, 'Y-m-d H:i:s');
         } else {
@@ -31,7 +32,6 @@ class OrderService
         $order = Order::create($data);
         $this->record_added_services($order, $data);
         $this->record_attachments($order, $data);
-
 
 
         return $order;
@@ -121,7 +121,7 @@ class OrderService
 
     private function record_attachments(Order $order, $data)
     {
-        if (isset($data['files_data']) && is_array($data['files_data']) && count($data['files_data']) > 0) {
+           if (isset($data['files_data']) && is_array($data['files_data']) && count($data['files_data']) > 0) {
             foreach ($data['files_data'] as $row) {
 
                 if (isset($row['upload']['data']['name'])) {

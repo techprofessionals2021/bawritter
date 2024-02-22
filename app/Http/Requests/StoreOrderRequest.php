@@ -50,6 +50,9 @@ class StoreOrderRequest extends FormRequest
             'files_data' => 'nullable|array',
             'writer_model' => 'nullable|array',
             'base_price' => 'nullable',
+            'spacing_type'=>'required',
+            // 'customer_id'=>'required'// uncommit while testing api with postman.
+
         ];
 
         if (Service::find($this->service_id)->price_type_id  == PriceType::PerPage) {

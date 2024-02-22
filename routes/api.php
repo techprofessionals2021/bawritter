@@ -1,6 +1,19 @@
 <?php
 
+use App\Http\Controllers\Api\v1\DashboardApiController;
+use App\Http\Controllers\Api\v1\JobApplicantController;
+use App\Http\Controllers\Api\v1\RegisterApiController;
+use App\Http\Controllers\Api\v1\LoginApiController;
+use App\Http\Controllers\Api\v1\OrderApiController;
+use App\Http\Controllers\Api\v1\UserApiController;
+use App\Http\Controllers\Api\v1\WalletApiController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +29,68 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+//  AUTH API
+
+Route::prefix('auth')->group(function () {
+    Route::post('register', [RegisterApiController::class, 'register'])->name('register');
+    Route::post('login',[LoginApiController::class, 'login'])->name('login');
+    Route::post('forgot-password', [LoginApiController::class, 'forgotPassword'])->name('forget.password');
+    Route::post('verify-otp',[LoginApiController::class, 'verifyOtp'])->name('verify.otp');
+    Route::post('password/reset', [LoginApiController::class, 'resetPassword'])->name('password.reset');
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout',[LoginApiController::class,'logout'])->name('logout');
+});
+
+//  Order API
+
+Route::prefix('order')->group(function () {
+
+     Route::get('create', [OrderApiController::class, 'create']);
+     Route::post('store', [OrderApiController::class,'storeApiOrderInSession']);
+     Route::get('datatable', [OrderApiController::class, 'datatable']);//only clients's order
+     Route::get('status_count',[OrderApiController::class, 'index']);
+     Route::get('search',[OrderApiController::class, 'search']);
+     Route::get('detail/{id}',[OrderApiController::class,'show']);
+     Route::get('attachment_download',[OrderApiController::class,'download']);
+     Route::post('rating_store',[OrderApiController::class,'rating_store']);
+
+});
+
+ //  Dashboard Api
+
+ Route::prefix('dashboard')->group(function () {
+
+     Route::get('status_counts',[DashboardApiController::class, 'statistics']);
+     Route::get('income_graph',[DashboardApiController::class, 'income_graph']);
+     Route::get('activity_logs',[DashboardApiController::class,'index']);
+
+ });
+
+  //  User Api
+
+ Route::prefix('user')->group(function(){
+
+      Route::get('/',[UserApiController::class, 'paginate']);
+      Route::post('send_invitation',[UserApiController::class, 'send_invitation']);
+      Route::get('profile',[UserApiController::class, 'userProfile']);
+      Route::post('update_profile',[UserApiController::class,'update_profile']);
+      Route::post('update_password',[UserApiController::class,'change_password']);
+  });
+
+
+  //User's wallet
+
+  Route::prefix('wallet')->group(function () {
+
+         Route::get('current_balance',[WalletApiController::class,'index']);
+         Route::get('transactions',[WalletApiController::class,'walletTransactions']);
+         Route::get('payments',[WalletApiController::class,'walletPayments']);
+
+       });
+
+  //job applicant Api
+
+  Route::post('job_applicant/store',[JobApplicantController::class, 'store']);
