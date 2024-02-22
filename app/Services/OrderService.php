@@ -15,7 +15,7 @@ class OrderService
     function create(array $data)
     {
 
-        $data['number'] = NumberGenerator::gen('App\Order');
+        $data['number'] = NumberGenerator::gen('App\models\Order');
 
         if (!isset($data['order_status_id']) && empty($data['order_status_id'])) {
             $data['order_status_id'] = ORDER_STATUS_PENDING_PAYMENT;

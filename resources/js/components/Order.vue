@@ -1,6 +1,8 @@
+<!--  -->
+
 <template>
   <div>
-    <form v-on:submit.prevent>
+    <form @submit.prevent>
       <div class="row">
         <div class="col-md-7">
           <div class="card">
@@ -17,14 +19,21 @@
                   :create_account_url="create_account_url"
                   :additional_services_by_service_id_url="additional_services_by_service_id_url"
                   :writer_list="writer_list"
-                  @changeTab="changeTab($event)"
-                  @dataChanged="handleServiceSelection($event)"
+                  @changeTab="changeTab"
+                  @dataChanged="handleServiceSelection"
                 ></ServiceSelection>
               </div>
 
               <!-- Tab 2 Starts -->
               <div v-if="isActiveTab(2)">
-                <Instruction :errors="errors" :term_and_condition_url="term_and_condition_url" :privacy_policy_url="privacy_policy_url" :upload_attachment_url="upload_attachment_url" @changeTab="changeTab($event)" @submitRequest="handleSubmit($event)"></Instruction>
+                <Instruction
+                  :errors="errors"
+                  :term_and_condition_url="term_and_condition_url"
+                  :privacy_policy_url="privacy_policy_url"
+                  :upload_attachment_url="upload_attachment_url"
+                  @changeTab="changeTab"
+                  @submitRequest="handleSubmit"
+                ></Instruction>
               </div>
               <!-- Tab 2 Ends -->
             </div>
@@ -32,7 +41,7 @@
         </div>
         <div class="offset-md-1 col-md-4">
           <div class="sticky-top">
-            <OrderSummary :form="dataForOrderSummary" @dataChanged="handleCalculatedData($event)"></OrderSummary>
+            <OrderSummary :form="dataForOrderSummary" @dataChanged="handleCalculatedData"></OrderSummary>
           </div>
         </div>
       </div>
@@ -41,6 +50,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import ServiceSelection from "./order/ServiceSelection.vue";
 import Instruction from "./order/Instruction.vue";
 import OrderSummary from "./order/OrderSummary.vue";
@@ -125,51 +135,50 @@ export default {
         default: {}
     },
   },
+  setup(props) {
+    const pricingTypes = ref({
+      fixed: 1,
+      perWord: 2,
+      perPage: 3
+    });
+    const activeTab = ref(1);
+    const form = ref({});
+    const dataForOrderSummary = ref({});
+    const errors = ref({});
 
-
-  data() {
-    return {
-      pricingTypes: {
-        fixed: 1,
-        perWord: 2,
-        perPage: 3
-      },
-      activeTab: 1,
-      form: {},
-      dataForOrderSummary : {},
-      errors : {}
+    const handleServiceSelection = ($data) => {
+      console.log($data,'$data');
+      dataForOrderSummary.value = $data;
     };
-  },
-  methods: {
-     handleServiceSelection($data){
-        this.dataForOrderSummary = $data;
-     },
-     handleCalculatedData($calculatedData){
-       this.form = $calculatedData;
-     },
-     handleSubmit($data){
-       var mergedRecords = {...this.form, ...$data};
-       this.submitForm(mergedRecords);
-     },
-    changeTab(tabNumber) {
-      if (tabNumber == 2 && !this.user_id) {
-        window.location = this.restricted_order_page_url;
+
+    const handleCalculatedData = ($calculatedData) => {
+      form.value = $calculatedData;
+    };
+
+    const handleSubmit = ($data) => {
+      const mergedRecords = { ...form.value, ...$data };
+      submitForm(mergedRecords);
+    };
+
+    const changeTab = (tabNumber) => {
+      if (tabNumber === 2 && !props.user_id) {
+        window.location = props.restricted_order_page_url;
         return false;
       }
-      this.activeTab = tabNumber;
-      this.$nextTick(() => {
-        window.scrollTo(0, 0);
-      });
-    },
-    isActiveTab: function(tab) {
-      return this.activeTab == tab;
-    },
-    submitForm(formRecords) {
-      this.errors = [];
+      activeTab.value = tabNumber;
+      window.scrollTo(0, 0);
+    };
+
+    const isActiveTab = (tab) => {
+      return activeTab.value === tab;
+    };
+
+    const submitForm = (formRecords) => {
+      errors.value = [];
       var $scope = this;
 
       axios
-        .post(this.add_to_cart_url, formRecords)
+        .post(props.add_to_cart_url, formRecords)
         .then(function(response) {
           if (response.data.redirect_url) {
             window.location.href = response.data.redirect_url;
@@ -183,8 +192,23 @@ export default {
           console.log(error);
           alert("Something went wrongs");
         });
-    }
-    }
+    };
+
+    return {
+      pricingTypes,
+      activeTab,
+      form,
+      dataForOrderSummary,
+      errors,
+      handleServiceSelection,
+      handleCalculatedData,
+      handleSubmit,
+      changeTab,
+      isActiveTab
+    };
+  }
 };
 </script>
 
+
+<!--  -->

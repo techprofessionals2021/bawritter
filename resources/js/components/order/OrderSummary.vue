@@ -21,7 +21,7 @@
             <div>
               <b>Rate</b>
               :
-              {{ form.unit_price | formatMoney }}
+              {{ formatMoney(form.unit_price) }}
             </div>
           </div>
 
@@ -49,37 +49,41 @@
               :
               {{ form.number_of_pages }}
             </div>
-            <!--  -->
+
             <div>
               <b>Writer Fee</b>
               :
-              {{ form.spacing_type == spacingTypes.double ?   this.form?.writer_model?.staff_price?.double_space_price : this.form?.writer_model?.staff_price?.single_space_price | formatMoney }}
+              {{ form.spacing_type == spacingTypes.double ?  
+              formatMoney(form?.writer_model?.staff_price?.double_space_price) 
+              : 
+              formatMoney(form?.writer_model?.staff_price?.single_space_price)  
+              }}
             </div>
 
             <div>
               <b>Work Level Charges</b>
               :
-              {{ this.calculatePercentage(
-                    form.spacing_type == spacingTypes.double ?   this.form?.writer_model?.staff_price?.double_space_price : this.form?.writer_model?.staff_price?.single_space_price,
-                    this.form.work_level_model.percentage_to_add
-                    ) | formatMoney
+              {{ formatMoney(calculatePercentage(
+                    form.spacing_type == spacingTypes.double ?   form?.writer_model?.staff_price?.double_space_price : form?.writer_model?.staff_price?.single_space_price,
+                    form.work_level_model.percentage_to_add
+                    )) 
               }}
             </div>
 
             <div>
               <b>Urgency Charges</b>
               :
-              {{ this.calculatePercentage(
-                    form.spacing_type == spacingTypes.double ?   this.form?.writer_model?.staff_price?.double_space_price : this.form?.writer_model?.staff_price?.single_space_price,
-                    this.form.urgency_model.percentage_to_add
-                    ) | formatMoney
+              {{ formatMoney(calculatePercentage(
+                    form.spacing_type == spacingTypes.double ?   form?.writer_model?.staff_price?.double_space_price : form?.writer_model?.staff_price?.single_space_price,
+                    form.urgency_model.percentage_to_add
+                    ))
               }}
             </div>
-            <!--  -->
+
             <div>
               <b>Unit Rate</b>
               :
-              {{ form.unit_price | formatMoney }}
+              {{ formatMoney(form.unit_price) }}
             </div>
           </div>
         </div>
@@ -88,7 +92,7 @@
           <tbody>
             <tr>
               <th scope="row" style="width: 30%">Amount</th>
-              <td style="width: 70%" class="text-right">{{ form.amount | formatMoney }}</td>
+              <td style="width: 70%" class="text-right">{{ formatMoney(form.amount)   }}</td>
             </tr>
             <tr v-if="form.added_services.length > 0 ">
               <td colspan="2">
@@ -98,7 +102,7 @@
                     <div class="col-md-6">
                       <div style="padding-left: 10px;">{{ row.name }}</div>
                     </div>
-                    <div class="col-md-6 text-right">{{ row.rate | formatMoney }}</div>
+                    <div class="col-md-6 text-right">{{ formatMoney(row.rate) }}</div>
                   </div>
                 </div>
               </td>
@@ -115,6 +119,7 @@
 </template>
 
 <script>
+import { ref, reactive,watch,Vue,computed,nextTick } from 'vue';
 export default {
   props: {
     form: {
@@ -123,38 +128,52 @@ export default {
       }
     }
   },
-  filters: {
-    formatMoney: function(value) {
+  // filters: {
+  //   formatMoney: function(value) {
+  //     return accounting.formatMoney(value, currencyConfig.currency);
+  //   }
+  // },
+
+  setup(props,{ emit }) {
+    console.log(props,'props');
+    const pricingTypes = {
+      fixed: 1,
+      perWord: 2,
+      perPage: 3
+    };
+
+    const spacingTypes = {
+      double: 'double',
+      single: 'single'
+    };
+
+    function formatMoney(value) {
       return accounting.formatMoney(value, currencyConfig.currency);
     }
-  },
 
-  data() {
-    return {
-      pricingTypes: {
-        fixed: 1,
-        perWord: 2,
-        perPage: 3
-      },
-      spacingTypes: {
-        double: "double",
-        single: "single"
-      }
-    };
-  },
+    function isObjectEmpty(obj) {
+      return Object.keys(obj).length === 0 && obj.constructor === Object;
+    }
+    function calculatePercentage(basePrice, percentageToAdd) {
+      var number = (parseFloat(basePrice) * parseFloat(percentageToAdd)) / 100;
+      return Number(parseFloat(number).toFixed(2));
+    }
+    function formatMoneyFromNumber($amount) {
+      return accounting.formatMoney($amount, currencyConfig.currency);
+    }
+    const calculateTotal = computed(()=> {
+      if (!isObjectEmpty(props.form)) {
+        console.log(props.form,'props.form');
+        console.log(pricingTypes,'pricingTypes');
+        const form = ref(props.form);
+        var serviceModel = form.value.service_model;
+        var writerModel = form.value.writer_model;
+        // var pricingTypes = pricingTypes;
+        // var spacingTypes = spacingTypes;
+        var workLevelModel = form.value.work_level_model;
+        var urgencyModel = form.value.urgency_model;
 
-  computed: {
-    calculateTotal: function() {
-      if (!this.isObjectEmpty(this.form)) {
-        console.log(this.form,'this.form');
-        var form = this.form;
-        var serviceModel = form.service_model;
-        var writerModel = form.writer_model;
-        var pricingTypes = this.pricingTypes;
-        var spacingTypes = this.spacingTypes;
-        var workLevelModel = form.work_level_model;
-        var urgencyModel = form.urgency_model;
-
+      
         // When Price Type is fixed
         if (serviceModel.price_type_id == pricingTypes.fixed) {
           var quantity = 1;
@@ -163,13 +182,14 @@ export default {
         }
         // When Price Type is Per Word
         if (serviceModel.price_type_id == pricingTypes.perWord) {
-          var quantity = parseFloat(form.number_of_words);
+          var quantity = parseFloat(form.value.number_of_words);
           var base_price = parseFloat(serviceModel.price);
 
         }
         // When Price Type is based on Number of Pages
         if (serviceModel.price_type_id == pricingTypes.perPage) {
-          if (form.spacing_type == spacingTypes.double) {
+          // alert(form.value.spacing_type)
+          if (form.value.spacing_type == spacingTypes.double) {
             // If spacing type is double
             // var base_price = parseFloat(serviceModel.double_spacing_price);
             var base_price = parseFloat(writerModel?.staff_price?.double_space_price);
@@ -179,15 +199,15 @@ export default {
             var base_price = parseFloat(writerModel?.staff_price?.single_space_price);
 
           }
-          var quantity = parseFloat(form.number_of_pages);
+          var quantity = parseFloat(form.value.number_of_pages);
         }
         // Calculate Work Level Price
-        var work_level_price = this.calculatePercentage(
+        var work_level_price = calculatePercentage(
           base_price,
           workLevelModel.percentage_to_add
         );
         // Calculate Urgency Price
-        var urgency_price = this.calculatePercentage(
+        var urgency_price = calculatePercentage(
           base_price,
           urgencyModel.percentage_to_add
         );
@@ -198,7 +218,7 @@ export default {
         var amount = (unit_price * quantity).toFixed(2);
 
         // Calculate Total Price of Additional Services
-        let additional_services_cost = _.sumBy(form.added_services, function(row) {
+        let additional_services_cost = _.sumBy(form.value.added_services, function(row) {
           return parseFloat(row.rate);
         });
 
@@ -210,53 +230,54 @@ export default {
         // Total (work here if you need to add discount option)
         var total = sub_total;
 
-        this.$set(this.form, "service_id", serviceModel.id);
-        this.$set(this.form, "urgency_id", urgencyModel.id);
-        this.$set(this.form, "urgency_percentage", urgencyModel.percentage_to_add);
-        this.$set(this.form, "dead_line", urgencyModel.date);
+        form.value.service_id = serviceModel.id;
+        form.value.urgency_id = urgencyModel.id;
+        form.value.urgency_percentage = urgencyModel.percentage_to_add;
+        form.value.dead_line = urgencyModel.date;
 
-        this.$set(this.form, "work_level_id", workLevelModel.id);
-        this.$set(this.form, "work_level_percentage", workLevelModel.percentage_to_add);
+        form.value.work_level_id = workLevelModel.id;
+        form.value.work_level_percentage = workLevelModel.percentage_to_add;
 
-        this.$set(this.form, "base_price", base_price);
+        form.value.base_price = base_price;
         // unit price = base_price + work_level_price + urgency_price
-        this.$set(this.form, "unit_price", unit_price);
-        this.$set(this.form, "quantity", quantity);
+        form.value.unit_price = unit_price;
+        form.value.quantity = quantity;
         // amount = unit_price * quantity
-        this.$set(this.form, "amount", amount);
-        this.$set(this.form, "sub_total", sub_total);
-        this.$set(this.form, "total", total);
-        this.$set(this.form, "work_level_price", work_level_price);
-        this.$set(this.form, "urgency_price", urgency_price);
+        form.value.amount = amount;
+        form.value.sub_total = sub_total;
+        form.value.total = total;
+        form.value.work_level_price = work_level_price;
+        form.value.urgency_price = urgency_price;
 
         var $scope = this;
 
-        Vue.nextTick(function () {
-          var records = Object.assign({}, $scope.form);
+        nextTick(() => {
+          const records = { ...form.value }; // Use object spread for shallow copy
           // Delete the following records before passing
           delete records['number_of_words'];
           delete records['number_of_pages'];
           delete records['service_model'];
           delete records['urgency_model'];
           delete records['work_level_model'];
-          $scope.$emit("dataChanged", records);
+    
+          emit("dataChanged", records);
         });
 
-        return this.formatMoneyFromNumber(total);
+        return formatMoneyFromNumber(total);
       }
-    }
+    })
+
+    return {
+      pricingTypes,
+      spacingTypes,
+      formatMoney,
+      calculateTotal,
+      formatMoneyFromNumber,
+      calculatePercentage,
+      isObjectEmpty
+      
+    };
   },
-  methods: {
-    calculatePercentage(basePrice, percentageToAdd) {
-      var number = (parseFloat(basePrice) * parseFloat(percentageToAdd)) / 100;
-      return Number(parseFloat(number).toFixed(2));
-    },
-    isObjectEmpty(obj) {
-      return Object.keys(obj).length === 0 && obj.constructor === Object;
-    },
-    formatMoneyFromNumber($amount) {
-      return accounting.formatMoney($amount, currencyConfig.currency);
-    }
-    }
+
 };
 </script>

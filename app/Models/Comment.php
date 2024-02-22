@@ -14,6 +14,6 @@ class Comment extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\Order', 'order_id', 'id');
+        return $this->belongsTo('App\models\Order', 'order_id', 'id');
     }
 }

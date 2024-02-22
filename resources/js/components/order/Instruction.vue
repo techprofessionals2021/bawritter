@@ -21,7 +21,7 @@
       ></textarea>
       <div class="invalid-feedback d-block" v-if="errors.instruction">{{ errors.instruction[0] }}</div>
     </div>
-    <!--Upload files -->
+
     <VueFileAgent
       ref="vueFileAgent"
       :theme="'list'"
@@ -40,9 +40,6 @@
       @delete="fileDeleted($event)"
       v-model="form.files_data"
     ></VueFileAgent>    
-    <!--  <button :disabled="!filesDataForUpload.length" @click="uploadFiles($event)">
-                     Upload {{ filesDataForUpload.length }} files
-    </button>-->
     <br />
     <a href="#" v-on:click.prevent="changeTab(1)">Previous</a>
     <br />
@@ -100,16 +97,16 @@ export default {
     return {
       agreedToTermsChecked: false,
       form: {
-        title: "",
-        instruction: "",
-        files_data: []
-      },
+      title: "",
+      instruction: "",
+      files_data: []
+    },
       uploadUrl: this.upload_attachment_url,
       uploadHeaders: {
         "X-Test-Header": "vue-file-agent",
         "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
           .content
-      },
+    },
       filesDataForUpload: []
     };
   },

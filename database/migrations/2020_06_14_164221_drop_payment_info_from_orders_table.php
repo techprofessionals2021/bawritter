@@ -52,7 +52,7 @@ class DropPaymentInfoFromOrdersTable extends Migration
                     $paymentRecordService->store($order->customer_id, $order->payment_method, $order->total, $order->transaction_id);
 
                     $user = \App\Models\User::find($order->customer_id);
-                    $order = \App\Order::find($order->id);
+                    $order = \App\models\Order::find($order->id);
                     $user->wallet()->pay($order->total, $order);
                 }
             });

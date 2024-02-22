@@ -1,34 +1,30 @@
 <template>
   <div>
     <h5 class="card-title">
-      Step
-      <b>1</b>/
-      <span class="small">3</span> TYPE OF WORK AND DEADLINE
+      Step <b>1</b>/<span class="small">3</span> TYPE OF WORK AND DEADLINE
     </h5>
     <hr />
     <div class="form-group">
       <label>Service Type</label>
-      <multiselect
-        track-by="id"
-        label="name"
+      <v-select
+        label="Select"
         v-model="form.service_model"
-        :options="services"
-        :allow-empty="false"
-        deselect-label=""
-        @input="getAdditionalServices(form.service_model)"
-      ></multiselect>
+        :items="servicesObject"
+        item-title="title"
+        item-value="value"
+        @update:model-value="getAdditionalServices"
+   
+      ></v-select>
     </div>
     <div class="form-group">
       <label>Writers</label>
-
-      <multiselect
-        track-by="id"
-        label="first_name"
+      <v-select
+        label="Select"
         v-model="form.writer_model"
-        :options="writer_list"
-        :allow-empty="false"
-        deselect-label=""
-      ></multiselect>
+        :items="writersObject"
+        item-title="title"
+        item-value="value"
+      ></v-select>
     </div>
     <div class="form-group">
       <label>Work Level</label>
@@ -36,9 +32,9 @@
         <div class="btn-group btn-group-toggle flex-wrap" data-toggle="buttons">
           <label
             class="btn btn-outline-primary"
-            v-on:click="workLevelChanged(row.id, index)"
-            :class="form.work_level_id === Number(row.id) ? 'active': ''"
-            v-for="(row,index) in levels"
+            @click="workLevelChanged(row.id, index)"
+            :class="{ 'active': form.work_level_id === Number(row.id) }"
+            v-for="(row, index) in levels"
             :key="index"
           >
             <input
@@ -54,8 +50,7 @@
         </div>
       </div>
     </div>
-
-    <div class="form-row" v-if="form.service_model.price_type_id == pricingTypes.perPage">
+    <div class="form-row" v-if="form.service_model.price_type_id === pricingTypes.perPage">
       <div class="form-group col-md-4">
         <label>Number of pages</label>
         <div class="input-group mb-3">
@@ -159,13 +154,18 @@
         v-bind:class="{ 'col-md-6': (form.service_model.price_type_id == pricingTypes.perWord), 'col-md-12': (form.service_model.price_type_id != pricingTypes.perWord) }"
       >
         <label>Urgency</label>
-        <multiselect track-by="id" label="name" v-model="form.urgency_model" :options="urgencies" :allow-empty="false" deselect-label=""></multiselect>
+        <v-select
+          label="Select"
+          v-model="form.urgency_model"
+          :items="urgenciesObject"
+          item-title="title"
+          item-value="value"
+        ></v-select>
       </div>
     </div>
-
     <div v-if="additional_services.length > 0">
       <h5>Additional Services</h5>
-      <div class="card mb-3" v-for="row in additional_services" v-bind:key="row.id">
+      <div class="card mb-3" v-for="row in additional_services" :key="row.id">
         <div class="row no-gutters">
           <div class="col-md-8">
             <div class="card-body">
@@ -183,7 +183,7 @@
                   <span v-else>
                     <i class="fas fa-plus"></i> Add
                   </span>
-                  {{ row.rate | formatMoney }}
+                  {{ formatMoney(row.rate)   }}
                 </div>
               </a>
             </div>
@@ -191,13 +191,12 @@
         </div>
       </div>
     </div>
-
     <div v-if="user_id">
       <button
         :disabled="hasError"
         type="button"
         class="btn btn-success btn-lg btn-block"
-        v-on:click.prevent="changeTab(2)"
+        @click.prevent="changeTab(2)"
       >
         <i class="fas fa-arrow-circle-right"></i> Next
       </button>
@@ -206,11 +205,10 @@
       <button
         type="button"
         class="btn btn-success btn-lg btn-block"
-        v-on:click.prevent="changeTab(2)"
+        @click.prevent="changeTab(2)"
       >
         <i class="fas fa-sign-in-alt"></i> Sign in to place your order
       </button>
-
       <a :href="create_account_url" class="btn btn btn-info btn-lg btn-block">
         <i class="fas fa-user-plus"></i> Create account
       </a>
@@ -219,129 +217,130 @@
 </template>
 
 <script>
+
 import Multiselect from "vue-multiselect";
+import VueMultiselect from "vue-multiselect";
+import { ref, reactive,watch,Vue,mounted, onMounted } from 'vue';
 
 export default {
   components: {
-    Multiselect
+    Multiselect,
+    VueMultiselect
   },
   props: {
     pricingTypes: {
-      default: {}
+      default: {},
     },
     services: {
-      default: {}
+      default: {},
     },
     levels: {
       type: Array,
       default() {
         return {};
-      }
+      },
     },
     urgencies: {
       type: Array,
       default() {
         return {};
-      }
+      },
     },
     spacings: {
       type: Array,
       default() {
         return {};
-      }
+      },
     },
     user_id: {
       type: [Boolean, Number],
       default() {
         return null;
-      }
+      },
     },
     restricted_order_page_url: {
       type: String,
       default() {
         return null;
-      }
+      },
     },
     additional_services_by_service_id_url: {
       type: String,
       default() {
         return null;
-      }
+      },
     },
     create_account_url: {
       type: String,
       default() {
         return null;
-      }
+      },
     },
     writer_list: {
-      default: {}
+      default: {},
     },
   },
 
-  filters: {
-    formatMoney: function(value) {
-      return accounting.formatMoney(value, currencyConfig.currency);
-    }
-  },
-  created() {
-    this.triggerChange(this.form);
-    this.getAdditionalServices(this.form.service_model);
-    console.log(this.writer_list,'this.writer_list');
-  },
-  watch: {
-    form: {
-      handler(val) {
-        this.triggerChange(val);
-      },
-      deep: true
-    },
-    errors: {
-      handler(val) {
-        this.checkError(val);
-      },
-      deep: true
-    }
-  },
-  data() {
-    return {
-      hasError:false,
-      errors: {},
-      additional_services: [],
-      form: {
-        service_model: this.services ? this.services[0] : {},
-        writer_model: this.writer_list ? this.writer_list[0] : {},
-        urgency_model: this.urgencies ? this.urgencies[0] : {},
-        work_level_model: this.levels ? this.levels[0] : {},
-        work_level_id: this.levels ? this.levels[0].id : 1,
-        number_of_words: this.services[0].minimum_order_quantity,
-        number_of_pages: this.services[0].minimum_order_quantity,
-        spacing_type: "double",
-        added_services: []
-      }
+
+
+  setup(props, { emit }) {
+    const hasError = ref(false);
+    const errors = ref({});
+    const additional_services = ref([]);
+    const serviceOptions = ref(['list', 'of', 'options']);
+    const form = reactive({
+      service_model: props.services ? props.services[0] : {},
+      writer_model: props.writer_list ? props.writer_list[0] : {},
+      urgency_model: props.urgencies ? props.urgencies[0] : {},
+      work_level_model: props.levels ? props.levels[0] : {},
+      work_level_id: props.levels ? props.levels[0].id : 1,
+      number_of_words: props.services[0].minimum_order_quantity,
+      number_of_pages: props.services[0].minimum_order_quantity,
+      spacing_type: "double",
+      added_services: [],
+    });
+
+    const checkError = () => {
+      const errorList = { ...errors.value };
+      hasError.value = Object.keys(errorList).length > 0;
     };
-  },
-  methods: {
-    checkError(){
-      var errorList = JSON.parse(JSON.stringify(this.errors));
-      this.hasError = (Object.keys(errorList).length > 0) ? true : false ;
-    },
-    triggerChange(form) {
-      this.$emit("dataChanged", form);
-    },
-    formatMoneyFromNumber($amount) {
-      return accounting.formatMoney($amount, currencyConfig.currency);
-    },
-    workLevelChanged(work_level_id, index) {
-      this.form.work_level_model = this.levels[index];
 
-      this.form.work_level_id = work_level_id;
-    },
-    spacingTypeChanged(type) {
-      this.form.spacing_type = type;
-    },
+    const triggerChange = () => {
+      emit("dataChanged", form);
+    };
 
-    changePageNumber(changeByValue) {
+    onMounted(() => {
+      triggerChange(); // Call your method when the component is mounted
+    });
+
+
+    // Define the watch for form
+    watch(form, (val) => {
+      // Handle form changes
+      triggerChange(val);
+    }, { deep: true });
+
+    // Define the watch for errors
+    watch(errors, (val) => {
+      // Handle errors changes
+      checkError(val);
+    }, { deep: true });
+
+    // const formatMoneyFromNumber = (amount) => {
+    //   return accounting.formatMoney(amount, currencyConfig.currency);
+    // };
+
+    const workLevelChanged = (work_level_id, index) => {
+      form.work_level_model = props.levels[index];
+      form.work_level_id = work_level_id;
+    };
+
+    const spacingTypeChanged = (type) => {
+      form.spacing_type = type;
+    };
+
+
+    function changePageNumber(changeByValue) {
       var changeByValue = parseInt(changeByValue);
       var number_of_pages = parseInt(this.form.number_of_pages);
       if (number_of_pages == 0 && changeByValue < 1) {
@@ -352,85 +351,91 @@ export default {
       }
       this.form.number_of_pages = number_of_pages + changeByValue;
       this.validateNumberOfPages();
-    },
-    changeNumberOfWords(changeByValue) {
-      var changeByValue = parseInt(changeByValue);
-      var number_of_words = parseInt(this.form.number_of_words);
+    };
+    function changeNumberOfWords(changeByValue) {
+       var changeByValue = parseInt(changeByValue);
+       var number_of_words = parseInt(this.form.number_of_words);
 
-      if (number_of_words == 0 && changeByValue < 1) {
-        return false;
-      }
-      this.form.number_of_words = number_of_words + changeByValue;
-      this.validateNumberOfWords();
-    },
-    validateNumberOfWords(){
-      if(this.form.number_of_words < this.form.service_model.minimum_order_quantity)
-      {
-        var minimum_order_quantity = this.form.service_model.minimum_order_quantity;
-        this.$set(this.errors, "number_of_words", ['Minium order quantity is ' + minimum_order_quantity]);
-      }
-      else
-      {
-        this.$delete(this.errors, 'number_of_words');
-      }
-      this.$delete(this.errors, 'number_of_pages');
-    },
-    validateNumberOfPages(){
+       if (number_of_words == 0 && changeByValue < 1) {
+         return false;
+       }
+       this.form.number_of_words = number_of_words + changeByValue;
+       this.validateNumberOfWords();
+    };
+    function validateNumberOfWords(){
+       if(this.form.number_of_words < this.form.service_model.minimum_order_quantity)
+       {
+         var minimum_order_quantity = this.form.service_model.minimum_order_quantity;
+         this.$set(this.errors, "number_of_words", ['Minium order quantity is ' + minimum_order_quantity]);
+       }
+       else
+       {
+         this.$delete(this.errors, 'number_of_words');
+       }
+       this.$delete(this.errors, 'number_of_pages');
+    };
+    function validateNumberOfPages(){
       if(this.form.number_of_pages < this.form.service_model.minimum_order_quantity)
       {
         var minimum_order_quantity = this.form.service_model.minimum_order_quantity;
-        this.$set(this.errors, "number_of_pages", ['Minium order quantity is ' + minimum_order_quantity]);
+        errors.value.number_of_pages = ['Minium order quantity is ' + minimum_order_quantity];
       }
       else
       {
-        this.$delete(this.errors, 'number_of_pages');
+        delete this.errors.number_of_pages;
       }
-      this.$delete(this.errors, 'number_of_words');
-    },
-    getAdditionalServices(service_model) {
+      delete this.errors.number_of_words;
+    };
 
+    const getAdditionalServices = (service_model) =>  {
+    console.log(service_model,'service_model');
       // Clear the errors
-      this.errors = {};
+      errors.value = {};
       // Clear the added services
-      this.$set(this.form,'added_services', []);
-
+      // this.$set(this.form,'added_services', []);
+      form.added_services = [];
       var service_id = service_model.id;
       var minimum_order_quantity = service_model.minimum_order_quantity;
 
-      if(service_model.price_type_id == this.pricingTypes.perPage)
+      if(service_model.price_type_id == props.pricingTypes.perPage)
       {
-        this.form.number_of_pages = minimum_order_quantity;
+        // this.form.number_of_pages = minimum_order_quantity;
+        form.number_of_pages = minimum_order_quantity;
       }
       else
       {
-        this.form.number_of_pages = 1;
+        // this.form.number_of_pages = 1;
+        form.number_of_pages = 1;
       }
 
       if(service_model.minimum_order_quantity)
       {
-        this.form.number_of_words = minimum_order_quantity;
+        // this.form.number_of_words = minimum_order_quantity;
+        form.number_of_words = minimum_order_quantity;
       }
       else
       {
-        this.form.number_of_words = 500;
+        // this.form.number_of_words = 500;
+        form.number_of_words = 500;
       }
 
       var $scope = this;
-      axios.post(this.additional_services_by_service_id_url, {
+      axios.post(props.additional_services_by_service_id_url, {
           service_id: service_id
         })
         .then(function(response) {
-          $scope.additional_services = response.data;
+          // $scope.additional_services = response.data;
+          additional_services.value = response.data;
         })
         .catch(function(error) {
-          alert("Something went wrongs");
+          alert(error);
         });
-    },
+    };
 
-    changeTab(tabNumber) {
-      this.$emit("changeTab", tabNumber);
-    },
-    additionalServiceChanged(id, additionalService) {
+    function changeTab(tabNumber) {
+      emit("changeTab", tabNumber);
+    };
+    function additionalServiceChanged(id, additionalService) {
       var isAlreadyInList = this.addedServiceList(id);
 
       if (isAlreadyInList) {
@@ -438,8 +443,8 @@ export default {
       } else {
         this.form.added_services.push(additionalService);
       }
-    },
-    addedServiceList(id) {
+    };
+    function addedServiceList(id) {
       var status = false;
 
       $.each(this.form.added_services, function(key, row) {
@@ -449,14 +454,14 @@ export default {
       });
 
       return status;
-    },
-    getServiceContainerClass(additionalServiceId) {
+    };
+    function getServiceContainerClass(additionalServiceId) {
       return {
         "btn-orange": this.addedServiceList(additionalServiceId),
         "btn-outline-orange": !this.addedServiceList(additionalServiceId)
       };
-    },
-    isNumber: function(evt) {
+    };
+    const isNumber = (evt) =>  {
       evt = (evt) ? evt : window.event;
       var charCode = (evt.which) ? evt.which : evt.keyCode;
       if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
@@ -465,7 +470,57 @@ export default {
         return true;
       }
     }
-  }
+
+    function formatMoney (value) {
+      return accounting.formatMoney(value, currencyConfig.currency);
+    }
+    const servicesTitle = props.services.map(service => service.name); 
+    const servicesObject = props.services.map((service) => {
+    return {
+     title: service.name,
+     value:service
+    } 
+    });
+    const writersObject = props.writer_list.map((writer) => {
+    return {
+     title: writer.first_name,
+     value:writer
+    } 
+    });
+    const urgenciesObject = props.urgencies.map((urgency) => {
+    return {
+     title: urgency.name,
+     value:urgency
+    } 
+    });
+    console.log(props.urgencies,'urgencies');
+    return {
+      hasError,
+      errors,
+      additional_services,
+      form,
+      checkError,
+      triggerChange,
+      //formatMoneyFromNumber,
+      workLevelChanged,
+      spacingTypeChanged,
+      formatMoney,
+      serviceOptions,
+      servicesObject,
+      writersObject,
+      urgenciesObject,
+      changePageNumber,
+      changeNumberOfWords,
+      //  validateNumberOfWords,
+      validateNumberOfPages,
+      getAdditionalServices,
+      changeTab,
+      additionalServiceChanged,
+      addedServiceList,
+      getServiceContainerClass,
+      isNumber,
+    };
+  },
 };
 </script>
 
@@ -485,5 +540,6 @@ html {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-
 </style>
+
+<!--  -->
