@@ -281,4 +281,32 @@ class Order extends Model
 
         return $statuses;
     }
+
+    // for API
+
+    static function apiStatistics($staff_id = NULL)
+    {
+        $orders = Order::select('order_status_id', DB::raw('count(*) as total'))
+            ->whereNull('archived')->groupBy('order_status_id');
+        if ($staff_id) {
+            $orders->where('staff_id', $staff_id);
+            $statuses = OrderStatus::whereIn('id', self::orderStatusAllowedForStaff())->get();
+        } else {
+            $statuses = OrderStatus::where('id', '<>', ORDER_STATUS_PENDING_PAYMENT)->get();
+        }
+
+        $orders = $orders->pluck('total', 'order_status_id');
+
+        if ($statuses->count() > 0) {
+            $statuses = $statuses->toArray();
+
+            foreach ($statuses as $key => $status) {
+                $statuses[$key]['value'] = (!isset($orders[$status['id']])) ? 0 : $orders[$status['id']];
+            }
+
+            $statuses = array_chunk($statuses, 6);
+        }
+
+        return $statuses;
+    }
 }

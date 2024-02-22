@@ -341,3 +341,27 @@ function paymentIsPending($orderStatusId)
         return true;
     }
 }
+
+//json function for return controllers data in json format for api
+
+function apiResponseSuccess($data,$message,$status_code=200){
+    return response()->json([
+        'message' => $message,
+        'status_code' =>$status_code,
+        'result' =>
+        ['data' => $data]
+    ]);
+};
+function responseError($data, string $message = null, int $statusCode = 400)
+{
+    // return (new ApiResponse)->error($data, $message, $code);
+    return response()->json([
+        'statusCode' => $statusCode,
+        'message' => $message,
+        'error' => $data
+    ]);
+}
+function validationError($validator)
+{
+    return responseError(['errors' => $validator->errors()], 'Validation Error', 422);
+}
