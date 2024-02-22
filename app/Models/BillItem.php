@@ -21,6 +21,6 @@ class BillItem extends Model
 
     function order()
     {
-        return $this->belongsTo('App\Order');
+        return $this->belongsTo('App\Models\Order');
     }
 }

@@ -13,9 +13,11 @@ use App\Traits\Wallet\Transactionable;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Permission\Models\Role;
 use App\models\Setting;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use HasApiTokens;
     use SoftDeletes;
     use Notifiable, HasRoles, TagOperation, HasWallet;
     use CausesActivity;
@@ -115,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setMetaData()
     {
         $records = $this->records()->get();
-
+ 
         $this->meta = new \StdClass();
 
         if ($records->count() > 0) {
