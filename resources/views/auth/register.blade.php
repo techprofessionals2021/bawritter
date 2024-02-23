@@ -45,7 +45,7 @@
                         <div class="input-group-prepend">
                            <span class="input-group-text"><i class="far fa-user"></i></span>
                         </div>
-                        <input placeholder="name@example.com" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ session()->get( 'email' ) ?? '' }}" {{ session()->get( 'readonly' ) ?? ''}} required autocomplete="email"> 
+                        <input placeholder="name@example.com" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ session()->get( 'email' ) ?? '' }}" {{ session()->get( 'readonly' ) ?? ''}} required autocomplete="email">
                         @error('email')
                         <span class="invalid-feedback d-block" role="alert">
                         <strong>{{ $message }}</strong>
@@ -86,12 +86,37 @@
                      {{ __('Create my account') }}
                      <i class="fas fa-long-arrow-alt-right"></i>
                      </button>
+
                   </div>
+                  <br/>
+                  {{-- <a href="{{ route('google') }}" class=" btn btn-sm  rounded-pill" >
+                    <i class="fab fa-google"></i>  Sign in with Google
+
+                   </a> --}}
+                   <a href="{{ route('google') }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                    <i class="fab fa-google"></i> Sign in with Google
+                   </a>
+
+                   {{-- <a href="{{ route('redirectFacebook') }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                    <i class="fab fa-facebook"></i> Sign in with facebook
+                   </a> --}}
+
+
+
                   @if(isset($data['user_token']))
                   <input id="user_token" type="hidden" class="form-control" name="user_token" value="{{ $data['user_token'] }}">
                   @endif
+
+
                </form>
-            </div>
+
+               {{-- <a href="{{ route('redirectFacebook') }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                <i class="fab fa-facebook"></i> Sign in with facebook
+               </a>
+                <br/> --}}
+
+
+        </div>
          </div>
       </div>
    </div>

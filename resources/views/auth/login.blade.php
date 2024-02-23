@@ -50,7 +50,7 @@
                         <div class="input-group-prepend">
                            <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">   
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
                      </div>
                      @error('password')
                      <span class="invalid-feedback" role="alert">
@@ -63,6 +63,12 @@
                      {{ __('Login') }}
                      <i class="fas fa-long-arrow-alt-right"></i>
                      </button>
+                     <br/>
+                     <br/>
+                     <a href="{{ route('google') }}" class="btn btn-sm btn-outline-primary rounded-pill">
+                        <i class="fab fa-google"></i> Login with Google
+                       </a>
+
                   </div>
                </form>
                <hr>
