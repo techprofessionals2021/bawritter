@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\models\AdditionalService;
+use App\Models\AdditionalService;
 
 class AdditionalServiceController extends Controller
 {
@@ -23,7 +24,7 @@ class AdditionalServiceController extends Controller
     {
         $additional_services = AdditionalService::orderBy('name', 'ASC');
 
-        if (! $request->include_inactive_items) {
+        if (!$request->include_inactive_items) {
             $additional_services->whereNull('inactive');
         }
 
@@ -32,21 +33,21 @@ class AdditionalServiceController extends Controller
             return '<a href="' . route('additional_services_edit', $additional_service->id) . '">' . $additional_service->name . '</a><p>' . $additional_service->description . '</p>';
         })
             ->editColumn('rate', function ($additional_service) {
-            return format_money($additional_service->rate);
-        })
+                return format_money($additional_service->rate);
+            })
             ->addColumn('status', function ($additional_service) {
-            return ($additional_service->inactive) ? 'Inactive' : 'Active';
-        })
+                return ($additional_service->inactive) ? 'Inactive' : 'Active';
+            })
             ->addColumn('action', function ($additional_service) {
 
-            return '<a class="btn btn-sm btn-danger delete-item" href="' . route('additional_services_delete', $additional_service->id) . '"><i class="fas fa-minus-circle"></i></a>';
-        })
+                return '<a class="btn btn-sm btn-danger delete-item" href="' . route('additional_services_delete', $additional_service->id) . '"><i class="fas fa-minus-circle"></i></a>';
+            })
             ->rawColumns([
-            'name',
-            'percentage_to_add',
-            'status',
-            'action'
-        ])
+                'name',
+                'percentage_to_add',
+                'status',
+                'action'
+            ])
             ->make(true);
     }
 

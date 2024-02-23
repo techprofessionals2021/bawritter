@@ -1,18 +1,19 @@
 <?php
+
 namespace Database\Seeders;
 
-use App\models\User;
-use App\models\Order;
-use App\models\Service;
-use App\models\Urgency;
-use App\models\WorkLevel;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Service;
+use App\Models\Urgency;
+use App\Models\WorkLevel;
 use Carbon\Carbon;
 use App\Enums\PriceType;
-use App\models\AdditionalService;
+use App\Models\AdditionalService;
 use App\Enums\PaymentReason;
 use App\Services\OrderService;
-use App\models\OfflinePaymentMethod;
-use App\models\PendingForApprovalPayment;
+use App\Models\OfflinePaymentMethod;
+use App\Models\PendingForApprovalPayment;
 use Illuminate\Database\Seeder;
 use App\Services\CalculatorService;
 
@@ -33,14 +34,14 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
     public function run()
     {
         // Specifically for User with ID:3
-        for ($i=1; $i < 6; $i++) { 
+        for ($i = 1; $i < 6; $i++) {
             $date = Carbon::now()->subDays($i)->toDateString();
             $this->generate(3, $date);
         }
         // Randomly picking 10 users from customer's list
-        $users = User::doesntHave('roles')->pluck('id');  
-        for ($i=0; $i < 40; $i++) {   
-            $customer_id = $this->faker->randomElement($users->toArray());         
+        $users = User::doesntHave('roles')->pluck('id');
+        for ($i = 0; $i < 40; $i++) {
+            $customer_id = $this->faker->randomElement($users->toArray());
             $this->generate($customer_id);
         }
     }
@@ -63,7 +64,6 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
                 'order_id' => $order->id,
                 'cart_total' => $order->total
             ];
-
         } else {
             $cart = null;
             $amount = $this->faker->randomFloat(2, 20, 100);
@@ -79,8 +79,7 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
             'cart' => $cart
         ]);
 
-        if($date)
-        {
+        if ($date) {
             $payment->created_at = $date;
             $payment->save();
         }
@@ -93,8 +92,8 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
         $services = Service::pluck('id');
         $urgencies = Urgency::pluck('id');
         $workLevels = WorkLevel::pluck('id');
-        $users = User::doesntHave('roles')->pluck('id');     
-        
+        $users = User::doesntHave('roles')->pluck('id');
+
 
         $calculator = new CalculatorService();
         if ($customer_id) {
@@ -108,22 +107,19 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
 
         $data['service_id'] = $faker->randomElement($services->toArray());
         $service = Service::find($data['service_id']);
-        $additionalServices= $service->additionalServices()->pluck('additional_service_id');
+        $additionalServices = $service->additionalServices()->pluck('additional_service_id');
 
         $data['urgency_id'] = $faker->randomElement($urgencies->toArray());
         $urgency = Urgency::find($data['urgency_id']);
         $data['work_level_id'] = $faker->randomElement($workLevels->toArray());
 
-        if(count($additionalServices->toArray()) > 0)
-        {
+        if (count($additionalServices->toArray()) > 0) {
             $adService = AdditionalService::find($faker->randomElement($additionalServices->toArray()));
             $data['added_services'] = [$adService->toArray()];
-        }
-        else
-        {
+        } else {
             $data['added_services'] = [];
         }
-        
+
 
         if ($service->price_type_id == PriceType::Fixed) {
             $data['quantity'] = 1;
@@ -148,7 +144,7 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
         Order::reguard();
 
         $orderService = new OrderService();
-        $order = $orderService->create($data);       
+        $order = $orderService->create($data);
 
         return $order;
     }
@@ -174,7 +170,7 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
     //     $services = Service::pluck('id');
     //     $urgencies = Urgency::pluck('id');
     //     $workLevels = WorkLevel::pluck('id');
-        
+
 
 
     //     $calculator = new CalculatorService();
@@ -219,5 +215,5 @@ class PendingForApprovalPaymentTableSeeder extends Seeder
     //     return $data;
     // }
 
-   
+
 }

@@ -1,10 +1,11 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\models\Service;
+use App\Models\Service;
 // use Faker\Generator as Faker;
-use App\models\AdditionalService;
+use App\Models\AdditionalService;
 use App\Enums\PriceType;
 use Faker\Factory;
 
@@ -17,13 +18,12 @@ class ServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach ($this->get_services() as $name) {            
-            $this->generate($name);            
+        foreach ($this->get_services() as $name) {
+            $this->generate($name);
         }
         $this->generate('Example of Per page writing service', PriceType::PerPage);
         $this->generate('Example of Per word writing service', PriceType::PerWord);
         $this->generate('Example of Fixed Price writing service', PriceType::Fixed);
-
     }
 
     private function generate($name, $price_type_id = null)
@@ -34,10 +34,9 @@ class ServicesTableSeeder extends Seeder
         $double_spacing_price = null;
         $minimum_order_quantity = null;
 
-        if(is_null($price_type_id))
-        {
+        if (is_null($price_type_id)) {
             $price_type_id = $faker->randomElement([PriceType::Fixed, PriceType::PerPage, PriceType::PerWord]);
-        }        
+        }
 
         if ($price_type_id == PriceType::Fixed) {
             $price = $faker->randomFloat(2, 10, 150);
@@ -59,11 +58,11 @@ class ServicesTableSeeder extends Seeder
             'double_spacing_price' =>  $double_spacing_price,
             'minimum_order_quantity' => $minimum_order_quantity
         ]);
-        
+
         $additionalServices = AdditionalService::pluck('id');
-        $count = $faker->randomElement([1,2,3]);
+        $count = $faker->randomElement([1, 2, 3]);
         $list = $faker->randomElements($additionalServices->toArray(), $count);
-        $service->additionalServices()->attach($list); 
+        $service->additionalServices()->attach($list);
     }
 
     private function get_services()

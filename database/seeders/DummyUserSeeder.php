@@ -28,29 +28,28 @@ class DummyUserSeeder extends Seeder
     public function run()
     {
         //User::truncate();
-        
+
         $faker = Factory::create();
 
         $types = [
             [
-                'role'  => 'admin', 
+                'role'  => 'admin',
                 'email' => 'admin@demo.com',
                 'photo' => 'uploads/avatars/XzA1MjM1MjEuanBn.jpg',
             ],
             [
-                'role'  => 'staff', 
-                'email' => 'writer@demo.com',  
-                'photo' => 'uploads/avatars/5eac6d75500a4_1588358517.png',              
+                'role'  => 'staff',
+                'email' => 'writer@demo.com',
+                'photo' => 'uploads/avatars/5eac6d75500a4_1588358517.png',
             ],
             [
-                'role'  => NULL, 
+                'role'  => NULL,
                 'email' => 'customer@demo.com',
-                'photo' => 'uploads/avatars/XzA3Mjk0MjUuanBn.jpg', 
+                'photo' => 'uploads/avatars/XzA3Mjk0MjUuanBn.jpg',
             ]
         ];
 
-        foreach ($types as $row) 
-        {
+        foreach ($types as $row) {
             $user = new User();
             $user->first_name = $faker->firstName;
             $user->last_name = $faker->lastName;
@@ -62,21 +61,17 @@ class DummyUserSeeder extends Seeder
 
             $user->created_at = now()->subMonths(6)->startofMonth()->toDateTimeString();
             $user->save();
-            
-            if(isset($row['role']) && $row['role'])
-            {
-                 // Assign role 'admin' to the user
+
+            if (isset($row['role']) && $row['role']) {
+                // Assign role 'admin' to the user
                 $user->assignRole($row['role']);
             }
 
-            if(isset($row['role']) && $row['role'] == 'staff')
-            {
+            if (isset($row['role']) && $row['role'] == 'staff') {
                 $this->createSkills($faker, $user);
             }
 
-            $this->createUserRecord($faker, $user);           
-            
-           
+            $this->createUserRecord($faker, $user);
         }
 
         $this->createPreviousMonthsUsers();
@@ -98,30 +93,27 @@ class DummyUserSeeder extends Seeder
             'address'                  => $faker->address,
         ];
 
-        foreach ($keys as $key => $value) 
-        {
+        foreach ($keys as $key => $value) {
             $rec = UserRecord::create([
                 'user_id'    => $user->id,
                 'option_key' => $key,
-            ]); 
+            ]);
             $rec->option_value = $value;
-            $rec->save();     
+            $rec->save();
         }
     }
 
     private function handleProfilePhotos()
     {
         $files = Storage::allFiles('dummy-content');
-        
+
         foreach ($files as $key => $file) {
 
             $photo = str_replace('dummy-content/avatar/', 'public/uploads/avatars/', $file);
-            
-            if(!Storage::exists($photo))
-            {
-                Storage::copy($file, $photo);    
+
+            if (!Storage::exists($photo)) {
+                Storage::copy($file, $photo);
             }
-            
         }
     }
 
@@ -151,39 +143,39 @@ class DummyUserSeeder extends Seeder
 
         $tags = Tag::pluck('id');
 
-        $user->tags()->sync($faker->randomElements($tags->toArray(), 8));      
+        $user->tags()->sync($faker->randomElements($tags->toArray(), 8));
     }
 
     private function createPreviousMonthsUsers()
     {
         $data = [];
 
-        for ($i = 1; $i <= 5 ; $i++) { 
+        for ($i = 1; $i <= 5; $i++) {
             $start = now()->subMonths($i)->startofMonth();
-            
-            for ($j = 1; $j <= 5; $j++) { 
+
+            for ($j = 1; $j <= 5; $j++) {
                 $randomDays = rand(0, 28);
                 $date = $start->copy()->addDays($randomDays)->toDateTimeString();
 
-                $data[] = [                    
-                    'number_of_users' => 3, 
+                $data[] = [
+                    'number_of_users' => 3,
                     'date'            => $date
                 ];
             }
         }
 
-        usort($data, function($a, $b) {
-          return strtotime($a["date"]) - strtotime($b["date"]);
+        usort($data, function ($a, $b) {
+            return strtotime($a["date"]) - strtotime($b["date"]);
         });
 
         foreach ($data as $row) {
 
             User::factory($row['number_of_users'])->create([
-                    'created_at' => $row['date'],
-                    'photo'      => $this->getCustomerPhoto()
+                'created_at' => $row['date'],
+                'photo'      => $this->getCustomerPhoto()
             ]);
         }
-        
+
         return $data;
     }
 
@@ -201,17 +193,16 @@ class DummyUserSeeder extends Seeder
             'XzAxMjk2NjcuanBn.jpg',
         ];
 
-        if($this->lastPhotoUsed && in_array($this->lastPhotoUsed, $collection))
-        {
+        if ($this->lastPhotoUsed && in_array($this->lastPhotoUsed, $collection)) {
             if (($key = array_search($this->lastPhotoUsed, $collection)) !== false) {
                 unset($collection[$key]);
             }
         }
 
         $photo = $this->faker->randomElement($collection);
-        
+
         $this->lastPhotoUsed = $photo;
-        
-        return 'uploads/avatars/'. $photo ;
+
+        return 'uploads/avatars/' . $photo;
     }
 }

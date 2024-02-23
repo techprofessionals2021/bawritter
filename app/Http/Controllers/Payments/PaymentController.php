@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Payments;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\models\Payment;
+use App\Models\Payment;
 
 class PaymentController extends Controller
 {

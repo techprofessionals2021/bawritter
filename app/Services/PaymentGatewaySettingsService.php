@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\models\PaymentGateway;
+use App\Models\PaymentGateway;
 
 class PaymentGatewaySettingsService
 {

@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\PaymentDisapprovedEvent;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\PaymentDisapproved;
-use App\models\User;
+use App\Models\User;
 
 class PaymentDisapprovedListener
 {

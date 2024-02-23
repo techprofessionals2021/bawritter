@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\NewOrder;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderSummary;
-use App\models\User;
+use App\Models\User;
 
 class NewOrderListener
 {

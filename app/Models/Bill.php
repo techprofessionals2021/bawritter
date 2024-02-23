@@ -1,5 +1,6 @@
 <?php
-namespace App\models;
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ class Bill extends Model
     protected $casts = [
         'paid' => 'date'
     ];
-    
+
     protected $fillable = [
         'number',
         'staff_invoice_number',
@@ -25,12 +26,12 @@ class Bill extends Model
 
     function items()
     {
-        return $this->hasMany('App\models\BillItem');
+        return $this->hasMany('App\Models\BillItem');
     }
 
     function from()
     {
-        return $this->belongsTo('App\models\User', 'user_id', 'id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     static function admin_dropdown()

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\models\Country;
-use App\models\ReferralSource;
+use App\Models\Country;
+use App\Models\ReferralSource;
 
 class Applicant extends Model
 {

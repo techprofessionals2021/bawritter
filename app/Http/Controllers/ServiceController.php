@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PriceType;
-use App\models\Service;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreServicesRequest;
@@ -122,7 +122,7 @@ class ServiceController extends Controller
     public function update(StoreServicesRequest $request, $id)
     {
         $request['inactive'] = (isset($request->inactive)) ? TRUE : NULL;
-        
+
         if ($request->price_type_id == PriceType::Fixed) {
             $request['minimum_order_quantity'] =   1;
         }

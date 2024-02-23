@@ -1,10 +1,10 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\models\PriceType;
-use App\models\AdditionalService;
+use App\Models\PriceType;
+use App\Models\AdditionalService;
 
 class Service extends Model
 {
@@ -24,12 +24,12 @@ class Service extends Model
      */
     public function additionalServices()
     {
-        return $this->belongsToMany('App\models\AdditionalService', 'service_tag_additional_services');
+        return $this->belongsToMany('App\Models\AdditionalService', 'service_tag_additional_services');
     }
 
     public function price_type()
     {
-        return $this->belongsTo('App\models\PriceType');
+        return $this->belongsTo('App\Models\PriceType');
     }
 
     public static function dropdown()

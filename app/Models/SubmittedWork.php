@@ -1,5 +1,6 @@
 <?php
-namespace App\models;
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,6 @@ class SubmittedWork extends Model
 
     public function order()
     {
-        return $this->belongsTo('App\models\Order', 'order_id', 'id');
+        return $this->belongsTo('App\Models\Order', 'order_id', 'id');
     }
 }

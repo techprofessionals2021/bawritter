@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Order;
-use App\models\Wallet;
+use App\Models\Order;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\Models\Activity;
@@ -14,7 +14,7 @@ class ReportController extends Controller
 
     function income_statement(Request $request)
     {
-        
+
         $data = NULL;
         if ($request->date) {
             try {
@@ -44,9 +44,7 @@ class ReportController extends Controller
                 }
             } catch (\Exception $e) {
             }
-        }
-        else
-        {
+        } else {
             $data['from_date'] = null;
             $data['to_date'] = null;
         }

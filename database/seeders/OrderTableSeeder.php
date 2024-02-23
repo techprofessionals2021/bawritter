@@ -4,17 +4,17 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-use App\models\Order;
-use App\models\Service;
-use App\models\Urgency;
-use App\models\WorkLevel;
-use App\models\User;
-use App\models\AdditionalService;
-use App\models\OrderAdditionalService;
-use App\models\Attachment;
-use App\models\SubmittedWork;
-use App\models\Rating;
-use App\models\Comment;
+use App\Models\Order;
+use App\Models\Service;
+use App\Models\Urgency;
+use App\Models\WorkLevel;
+use App\Models\User;
+use App\Models\AdditionalService;
+use App\Models\OrderAdditionalService;
+use App\Models\Attachment;
+use App\Models\SubmittedWork;
+use App\Models\Rating;
+use App\Models\Comment;
 use App\Services\CalculatorService;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\models\PushNotification;
+use App\Models\PushNotification;
 use App\Enums\PriceType;
 use App\Services\PaymentRecordService;
 
@@ -105,19 +105,16 @@ class OrderTableSeeder extends Seeder
 
         $data['service_id'] = $faker->randomElement($services->toArray());
         $service = Service::find($data['service_id']);
-        $additionalServices= $service->additionalServices()->pluck('additional_service_id');
+        $additionalServices = $service->additionalServices()->pluck('additional_service_id');
 
         $data['urgency_id'] = $faker->randomElement($urgencies->toArray());
         $urgency = Urgency::find($data['urgency_id']);
         $data['work_level_id'] = $faker->randomElement($workLevels->toArray());
 
-        if(count($additionalServices->toArray()) > 0)
-        {
+        if (count($additionalServices->toArray()) > 0) {
             $adService = AdditionalService::find($faker->randomElement($additionalServices->toArray()));
             $data['added_services'] = [$adService->toArray()];
-        }
-        else
-        {
+        } else {
             $data['added_services'] = [];
         }
 
@@ -544,12 +541,12 @@ class OrderTableSeeder extends Seeder
         }
     }
 
-     private function insertNotification($type, $notifiable_id, $message, $url, $date)
-     {
+    private function insertNotification($type, $notifiable_id, $message, $url, $date)
+    {
         $data = [
             'id' => $this->faker->regexify('[A-Za-z0-9]{20}'),
             'type' => 'App\Notifications\\' . $type,
-            'notifiable_type' => 'App\models\User',
+            'notifiable_type' => 'App\Models\User',
             'notifiable_id' => $notifiable_id,
             'data' => json_encode(['message' => $message, 'url' => $url]),
             'created_at' => $date

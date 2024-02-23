@@ -30,7 +30,7 @@ class WalletServiceProvider extends ServiceProvider
         Relation::morphMap([
             'payment'           => 'App\models\Payment',
             'order'             => 'App\models\Order',
-            // We cannot add App\User as it is being used in Spatie Permission
+            // We cannot add App\User as it is being used in Spatie Permission                 
         ]);
     }
 }

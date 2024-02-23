@@ -6,8 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\models\User;
-use App\models\Order;
+use App\Models\User;
+use App\Models\Order;
 
 class TaskAssigned extends Notification implements ShouldQueue
 {

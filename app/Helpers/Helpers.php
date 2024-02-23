@@ -1,6 +1,6 @@
 <?php
 
-use App\models\Setting;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Mews\Purifier\Facades\Purifier;
@@ -92,7 +92,7 @@ function is_active_menu($route_name)
 
 function get_company_name()
 {
-   return env('APP_NAME');
+    return env('APP_NAME');
     // return Purifier::clean(settings('company_name'));
 }
 
@@ -188,7 +188,7 @@ function growl_notification()
             'title' => 'Success',
             'description' => session()->get('success'),
             'closeTimeout' => 4000,
-            'zIndex'=> '2000'
+            'zIndex' => '2000'
         ];
     } elseif (session()->has('fail')) {
         $data = [
@@ -197,7 +197,7 @@ function growl_notification()
             'title' => 'Failed',
             'description' => session()->get('fail'),
             'closeTimeout' => 4000,
-            'zIndex'=> '2000'
+            'zIndex' => '2000'
         ];
     } elseif (session()->has('info')) {
         $data = [
@@ -206,7 +206,7 @@ function growl_notification()
             'title' => 'Sorry!',
             'description' => session()->get('info'),
             'closeTimeout' => 4000,
-            'zIndex'=> '2000'
+            'zIndex' => '2000'
         ];
     }
 
@@ -238,8 +238,7 @@ function logActivity($performedOn = NULL, $log = NULL, $user = NULL, $properties
     $user = (empty($user)) ? auth()->user() : $user;
     $activity = activity()->causedBy($user);
 
-    if($performedOn)
-    {
+    if ($performedOn) {
         $activity->performedOn($performedOn);
     }
 
@@ -276,7 +275,7 @@ function isRevisionAllowed($order)
 
 function pushNotification($user_id)
 {
-    $notification = \App\models\PushNotification::updateOrCreate([
+    $notification = \App\Models\PushNotification::updateOrCreate([
         'user_id' => $user_id
     ]);
     $notification->number++;
@@ -323,7 +322,7 @@ define('ORDER_STATUS_PAYMENT_DISAPPROVED', 11);
 
 // define('ORDER_STATUS_SUBMITTED_FOR_QA', 9);
 
-function convertToLocalTime($value, $format='d-M-Y H:i:s')
+function convertToLocalTime($value, $format = 'd-M-Y H:i:s')
 {
     $timezone = (auth()->user()->timezone) ? auth()->user()->timezone : 'utc';
 

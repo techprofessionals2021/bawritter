@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\models\Order;
-use App\models\Urgency;
-use App\models\Attachment;
-use App\models\NumberGenerator;
-use App\models\OrderAdditionalService;
+use App\Models\Order;
+use App\Models\Urgency;
+use App\Models\Attachment;
+use App\Models\NumberGenerator;
+use App\Models\OrderAdditionalService;
 use App\Events\NewOrderEvent;
 use Illuminate\Support\Facades\DB;
 

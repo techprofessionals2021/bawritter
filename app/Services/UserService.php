@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\models\User;
-use App\models\UserRecord;
+use App\Models\User;
+use App\Models\UserRecord;
 use Illuminate\Support\Arr;
 
 class UserService
