@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="card">
+    <div class="card outlined br-20 shadow">
       <div class="card-body" v-if="!isObjectEmpty(form)">
-        <h5 class="card-title">Order Summary</h5>
+        <h5 class="card-title sky font-weight-bold">Order Summary</h5>
         <div class="mb-4">
           <p>
-            <b>Service</b>
+            <b class="sky">Service</b>
             <br />
             {{ form.service_model.name }}
             <br />
@@ -53,10 +53,10 @@
             <div>
               <b>Writer Fee</b>
               :
-              {{ form.spacing_type == spacingTypes.double ?  
-              formatMoney(form?.writer_model?.staff_price?.double_space_price) 
-              : 
-              formatMoney(form?.writer_model?.staff_price?.single_space_price)  
+              {{ form.spacing_type == spacingTypes.double ?
+              formatMoney(form?.writer_model?.staff_price?.double_space_price)
+              :
+              formatMoney(form?.writer_model?.staff_price?.single_space_price)
               }}
             </div>
 
@@ -66,7 +66,7 @@
               {{ formatMoney(calculatePercentage(
                     form.spacing_type == spacingTypes.double ?   form?.writer_model?.staff_price?.double_space_price : form?.writer_model?.staff_price?.single_space_price,
                     form.work_level_model.percentage_to_add
-                    )) 
+                    ))
               }}
             </div>
 
@@ -91,13 +91,13 @@
         <table class="table table-sm">
           <tbody>
             <tr>
-              <th scope="row" style="width: 30%">Amount</th>
-              <td style="width: 70%" class="text-right">{{ formatMoney(form.amount)   }}</td>
+              <th class="sky" scope="row" style="width: 30%;  ">Amount</th>
+              <td style="width: 70%" class="text-right sky">{{ formatMoney(form.amount)   }}</td>
             </tr>
             <tr v-if="form.added_services.length > 0 ">
               <td colspan="2">
                 <div>
-                  <div style="font-weight: bold;">Additional Services</div>
+                  <div class="sky font-weight-bold">Additional Services</div>
                   <div class="row" v-for="row in form.added_services" v-bind:key="row.id">
                     <div class="col-md-6">
                       <div style="padding-left: 10px;">{{ row.name }}</div>
@@ -108,8 +108,8 @@
               </td>
             </tr>
             <tr>
-              <th scope="row" style="width: 30%">Total</th>
-              <td style="width: 80%" class="text-right">{{ calculateTotal }}</td>
+              <th class="sky" scope="row" style="width: 30%">Total</th>
+              <td  style="width: 80%" class="text-right sky">{{ calculateTotal }}</td>
             </tr>
           </tbody>
         </table>
@@ -173,7 +173,7 @@ export default {
         var workLevelModel = form.value.work_level_model;
         var urgencyModel = form.value.urgency_model;
 
-      
+
         // When Price Type is fixed
         if (serviceModel.price_type_id == pricingTypes.fixed) {
           var quantity = 1;
@@ -259,7 +259,7 @@ export default {
           delete records['service_model'];
           delete records['urgency_model'];
           delete records['work_level_model'];
-    
+
           emit("dataChanged", records);
         });
 
@@ -275,7 +275,7 @@ export default {
       formatMoneyFromNumber,
       calculatePercentage,
       isObjectEmpty
-      
+
     };
   },
 

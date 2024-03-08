@@ -1,26 +1,25 @@
 <template>
   <div>
-    <h5 class="card-title">
+    <h5 class="card-title sky">
       Step
       <b>2</b>/
       <span class="small">3</span> ADDITIONAL PAPER DETAILS
     </h5>
     <hr />
-
     <div class="form-group">
-      <label>Title <span class="required">*</span></label>
+      <label class="sky">Title <span class="required">*</span></label>
       <input type="text" class="form-control" v-model="form.title" />
       <div class="invalid-feedback d-block" v-if="errors.title">{{ errors.title[0] }}</div>
     </div>
     <div class="form-group">
-      <label>Specific Instructions <span class="required">*</span></label>
-      <textarea
+       <label class="sky">Specific Instructions <span class="required">*</span></label>
+       <textarea
         class="form-control"
         v-model="form.instruction"
         placeholder="E.g., preferred paper structure, outline, grading scale, or any particular work focus."
-      ></textarea>
+        ></textarea>
       <div class="invalid-feedback d-block" v-if="errors.instruction">{{ errors.instruction[0] }}</div>
-    </div>
+     </div>
 
     <VueFileAgent
       ref="vueFileAgent"
@@ -39,22 +38,31 @@
       @select="filesSelected($event)"
       @delete="fileDeleted($event)"
       v-model="form.files_data"
-    ></VueFileAgent>    
-    <br />
-    <a href="#" v-on:click.prevent="changeTab(1)">Previous</a>
+    ></VueFileAgent>
+    <br/>
+    <a class="sky" href="#" v-on:click.prevent="changeTab(1)">Previous</a>
     <br />
     <br />
     <div class="custom-control custom-checkbox">
       <input  :value="1" type="checkbox" class="custom-control-input" id="termsCheckBox" v-model="agreedToTermsChecked">
       <label class="custom-control-label" for="termsCheckBox">
-        I agree to the <a :href="term_and_condition_url" target="_blank">Terms and Conditions</a> 
+        I agree to the <a :href="term_and_condition_url" target="_blank">Terms and Conditions</a>
         and <a :href="privacy_policy_url" target="_blank">Privacy Policy</a>
       </label>
-    </div>    
+    </div>
     <br>
-    <button :disabled="!agreedToTermsChecked" class="btn btn-success btn-lg btn-block" v-on:click.prevent="submit()">
+    <button :disabled="!agreedToTermsChecked" class="btn bg-sky text-white btn-lg btn-block" v-on:click.prevent="submit()">
       <i class="far fa-check-circle"></i> Pay now
     </button>
+    <!-- <v-btn
+       :disabled="!agreedToTermsChecked"
+      variant="outlined"
+      class="btn btn-lg btn-block"
+      color="#229ad8"
+      v-on:click.prevent="submit()"
+      >
+      <i class="fas fa-arrow-circle-right"></i> Pay Now
+      </v-btn> -->
   </div>
 </template>
 

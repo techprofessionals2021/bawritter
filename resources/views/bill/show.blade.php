@@ -11,10 +11,10 @@
          @include('bill.partials.details')
       </div>
       <div class="col-md-3">
-         @role('admin') 
+         @role('admin')
             @if($bill->paid)
             <form action="{{ route('bill_mark_as_unpaid', $bill->id) }}" method="POST" autocomplete="off">
-               {{ csrf_field()  }}  
+               {{ csrf_field()  }}
                <button type="submit" class="btn btn-light btn-lg btn-block">
                <i class="far fa-check-circle"></i> Mark as unpaid</button>
             </form>
@@ -24,7 +24,7 @@
             </div>
             @else
             <form action="{{ route('bill_mark_as_paid', $bill->id) }}" method="POST" autocomplete="off">
-               {{ csrf_field()  }}  
+               {{ csrf_field()  }}
                <button type="submit" class="btn btn-success btn-lg btn-block">
                <i class="far fa-check-circle"></i> Mark as paid</button>
             </form>

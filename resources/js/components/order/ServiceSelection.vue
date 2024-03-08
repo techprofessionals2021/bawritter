@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h5 class="card-title">
+    <h5 class="card-title sky">
       Step <b>1</b>/<span class="small">3</span> TYPE OF WORK AND DEADLINE
     </h5>
     <hr />
     <div class="form-group">
-      <label>Service Type</label>
+      <label class="sky">Service Type</label>
       <v-select
         label="Select"
         v-model="form.service_model"
@@ -13,11 +13,10 @@
         item-title="title"
         item-value="value"
         @update:model-value="getAdditionalServices"
-   
       ></v-select>
     </div>
     <div class="form-group">
-      <label>Writers</label>
+      <label class="sky">Writers</label>
       <v-select
         label="Select"
         v-model="form.writer_model"
@@ -27,11 +26,12 @@
       ></v-select>
     </div>
     <div class="form-group">
-      <label>Work Level</label>
+      <label class="sky">Work Level</label>
       <div>
         <div class="btn-group btn-group-toggle flex-wrap" data-toggle="buttons">
           <label
             class="btn btn-outline-primary"
+
             @click="workLevelChanged(row.id, index)"
             :class="{ 'active': form.work_level_id === Number(row.id) }"
             v-for="(row, index) in levels"
@@ -52,18 +52,18 @@
     </div>
     <div class="form-row" v-if="form.service_model.price_type_id === pricingTypes.perPage">
       <div class="form-group col-md-4">
-        <label>Number of pages</label>
+        <label class="sky">Number of pages</label>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <button
               type="button"
-              class="btn btn-outline-secondary"
+              class="btn custom-btn-outline-blue"
               v-on:click="changePageNumber(-1)"
             >-</button>
           </div>
           <input
             type="text"
-            class="form-control text-center"
+            class="form-control text-center custom-btn-outline-blue"
             aria-describedby="basic-addon1"
             v-model="form.number_of_pages"
             v-on:keypress="isNumber($event)"
@@ -73,7 +73,7 @@
             <div class="input-group-prepend">
               <button
                 type="button"
-                class="btn btn-outline-secondary"
+                class="btn custom-btn-outline-blue"
                 v-on:click="changePageNumber(1)"
               >+</button>
             </div>
@@ -82,7 +82,7 @@
         <div class="invalid-feedback d-block" v-if="errors.number_of_pages">{{ errors.number_of_pages[0] }}</div>
       </div>
       <div class="form-group col-md-8">
-        <label>
+        <label class="sky">
           Spacing
           <span
             data-toggle="tooltip"
@@ -95,7 +95,7 @@
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label
               v-for="row in spacings"
-              class="btn btn-outline-pink"
+              class="btn btn-outline-primary"
               v-on:click="spacingTypeChanged(row.id)"
               :class="form.spacing_type == row.id ? 'active': ''"
               :key="row.id"
@@ -119,7 +119,7 @@
         class="form-group col-md-6"
         v-if="form.service_model.price_type_id == pricingTypes.perWord"
       >
-        <label>Number of Words</label>
+        <label class="sky">Number of Words</label>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <button
@@ -153,7 +153,7 @@
         class="form-group"
         v-bind:class="{ 'col-md-6': (form.service_model.price_type_id == pricingTypes.perWord), 'col-md-12': (form.service_model.price_type_id != pricingTypes.perWord) }"
       >
-        <label>Urgency</label>
+        <label class="sky">Urgency</label>
         <v-select
           label="Select"
           v-model="form.urgency_model"
@@ -164,23 +164,23 @@
       </div>
     </div>
     <div v-if="additional_services.length > 0">
-      <h5>Additional Services</h5>
+      <h5 class="sky font-weight-bold">Additional Services</h5>
       <div class="card mb-3" v-for="row in additional_services" :key="row.id">
         <div class="row no-gutters">
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ row.name }}</h5>
+              <h5 class="card-title sky">{{ row.name }}</h5>
               <p class="card-text">{{ row.description }}</p>
             </div>
           </div>
           <div class="col-md-4">
             <div class="d-flex justify-content-center" style="margin-top: 40px;">
               <a href="#" v-on:click.prevent="additionalServiceChanged(row.id, row)">
-                <div class="btn btn-block" v-bind:class="getServiceContainerClass(row.id)">
+                <div class="btn btn-block bg-sky text-white btn-outline-primary " v-bind:class="getServiceContainerClass(row.id)">
                   <span v-if="addedServiceList(row.id)">
-                    <i class="fas fa-check-circle"></i> Added
+                    <i class="fas fa-check-circle"></i>Added
                   </span>
-                  <span v-else>
+                  <span class="bg-sky text-white" v-else>
                     <i class="fas fa-plus"></i> Add
                   </span>
                   {{ formatMoney(row.rate)   }}
@@ -195,13 +195,24 @@
       <button
         :disabled="hasError"
         type="button"
-        class="btn btn-success btn-lg btn-block"
+        class="btn bg-sky  text-white btn-lg btn-block"
         @click.prevent="changeTab(2)"
-      >
-        <i class="fas fa-arrow-circle-right"></i> Next
-      </button>
-    </div>
-    <div v-else>
+        >
+        <i class="fas fa-arrow-circle-right text-white "></i> Next
+       </button>
+
+     <!-- <v-btn
+
+   variant="outlined"
+   class="btn btn-lg btn-block"
+   color="#229ad8"
+   @click.prevent="changeTab(2)"
+    >
+   <i class="fas fa-arrow-circle-right"></i> Next
+   </v-btn> -->
+
+     </div>
+     <div v-else>
       <button
         type="button"
         class="btn btn-success btn-lg btn-block"
@@ -474,24 +485,24 @@ export default {
     function formatMoney (value) {
       return accounting.formatMoney(value, currencyConfig.currency);
     }
-    const servicesTitle = props.services.map(service => service.name); 
+    const servicesTitle = props.services.map(service => service.name);
     const servicesObject = props.services.map((service) => {
     return {
      title: service.name,
      value:service
-    } 
+    }
     });
     const writersObject = props.writer_list.map((writer) => {
     return {
      title: writer.first_name,
      value:writer
-    } 
+    }
     });
     const urgenciesObject = props.urgencies.map((urgency) => {
     return {
      title: urgency.name,
      value:urgency
-    } 
+    }
     });
     console.log(props.urgencies,'urgencies');
     return {

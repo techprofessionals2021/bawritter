@@ -51,6 +51,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
+        
         $data = [];
 
         if (isset($request->c)) {
@@ -94,7 +95,7 @@ class RegisterController extends Controller
             } else {
                 abort(404);
             }
-        }
+                }
 
         $messages = [
             'email.in' => 'No invitation was not sent to this email'
@@ -125,7 +126,7 @@ class RegisterController extends Controller
             // Assign the role
             $user->assignRole($invitation->role_name);
 
-            // Delete the invitation            
+            // Delete the invitation
             $invitation->delete();
         } else {
             $user->sendEmailVerificationNotification();

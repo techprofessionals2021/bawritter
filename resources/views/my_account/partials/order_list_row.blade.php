@@ -1,31 +1,32 @@
-<div class="card order-box shadow bg-white rounded">
-    <a href="{{ route('orders_show', $order->id) }}">
-        <h5>{{ $order->title }}</h5>
-    </a>
+<div class=" card order-box shadow bg-white br-10 ">
+     <a href="{{ route('orders_show', $order->id) }}">
+        <h5 class="sky">{{ $order->title }}</h5>
+     </a>
     <div class="row">
-        <div class="col-md-6">
-            {{ $order->number }}
+        <div class="col-md-8">
+          <span class="text-grey"> {{ $order->number }}</span>
         </div>
-        <div class="col-md-6  text-right">
+        <div class="col-md-2  text-right">
             @if ($order->archived)
-                <span class="badge badge-secondary">Archived</span>
+                <span class="badge badge-secondary ">Archived</span>
             @endif
-            <span class="badge badge-brilliant-rose">
+            <span class="badge bg-sky text-white">
                 {{ $order->service->price_type->name }}
             </span>
             <span class="badge {{ $order->status->badge }}">{{ $order->status->name }}</span>
         </div>
     </div>
 
-    <p class="order-instruction">
+    <p class="order-instruction text-grey">
+
         <?php echo Str::words($order->instruction, 20, ' ...'); ?>
     </p>
     <div class="row order-overview">
-        <div class="col-md-6"><span class="font-weight-bold">Service Type</span>
+        <div class="col-md-6"><span class="font-weight-bold sky">Service Type</span>
             <br>
-            {{ @$order->service->name }}
+            <span class="text-grey">  {{ @$order->service->name }}</span>
         </div>
-        <div class="col-md-6"><span class="font-weight-bold">Assigned To</span>
+        <div class="col-md-6"><span class="font-weight-bold sky">Assigned To</span>
             <br>
             <?php
             // if (isset($order->assignee)) {
@@ -36,10 +37,10 @@
                 <span class="text-success">
                     @if (auth()->user()->hasRole('admin'))
                         <a href="{{ route('user_profile', @$order->staff_id) }}">
-                            {{ @$order->assignee->full_name }}
+                            <span class="text-grey">{{ @$order->assignee->full_name }}</span>
                         </a>
                     @else
-                        {{ @$order->assignee->full_name }}
+                    <span class="text-grey">    {{ @$order->assignee->full_name }}</span>
                     @endif
                 </span>
             @else
@@ -54,19 +55,21 @@
         </div>
     </div>
     <div class="row order-overview">
-        <div class="col-md-6"><span class="font-weight-bold">Posted</span>
+        <div class="col-md-6"><span class="font-weight-bold sky">Posted</span>
             <br>
-            {{ convertToLocalTime($order->created_at) }}
+            <span class="text-grey">{{ convertToLocalTime($order->created_at) }}</span>
         </div>
-        <div class="col-md-6"><span class="font-weight-bold">Deadline</span>
+        <div class="col-md-6"><span class="font-weight-bold sky">Deadline</span>
             <br>
             @if ($order->order_status_id != ORDER_STATUS_PENDING_PAYMENT)
-                {{ convertToLocalTime($order->dead_line) }}
+            <span class="text-grey">  {{ convertToLocalTime($order->dead_line) }}</span>
             @else
-                <small class="text-danger">Applicable after payment</small>
+                <small class="sky">Applicable after payment</small>
             @endif
-            <span class="font-12 text-info"><i>
-                    (Urgency: {{ $order->urgency->value }} {{ $order->urgency->type }})
+            <span class="font-12 sky"><i>
+                    (Urgency:
+                    <span class="text-grey">{{ $order->urgency->value }} {{ $order->urgency->type }}</span>
+                    )
                 </i>
             </span>
         </div>

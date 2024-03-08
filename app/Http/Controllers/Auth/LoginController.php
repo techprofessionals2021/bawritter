@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Login Controller

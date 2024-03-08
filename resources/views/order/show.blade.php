@@ -6,7 +6,7 @@
     $group_name = app('request')->input('group');
     $sub_group_name = app('request')->input('subgroup');
 @endphp
-<section class="header-account-page d-flex align-items-end navbar-background pt-80" data-offset-top="#header-main">
+   <section class="header-account-page d-flex align-items-end navbar-background pt-10" data-offset-top="#header-main">
     <div class="container pt-4 pt-lg-0">
         <div class="row">
             <div class="col-lg-12">
@@ -14,7 +14,7 @@
                     <div><span class="h2 mb-0 text-white d-block">{{ $order->number }}</span></div>
                     <div>
                         <h5>Status: <span
-                                class="badge {{ $order->status->badge }}">{{ $order->status->name }}</span></h5>
+                     class="badge {{ $order->status->badge }}">{{ $order->status->name }}</span></h5>
                     </div>
                 </div>
                 <!-- Salute + Small stats -->

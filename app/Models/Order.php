@@ -276,7 +276,7 @@ class Order extends Model
                 $statuses[$key]['value'] = (!isset($orders[$status['id']])) ? 0 : $orders[$status['id']];
             }
 
-            $statuses = array_chunk($statuses, 6);
+            $statuses = array_chunk($statuses, 10);
         }
 
         return $statuses;
