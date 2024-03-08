@@ -4,8 +4,8 @@
       <span v-if="numberOfNotification > 0" class="badge badge-pill badge-danger" style="float:right;margin-top: -8px; margin-left: -5px;">
       {{ numberOfNotification }}
       </span>
-      <!-- <i class="fa fa-bell"></i> -->
-      <img alt="bell" src="images/bell.png" class="card-img-top user-avatar">
+      <i class=" text-yellow fa fa-bell fa-2x mr-5"></i>
+      <!-- <img alt="bell" src="images/bell.png" class="card-img-top user-avatar"> -->
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01" style="width: 300px; font-size: 13px; max-height: 300px; overflow-y: scroll">
          <div class="text-center" v-if="loadingEnabled">Loading</div>
