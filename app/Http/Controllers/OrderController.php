@@ -14,6 +14,7 @@ use App\Events\DeliveryAcceptedEvent;
 use App\Events\OrderStatusChangedEvent;
 use Yajra\DataTables\Facades\DataTables;
 use App\Events\RequestedForRevisionEvent;
+use App\Models\OrderStatus;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -26,7 +27,9 @@ class OrderController extends Controller
      */
     function index()
     {
+     
         $data = Order::admin_dropdown();
+
         $data['statistics'] = Order::statistics();
 
         $data['staff_list'] = [
@@ -43,6 +46,8 @@ class OrderController extends Controller
             'tommorrow' => 'Tommorrow',
             'day_after_tommorrow' => 'The day after tommorrow'
         ];
+
+
         return view('order.index', compact('data'));
     }
 

@@ -1,11 +1,11 @@
 @if(!is_null($order->rating))
-<div class="card">
+<div class="card outlined br-20">
    <div class="card-body">
-      <h5 class="card-title">Rating</h5>
+      <h5 class="card-title sky">Rating</h5>
       {{ star_rating($order->rating->number) }}
       <br><br>
-      <div class="font-weight-bold">Comment</div>
-      <p>{{ $order->rating->comment }}</p>     
+      <div class="font-weight-bold sky ">Comment</div>
+      <p class="text-grey">{{ $order->rating->comment }}</p>
    </div>
 </div>
 @else

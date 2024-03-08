@@ -44,14 +44,19 @@ class DashboardApiController extends Controller
             'paidBillsAmount' => $this->paidBillsAmount(),
             'profitAmount' => $this->profitAmount(),
         ];
-if($data){
-    return apiResponseSuccess($data,' Monthly Activities Counts');
-}else{
-    return responseError('$data','no data error');
-}
+        
+     if($data){
+
+     return apiResponseSuccess($data,' Monthly Activities Counts');
+
+     }
+
+     else{
+     return responseError('$data','no data error');
+
+     }
 
     }
-
 
       function income_graph()
 
@@ -68,6 +73,7 @@ if($data){
               $data['labels'][] = $date->format('F');
               $data['formatted_values'][$profit] = format_money($profit);
           }
+
           if($data){
             return apiResponseSuccess($data,'income graph report data');
           } else{

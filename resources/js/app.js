@@ -53,7 +53,7 @@ window.dateRanges = {
  window.GrowlNotification = require('./growl-notification.min');
 
 
- 
+
 // Vue.use(VueFileAgent);
 
 // Vue.component('Order', require('./components/Order.vue').default);
@@ -74,12 +74,16 @@ window.dateRanges = {
 // require('./custom-script');
 import { createApp, ref } from 'vue';
 import MyComponent from './components/MyComponent.vue';
+
 import Order from './components/Order.vue';
+
 import ServiceSelection from './components/order/ServiceSelection.vue';
 import OrderSummary from './components/order/OrderSummary.vue';
 import Instruction from './components/order/Instruction.vue';
 import SubmitWork from './components/SubmitWork.vue';
 import Notification from './components/Notification.vue';
+import Register from './components/Register.vue';
+
 // import VueFileAgent from 'vue-file-agent';
 // import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import VueFileAgentNext from '@boindil/vue-file-agent-next'
@@ -98,7 +102,7 @@ const vuetify = createVuetify({
   directives,
 })
 
-const app  = createApp({ 
+const app  = createApp({
     components: {
     MyComponent,
     Order,
@@ -106,7 +110,9 @@ const app  = createApp({
     OrderSummary,
     Instruction,
     SubmitWork,
-    Notification
+    Register,
+    Notification,
+
   },
 });
 // app.component('Order', order);

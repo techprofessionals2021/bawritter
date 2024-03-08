@@ -4,11 +4,12 @@
       <span v-if="numberOfNotification > 0" class="badge badge-pill badge-danger" style="float:right;margin-top: -8px; margin-left: -5px;">
       {{ numberOfNotification }}
       </span>
-      <i class="fa fa-bell"></i>
-      </a>    
+      <i class=" text-yellow fa fa-bell fa-2x mr-5"></i>
+      <!-- <img alt="bell" src="images/bell.png" class="card-img-top user-avatar"> -->
+      </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01" style="width: 300px; font-size: 13px; max-height: 300px; overflow-y: scroll">
          <div class="text-center" v-if="loadingEnabled">Loading</div>
-         <a v-if="notifications.length > 0 && !loadingEnabled" class="btn btn-link float-md-right"  style="border-bottom:1px solid #eee; font-size: 12px;" :href="url_mark_all_as_read">Mark all as read</a>           
+         <a v-if="notifications.length > 0 && !loadingEnabled" class="btn btn-link float-md-right"  style="border-bottom:1px solid #eee; font-size: 12px;" :href="url_mark_all_as_read">Mark all as read</a>
          <a v-if="!loadingEnabled" v-for="notification in notifications" class="dropdown-item"  style="white-space: normal !important; padding-top: 10px; padding-bottom: 10px; border-bottom:1px solid #eee;" :href="notification.url">{{ notification.message }}
          <small class="form-text text-muted">{{ notification.moment }}</small>
          </a>
@@ -19,7 +20,6 @@
 </template>
 
 <script>
-
 
   export default {
 
@@ -89,5 +89,5 @@
 
       }
     }
-  } 
+  }
   </script>

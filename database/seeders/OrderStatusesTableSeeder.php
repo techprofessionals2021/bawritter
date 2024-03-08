@@ -27,7 +27,7 @@ class OrderStatusesTableSeeder extends Seeder
             ['name' => 'Payment needs approval', 'badge' => 'badge-danger'],
             ['name' => 'Payment Disapproved', 'badge' => 'badge-dark'],
 
-            // ['name' => 'Submitted for QA', 'badge' => 'badge-danger'],       
+            // ['name' => 'Submitted for QA', 'badge' => 'badge-danger'],
         ]);
     }
 }

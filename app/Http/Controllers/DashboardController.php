@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
-use App\Models\User;
-use App\Models\Order;
-use App\Models\Bill;
+use App\models\User;
+use App\models\Order;
+use App\models\Bill;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -31,7 +31,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
 
-        $data['activities'] = Activity::limit(5)->orderBy('created_at', 'DESC')->get();
+        $data['activities'] = Activity::limit(3)->orderBy('created_at', 'DESC')->get();
 
         return view('dashboard', compact('data'));
     }
@@ -39,7 +39,7 @@ class DashboardController extends Controller
     private function usersCount()
     {
         return User::whereBetween(DB::raw('DATE(created_at)'), [Carbon::now()->subDays(7)->toDateString(), Carbon::today()->toDateString()])
-            ->doesntHave('roles')->get()->count();
+        ->doesntHave('roles')->get()->count();
     }
 
     private function ordersCount()
@@ -57,8 +57,8 @@ class DashboardController extends Controller
     private function profitAmount()
     {
         $total = Order::where('order_status_id', ORDER_STATUS_COMPLETE)
-            ->whereBetween(DB::raw('DATE(created_at)'), [Carbon::now()->subDays(30)->toDateString(), Carbon::today()->toDateString()])
-            ->sum(DB::raw('total - IFNULL(staff_payment_amount, 0)'));
+        ->whereBetween(DB::raw('DATE(created_at)'), [Carbon::now()->subDays(30)->toDateString(), Carbon::today()->toDateString()])
+        ->sum(DB::raw('total - IFNULL(staff_payment_amount, 0)'));
 
         return format_money($total);
     }
@@ -66,24 +66,24 @@ class DashboardController extends Controller
 
     public function statistics(Request $request)
     {
-        switch ($request->name) {
+       switch ($request->name) {
             case 'users_count':
-                $data = $this->usersCount();
-                break;
+                    $data = $this->usersCount();
+               break;
             case 'orders_count':
-                $data = $this->ordersCount();
-                break;
+                    $data = $this->ordersCount();
+               break;
             case 'paid_bills_amount':
-                $data = $this->paidBillsAmount();
-                break;
+                    $data = $this->paidBillsAmount();
+               break;
             case 'profit_amount':
-                $data = $this->profitAmount();
-                break;
-            default:
-                $data = 0;
-                break;
-        }
+                    $data = $this->profitAmount();
+               break;
+           default:
+               $data = 0;
+               break;
+       }
 
-        return response()->json($data);
+       return response()->json($data);
     }
 }

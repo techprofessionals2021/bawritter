@@ -152,6 +152,7 @@ class UserController extends Controller
         $subject = anchor($user->full_name, route('user_profile', $user->id));
         logActivity($user, 'updated avatar of ' . $subject);
 
+
         return response()->json($avatar->upload($request, $user));
     }
 
@@ -224,7 +225,7 @@ class UserController extends Controller
 
             $message = 'Invitation sent to the user';
 
-            // Log user's activity          
+            // Log user's activity
             logActivity(auth()->user(), 'sent invitation at ' . $request->email);
         }
 
@@ -248,7 +249,7 @@ class UserController extends Controller
         try {
 
             $user->delete();
-            // Log user's activity          
+            // Log user's activity
             logActivity($user, 'deleted user ' . $user->full_name);
             $redirect->withSuccess('Successfully deleted');
             DB::commit();

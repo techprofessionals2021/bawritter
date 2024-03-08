@@ -2,7 +2,7 @@
 @section('title', $data['title'])
 @section('content')
 <div class="container page-container" id="app">
- <h2>{{ $data['title'] }}</h2>
+ <h2 class="sky font-weight-bold">{{ $data['title'] }}</h2>
  <br>
   <order :services="{{ json_encode($data['service_id_list']) }}"
 :levels="{{ json_encode($data['work_level_id_list']) }}"

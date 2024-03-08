@@ -7,9 +7,13 @@
 // {
 
 use App\Http\Controllers\Auth\LoginController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SocialController;
+
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class,'showLoginForm'])->name('homepage');
 
@@ -27,3 +31,14 @@ Route::get('money-back-guarantee', [HomeController::class,'content'])->name('mon
 Route::get('sitemap.xml', [SitemapController::class,'index'])->name('sitemap.xml');
 Route::get('page-sitemap.xml',[SitemapController::class,'page'])->name('page-sitemap.xml');
 
+
+// routes/web.php
+
+// Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+// Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('authRedirectCallBack');
+Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google');
+Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
+// facebook
+
+Route::get('/redirect', [SocialController::class, 'redirectFacebook'])->name('redirectFacebook');;
+Route::get('auth/facebook/callback', [SocialController::class, 'facebookCallback']);

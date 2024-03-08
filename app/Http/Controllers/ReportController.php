@@ -66,6 +66,7 @@ class ReportController extends Controller
             $data['formatted_values'][$profit] = format_money($profit);
         }
 
+        //  dd($data);
         return response()->json($data);
     }
 

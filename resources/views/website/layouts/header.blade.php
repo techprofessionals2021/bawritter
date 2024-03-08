@@ -5,8 +5,9 @@
             <div class="row align-items-center no-gutters">
                <div class="col">
                   <div class="logo-img">
-                     <a  href="{{ route('homepage') }}">                    
+                     <a  href="{{ route('homepage') }}">
                      <img src="{{ get_company_logo() }}" alt="{{ settings('company_name') }}" >
+                     {{-- <img src="images/login-image-1.png" alt="Your Image"> --}}
                      </a>
                   </div>
                </div>
