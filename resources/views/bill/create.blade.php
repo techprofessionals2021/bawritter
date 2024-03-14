@@ -2,9 +2,9 @@
 @section('title', 'Request for payment')
 @section('content')
 <div class="container page-container ">
-   <div class="row">
+   <div class="row card-body shadow br-10">
       <div class="col-md-12">
-         <h4 class="sky">Request for payment</h4>
+         <h4 class="sky font-weight-bold">Request for payment</h4>
          {{-- <hr> --}}
       </div>
       @if($unbilled_tasks->count() > 0)
@@ -41,7 +41,7 @@
       <div class="card-header sky font-weight-bold">Submit Payout Request
       </div>
       <div class="card-body">
-        
+
             <form action="{{ route('post_request_for_payment') }}" method="POST" autocomplete="off">
                {{ csrf_field()  }}
 

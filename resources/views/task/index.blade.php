@@ -7,19 +7,27 @@
          <h4 class="sky font-weight-bold">My Tasks</h4>
 
          @include('task.partials.statistics')
-      
+
       </div>
 
-      <div class="col-md-8">
+      <div class="bg-white card-body shadow br-10">
+
+        <div class="row scroll-bar">
+            <div class="col-md-4">
+                @include('task.partials.search')
+              </div>
+
+      <div class="col-md-8 mt-3">
         <table id="tasks_table" class="w-100">
              <tr>
                   <th scope="col"></th>
                </tr>
          </table>
       </div>
-
-      <div class="col-md-4">
+      {{-- <div class="col-md-4">
         @include('task.partials.search')
+      </div> --}}
+     </div>
       </div>
    </div>
 </div>
