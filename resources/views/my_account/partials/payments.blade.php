@@ -1,7 +1,8 @@
-<h4>My Payments</h4>
-<table id="table" class="table table-striped nowrap w-100">
+<div class="card-body shadow br-20">
+<h4 class="sky font-weight-bold mb-5">My Payments</h4>
+<table id="table" class="table mt-5 nowrap w-100">
     <thead>
-        <tr>
+        <tr class="sky">
             <th scope="col" data-priority="1">Date</th>
             <th scope="col">Number</th>
             <th scope="col" data-priority="2">Method</th>
@@ -10,6 +11,7 @@
         </tr>
     </thead>
 </table>
+</div>
 @section('innerJs')
 <script>
     $(function () {

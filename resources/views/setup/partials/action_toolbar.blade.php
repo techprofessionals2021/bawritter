@@ -1,11 +1,11 @@
-<div class="actions-toolbar py-2 mb-1">
+<div class="actions-toolbar py-2 mb-1 ">
    <div class="row">
       <div class="col-md-6">
-         <h5 class="mb-1">{{ $title }}</h5>
+         <h5 class="mb-1 sky font-weight-bold">{{ $title }}</h5>
       </div>
       <div class="col-md-6 text-right">
          @if(!isset($hide_save_button))
-         <button type="submit" name="submit" class="btn btn-sm btn-success" id="submitForm">
+         <button type="submit" name="submit" class="btn btn-sm bg-sky text-white" id="submitForm">
          <i class="fas fa-save"></i> Save record
          </button>
          @endif
@@ -21,5 +21,5 @@
          @endif
       </div>
    </div>
-   <hr>
+   {{-- <hr> --}}
 </div>

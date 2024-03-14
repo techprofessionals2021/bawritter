@@ -1,20 +1,20 @@
 @extends('layouts.app')
 @section('title', 'Payments pending for approval')
 @section('content')
-<div class="container page-container">
-    <div class="row">
+<div class="container page-container card shadow br-20">
+    <div class="row card-body">
         <div class="col-md-6">
-            <h4>Payments pending for approval</h4>
+            <h4 class="sky font-weight-bold">Payments pending for approval</h4>
         </div>
         <div class="col-md-6 text-right">
 
         </div>
-        <div class="col-md-12">    
-            <table id="orders_table" class="table table-striped">
-                <thead>
+        <div class="col-md-12">
+            <table id="orders_table" class="table text-grey">
+                <thead class="sky">
                     <tr>
                         <th scope="col">Date</th>
-                        <th scope="col">From</th>
+                       <th scope="col">From</th>
                         <th scope="col">Method</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Reference</th>
@@ -87,7 +87,7 @@
                         className: "text-right"
                     }
                 ]
-            });       
+            });
 
         });
 

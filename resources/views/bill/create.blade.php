@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('title', 'Request for payment')
 @section('content')
-<div class="container page-container">
-   <div class="row">
+<div class="container page-container ">
+   <div class="row card-body shadow br-10">
       <div class="col-md-12">
-         <h4>Request for payment</h4>
-         <hr>
+         <h4 class="sky font-weight-bold">Request for payment</h4>
+         {{-- <hr> --}}
       </div>
-      @if($unbilled_tasks->count() > 0)      
-      <div class="col-md-7">         
+      @if($unbilled_tasks->count() > 0)
+      <div class="col-md-7 ">
 
          <table id="payment_request_table" class="table">
-            <thead>
+            <thead class="sky font-weight-bold">
                <tr>
                   <th>#</th>
                   <th>Item</th>
@@ -25,9 +25,9 @@
                   <td><a href="{{ route('orders_show', $order->id) }}">{{ $order->number }}</a></td>
                   <td class="text-right">{{ format_money($order->staff_payment_amount) }}</td>
                </tr>
-               @endforeach               
+               @endforeach
             </tbody>
-            <tfoot>
+            <tfoot class="sky font-weight-bold">
                <tr>
                   <th></th>
                   <th>Total</a></th>
@@ -37,18 +37,17 @@
          </table>
       </div>
       <div class="offset-md-1 col-md-4">
-            <div class="card">
-      <div class="card-header">Submit Payout Request
+            <div class="card br-20  shadow ">
+      <div class="card-header sky font-weight-bold">Submit Payout Request
       </div>
       <div class="card-body">
-     
-         
+
             <form action="{{ route('post_request_for_payment') }}" method="POST" autocomplete="off">
-               {{ csrf_field()  }}    
-                         
+               {{ csrf_field()  }}
+
                <div class="form-group">
                   <label>Your Name <span class="required">*</span></label>
-                  <input type="text" class="form-control form-control-sm" name="name" value="{{ old('name', auth()->user()->full_name) }}"> 
+                  <input type="text" class="form-control form-control-sm" name="name" value="{{ old('name', auth()->user()->full_name) }}">
                   <div class="invalid-feedback d-block">{{ showError($errors, 'name') }}</div>
                </div>
                <div class="form-group">
@@ -63,7 +62,7 @@
                </div>
                <div class="form-group">
                   <label>Your Invoice Number (Optional)</label>
-                  <input type="text" class="form-control form-control-sm" name="staff_invoice_number" value="{{ old('staff_invoice_number') }}"> 
+                  <input type="text" class="form-control form-control-sm" name="staff_invoice_number" value="{{ old('staff_invoice_number') }}">
                   <div class="invalid-feedback d-block">{{ showError($errors, 'staff_invoice_number') }}</div>
                </div>
 
@@ -72,10 +71,10 @@
                   <div>{{ format_money($data['total']) }}</div>
                </div>
 
-               
-               <button type="submit" class="btn btn-success btn-lg btn-block"><i class="far fa-paper-plane"></i> Request for payment</button>
+
+               <button type="submit" class="btn bg-sky text-white  btn-block"><i class="far fa-paper-plane"></i> Request for payment</button>
             </form>
-         
+
       </div>
    </div>
       </div>

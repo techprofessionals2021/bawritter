@@ -4,7 +4,7 @@
 <div class="container page-container">
    <div class="row mb-4">
       <div class="col-md-6">
-         <h4>Job Applicants</h4>
+         <h4 class="sky font-weight-bold">Job Applicants</h4>
       </div>
       <div class="col-md-6 text-right">
       </div>

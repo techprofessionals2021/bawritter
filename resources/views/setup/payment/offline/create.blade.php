@@ -7,7 +7,7 @@
 'hide_save_button' => TRUE,
 'back_link' => ['title' => 'back to offline payment methods', 'url' => route("offline_payment_methods")],
 ])
-<form role="form" class="form-horizontal" enctype="multipart/form-data"
+<form role="form" class="form-horizontal card-body shadow br-20" enctype="multipart/form-data"
     action="{{ (isset($method->id)) ? route( 'offline_payment_method_update', $method->id) : route('offline_payment_method_store') }}"
     method="post" autocomplete="off">
     {{ csrf_field() }}
@@ -16,54 +16,54 @@
     @endif
 
     <div class="form-group">
-        <label>Name <span class="required">*</span></label>
+        <label class="sky">Name <span class="required">*</span></label>
         <input type="text"
-            class="form-control form-control-sm {{ showErrorClass($errors, 'name') }}"
+            class=" text-grey form-control form-control-sm {{ showErrorClass($errors, 'name') }}"
             name="name" value="{{ old_set('name', NULL, $method) }}">
         <div class="invalid-feedback d-block">{{ showError($errors, 'name') }}</div>
     </div>
 
 
     <div class="form-group">
-        <label>Description <span class="required">*</span></label>
+        <label class="sky">Description <span class="required">*</span></label>
         <input type="text"
-            class="form-control form-control-sm {{ showErrorClass($errors, 'description') }}"
+            class=" text-grey form-control form-control-sm {{ showErrorClass($errors, 'description') }}"
             name="description" value="{{ old_set('description', NULL, $method) }}">
         <div class="invalid-feedback d-block">{{ showError($errors, 'description') }}</div>
     </div>
 
 
     <div class="form-group">
-        <label>Message to display after submitting the payment request <span class="required">*</span></label>
+        <label class="sky">Message to display after submitting the payment request <span class="required">*</span></label>
         <input type="text"
-            class="form-control form-control-sm {{ showErrorClass($errors, 'success_message') }}"
+            class=" text-grey form-control form-control-sm {{ showErrorClass($errors, 'success_message') }}"
             name="success_message" value="{{ old_set('success_message', NULL, $method) }}">
         <div class="invalid-feedback d-block">{{ showError($errors, 'success_message') }}</div>
     </div>
 
     <div class="form-group">
-        <label>Instruction to customer <small class="text-muted">(e.g bank name, account number, swift code etc. )</small></label>
+        <label class="sky">Instruction to customer <small class="text-muted">(e.g bank name, account number, swift code etc. )</small></label>
         <textarea
-            class="form-control form-control-sm {{ showErrorClass($errors, 'instruction') }}"
+            class=" text-grey form-control form-control-sm {{ showErrorClass($errors, 'instruction') }}"
             name="instruction">{{ old_set('instruction', NULL, $method) }}</textarea>
         <div class="invalid-feedback d-block">{{ showError($errors, 'instruction') }}</div>
     </div>
 
     <div class="form-group">
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="requires_transaction_number"
+            <input type="checkbox" class=" text-grey custom-control-input" id="requires_transaction_number"
                 name="requires_transaction_number" value="1"
                 {{ old_set('requires_transaction_number', NULL, $method->settings) ? 'checked="checked"' : '' }}>
-            <label class="custom-control-label" for="requires_transaction_number">Requires Evidence / Transaction
+            <label class="custom-control-label text-grey" for="requires_transaction_number">Requires Evidence / Transaction
                 number</label>
         </div>
     </div>
 
     <div class="form-group reference_field_label"
         style="{{ hideElementIfApplicable('requires_transaction_number', $method->settings) }}">
-        <label>Field name to display for entering transaction number <span class="required">*</span></label>
+        <label class="sky">Field name to display for entering transaction number <span class="required">*</span></label>
         <input type="text"
-            class="form-control form-control-sm {{ showErrorClass($errors, 'reference_field_label') }}"
+            class=" text-grey form-control form-control-sm {{ showErrorClass($errors, 'reference_field_label') }}"
             name="reference_field_label"
             value="{{ old_set('reference_field_label', NULL, $method->settings) }}">
         <div class="invalid-feedback d-block">{{ showError($errors, 'reference_field_label') }}
@@ -75,16 +75,16 @@
             <input type="checkbox" class="custom-control-input" id="requires_uploading_attachment"
                 name="requires_uploading_attachment" value="1"
                 {{ old_set('requires_uploading_attachment', NULL, $method->settings) ? 'checked="checked"' : '' }}>
-            <label class="custom-control-label" for="requires_uploading_attachment">Requires Uploading
+            <label class=" text-grey custom-control-label" for="requires_uploading_attachment">Requires Uploading
                 attachment</label>
         </div>
     </div>
 
     <div class="form-group attachment_field_label"
         style="{{ hideElementIfApplicable('requires_uploading_attachment', $method->settings) }}">
-        <label>Field name to display for attachment uploading <span class="required">*</span></label>
+        <label class="sky">Field name to display for attachment uploading <span class="required">*</span></label>
         <input type="text"
-            class="form-control form-control-sm {{ showErrorClass($errors, 'attachment_field_label') }}"
+            class=" text-grey form-control form-control-sm {{ showErrorClass($errors, 'attachment_field_label') }}"
             name="attachment_field_label"
             value="{{ old_set('attachment_field_label', NULL, $method->settings) }}">
         <div class="invalid-feedback d-block">{{ showError($errors, 'attachment_field_label') }}
@@ -97,10 +97,10 @@
         <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="inactive" name="inactive" value="1"
                 {{ old_set('inactive', NULL, $method) ? 'checked="checked"' : '' }}>
-            <label class="custom-control-label" for="inactive">Inactive</label>
+            <label class=" text-grey custom-control-label" for="inactive">Inactive</label>
         </div>
     </div>
-    <input type="submit" name="submit" class="btn btn-success" value="Submit" />
+    <input type="submit" name="submit" class="btn bg-sky text-white" value="Submit" />
 </form>
 @endsection
 

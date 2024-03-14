@@ -1,13 +1,13 @@
-<section class="header-account-page pt-100 d-flex align-items-end navbar-background" data-offset-top="#header-main">
+<section class="header-account-page mt-10 d-flex align-items-end navbar-background" data-offset-top="#header-main">
     <div class="container pt-4 pt-lg-0">
         <div class="row justify-content-end">
-            <div class=" col-lg-8">
+            <div class=" col-lg-8 ">
                 <!-- Salute + Small stats -->
-                <div class="row align-items-center mb-4">
-                    <div class="col-lg-8 col-xl-5 mb-4 mb-md-0">
-                        <span class="h2 mb-0 text-white d-block">{{ $user->full_name }}</span>
-                    </div>
-                    <div class="col-auto flex-fill d-none d-xl-block">
+                <div class="row align-items-center">
+                    {{-- <div class="col-lg-8 col-xl-5 mb-4 mb-md-0">
+                        <span class="h2 mb-0 sky font-weight-bold d-block">{{ $user->full_name }}</span>
+                    </div> --}}
+                    <div class="col-auto flex-fill d-none d-xl-block ">
                         <ul class="list-inline row justify-content-lg-end mb-0">
                             <li class="list-inline-item col-sm-4 col-md-auto px-3 my-2 mx-0">
                                 <span class="badge badge-dot text-white">

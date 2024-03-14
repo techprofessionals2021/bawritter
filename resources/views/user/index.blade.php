@@ -7,6 +7,7 @@
          <h3 class="sky font-weight-bold">List of {{ $data['entity'] }}</h3>
          <br>
       </div>
+
       <div class="col-md-6">
          @if(in_array($data['type'],['admin', 'staff']))
          <a href="{{ route('user_invitation', ['type' => $data['type']])}}" class="btn bg-sky text white float-md-right">
@@ -15,11 +16,14 @@
          </a>
          @endif
       </div>
-      <div class="clearfix"></div>
-      <div class="col-md-4">
+      <div class="bg-white card-body shadow br-10">
+
+        <div class="row scroll-bar">
+
+      <div class="col-md-4 mt-5">
          @include('user.partials.search')
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8 mt-5">
          <table id="table" class="w-100">
             <thead>
                <tr>
@@ -27,6 +31,7 @@
                </tr>
             </thead>
          </table>
+      </div>
       </div>
    </div>
 </div>

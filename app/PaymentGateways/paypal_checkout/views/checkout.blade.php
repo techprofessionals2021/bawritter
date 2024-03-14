@@ -4,25 +4,25 @@
 <div class="container page-container">
    <div class="row">
       <div class="col-md-12">
-         <h3>Pay with {{ $data['gateway_name'] }}</h3>         
+         <h3 class="sky Font-weight-bold">Pay with {{ $data['gateway_name'] }}</h3>
          <hr>
       </div>
       <div class="col-md-6 d-none d-lg-block">
          <div class="checkout-image-cover">
-            <img src="{{ asset('images/payment.svg') }}" class="img-fluid">	
+            <img src="{{ asset('images/payment.svg') }}" class="img-fluid">
          </div>
       </div>
       <div class="col-md-6">
          @include('checkout.back_to_payment_options')
-         <div class="card">
+         <div class="card shadow br-20">
             <div class="card-body">
                <div class="d-flex justify-content-between">
-                  <h4 class="h4">Total</h4>
-                  <div class="h4">{{ format_money($data['total']) }}</div>
+                  <h4 class="h4 sky">Total</h4>
+                  <div class="h4 sky">{{ format_money($data['total']) }}</div>
                </div>
                <hr>
                <div id="paypal-button-container"></div>
-               <div class="text-center" id="loading">Please wait ...</div>              
+               <div class="text-center" id="loading">Please wait ...</div>
             </div>
          </div>
       </div>
@@ -51,31 +51,31 @@ if(window.hasOwnProperty("paypal")){
               if(response.data.status == 'success')
               {
                 return response.data.id;
-              }            
+              }
             return null;
           });
     },
     onApprove: function(data, actions) {
       if(data.orderID)
-      {  
+      {
          $('#paypal-button-container').hide();
          $('#loading').show();
          var form = document.querySelector('#payment-form');
          document.querySelector('#order_id').value = data.orderID;
          form.submit();
-      }       
+      }
 
     },
     onDisplay:function(){
       $("#loading").hide();
-    },  
-    onError: function (err) {      
+    },
+    onError: function (err) {
       $('#paypal-button-container').show();
       $('#loading').hide();
       showError("Something went wrong, please try again later, or use a different payment method");
     }
   }).render('#paypal-button-container');
-  
+
 } else {
 
    showError("Something went wrong, please try again later, or use a different payment method");
@@ -101,6 +101,6 @@ if(window.hasOwnProperty("paypal")){
     }); // End of script
 
 
-   
+
 </script>
 @endpush

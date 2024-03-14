@@ -4,7 +4,7 @@
 <div class="container page-container">
     <div class="row">
         <div class="col-md-12">
-            <h3>Pay with {{ $data['gateway_name'] }}</h3>
+            <h3 class="sky font-weight-bold">Pay with {{ $data['gateway_name'] }}</h3>
             @php
                 if($errors->has('payment_method_nonce'))
                 {
@@ -13,24 +13,24 @@
             @endphp
             <hr>
         </div>
-        <div class="col-md-6 d-none d-lg-block">
+        {{-- <div class="col-md-6 d-none d-lg-block">
             <div class="checkout-image-cover">
                 <img src="{{ asset('images/payment.svg') }}" class="img-fluid">
             </div>
-        </div>
-        <div class="col-md-6">
+        </div> --}}
+        <div class="col-md-12 mt-5">
             @include('checkout.back_to_payment_options')
-            <div class="card">
+            <div class="card shadow br-20">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <h4 class="h4">Total</h4>
-                        <div class="h4">{{ format_money($data['total']) }}</div>
+                        <h4 class="h4 sky font-weight-bold">Total</h4>
+                        <div class="h4 sky font-weight-bold">{{ format_money($data['total']) }}</div>
                     </div>
                     <hr>
                     <div id="dropin-wrapper">
                         <div id="checkout-message"></div>
                         <div id="dropin-container"></div>
-                        <button style="display: none;" id="submit-button" class="btn btn-success btn-lg btn-block"><i
+                        <button style="display: none;" id="submit-button" class="btn bg-sky text-white btn-lg btn-block"><i
                                 class="fas fa-shopping-cart"></i> Confirm Payment</button>
                     </div>
                     <div class="text-center" id="loading">Please wait ...</div>
@@ -49,7 +49,7 @@
 @push('scripts')
 <script src="https://js.braintreegateway.com/web/dropin/1.22.1/js/dropin.min.js"></script>
 
-    <script>      
+    <script>
 
         var submitButton = $('#submit-button');
         var loading = $('#loading');
@@ -59,7 +59,7 @@
             authorization: "{{ $data['client_token'] }}",
             container: '#dropin-container'
         };
-        
+
         <?php if($data['enable_paypal'] == true) {?>
         config.paypal = {
             flow: 'vault'
