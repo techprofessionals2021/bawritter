@@ -45,8 +45,9 @@ class BillController extends Controller
                 return format_money($bill->total);
             })
             ->addColumn('from', function ($bill) {
+                // dd($bill)
 
-                return '<a href="' . route('user_profile', $bill->user_id) . '">' . $bill->from->full_name . '</a>';
+                return '<a href="' . route('user_profile', $bill->user_id) . '">' . $bill->full_name . '</a>';
             })
             ->addColumn('status', function ($bill) {
 
@@ -76,6 +77,7 @@ class BillController extends Controller
                 }
             })
             ->make(true);
+            // dd($request->all());
     }
 
     public function create(Request $request)

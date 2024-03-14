@@ -15,8 +15,8 @@
     <div class="col-md-6">
       @include('checkout.back_to_payment_options')
       <div class="card">
-        <div class="card-body">        
-          <div class="d-flex justify-content-between">            
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
             <h4 class="h4">Total</h4>
             <div class="h4">{{ format_money($data['total']) }}</div>
           </div>
@@ -27,12 +27,12 @@
               <div id="card-element"></div>
               <div id="card-errors" class="invalid-feedback d-block"></div>
             </div>
-            <button type="submit" class="btn btn-success btn-lg btn-block confirm-button" disabled><i class="fas fa-shopping-cart"></i> Confirm Payment</button>
+            <button type="submit" class="btn bg-sky text-white btn-lg btn-block confirm-button" disabled><i class="fas fa-shopping-cart"></i> Confirm Payment</button>
           </form>
          <!--  <div class="text-center" id="loading">Please wait ...</div> -->
-       
-          <button class="btn btn-success btn-block" type="submit" id="payButton"><i class="fas fa-shopping-cart"></i> Pay Now</button>
-       
+
+          <button class="btn bg-sky text-white btn-block" type="submit" id="payButton"><i class="fas fa-shopping-cart"></i> Pay Now</button>
+
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
 
 @push('scripts')
 
-<script src="https://js.paystack.co/v1/inline.js"></script> 
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
 
 $(function(){
@@ -53,7 +53,7 @@ $(function(){
 });
 
   function payWithPaystack() {
-    
+
 
     var public_key = document.getElementById('publishable_key').dataset.public_key;
     var verify_url = document.getElementById('verify_url').dataset.processurl;
@@ -61,12 +61,12 @@ $(function(){
     // document.getElementById('payment-form').style.display = "block";
     // document.getElementById('loading').style.display = "none";
 
-    
+
     var handler = PaystackPop.setup({
-      key: public_key, // Replace with your public key  
+      key: public_key, // Replace with your public key
       email: '{{ $data["email"] }}',
-      amount: {{ $data["payment_amount"] }}, 
-      currency: '{{ $data["currency"] }}', 
+      amount: {{ $data["payment_amount"] }},
+      currency: '{{ $data["currency"] }}',
       firstname: '{{ $data["first_name"] }}',
       lastname: '{{ $data["last_name"] }}',
 
@@ -76,7 +76,7 @@ $(function(){
         var reference = response.reference;
 
         verifyPayment(verify_url, reference);
-       
+
         // Make an AJAX call to your server with the reference to verify the transaction
       },
       onClose: function() {
@@ -89,7 +89,7 @@ $(function(){
   }
 
   function verifyPayment(verify_url, reference){
-    
+
     axios.post(verify_url, {reference: reference})
         .then(function (response) {
           var response = response.data;
@@ -104,7 +104,7 @@ $(function(){
           }
 
         })
-        .catch(function (error) {     
+        .catch(function (error) {
           showError('Something went wrong! Please try again later');
           console.log(error);
         });

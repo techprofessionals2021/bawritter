@@ -2,7 +2,7 @@
 @section('title', 'Email Settings')
 @section('setting_page')
 <style type="text/css">
-   <?php 
+   <?php
       if(old_set('company_email_send_using', NULL, $rec) == 'mailgun') { ?>
    #otherMailConfigInfo{
    display: none;
@@ -10,7 +10,7 @@
    #mailgunInfo{
    display: block;
    }
-   <?php } else { ?> 
+   <?php } else { ?>
    #mailgunInfo{
    display: none;
    }
@@ -20,7 +20,7 @@
    <?php } ?>
 </style>
 
-<form role="form" class="form-horizontal" enctype="multipart/form-data" action="{{ route('patch_settings_email') }}" method="post" autocomplete="off" >
+<form role="form" class="form-horizontal card-body shadow br-20" enctype="multipart/form-data" action="{{ route('patch_settings_email') }}" method="post" autocomplete="off" >
    {{ csrf_field()  }}
    {{ method_field('PATCH') }}
    @include('setup.partials.action_toolbar', ['title' => 'Email Configuration'])
@@ -28,14 +28,14 @@
       <div class="form-group col-md-6">
          <label>Send email using <span class="required">*</span></label>
          <?php
-            echo form_dropdown('company_email_send_using', 
+            echo form_dropdown('company_email_send_using',
                $data['email_sending_options'], old_set('company_email_send_using', NULL, $rec) , "class='form-control selectPickerWithoutSearch email_sending_options' ");
             ?>
       </div>
       <div class="form-group col-md-6 configuration">
          <label>Queue Connection <span class="required">*</span></label>
          <?php
-            echo form_dropdown('queue_connection', 
+            echo form_dropdown('queue_connection',
                $data['queue_connection_options'], old_set('queue_connection', NULL, $rec) , "class='form-control selectPickerWithoutSearch queue_connection' ");
             ?>
       </div>
@@ -100,7 +100,7 @@
 @section('innerPageJS')
 <script>
    $(function() {
-   
+
    $('select').select2({
           theme: 'bootstrap4',
            minimumResultsForSearch: -1
@@ -125,12 +125,12 @@
                $('.configuration').show();
             }
       });
-   
+
 
       $('.email_sending_options').trigger("change");
-   
+
    });
-   
-   
+
+
 </script>
 @endsection

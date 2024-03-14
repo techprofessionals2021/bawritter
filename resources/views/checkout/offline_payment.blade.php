@@ -4,26 +4,27 @@
 <div class="container page-container">
     <div class="row">
         <div class="col-md-12">
-            <h3>Pay with {{ $data['gateway_name'] }}</h3>
-            <hr>
+            <h3 class="font-weight-bold sky">Pay with{{ $data['gateway_name'] }}</h3>
+            {{-- <hr> --}}
         </div>
-        <div class="col-md-6 d-none d-lg-block">
+        {{-- <div class="col-md-6 d-none d-lg-block ">
             <div class="checkout-image-cover">
                 <img src="{{ asset('images/payment.svg') }}" class="img-fluid">
             </div>
-        </div>
-        <div class="col-md-6">
-            @include('checkout.back_to_payment_options')
-            <div class="card">
+        </div> --}}
+        <div class="col-md-12">
+            {{-- @include('checkout.back_to_payment_options') --}}
+
+            <div class="card shadow br-20 mt-5">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h4 class="h4">Total</h4>
-                        <div class="h4">{{ format_money($data['total']) }}</div>
+                    <div class="d-flex justify-content-between ">
+                        <h4 class="h4 sky font-weight-bold">Total</h4>
+                        <div class="h4 sky font-weight-bold">{{ format_money($data['total']) }}</div>
                     </div>
                     <hr>
                     @if($paymentMethod->instruction)
                     <div class="text-muted">
-                        <div><b>Instructions</b></div>
+                        <div class="sky font-weight-bold">Instructions</div>
                         {!! nl2br($paymentMethod->instruction) !!}
                     </div>
                     <br>
@@ -34,7 +35,7 @@
                         @csrf
                         @if($paymentMethod->settings->requires_transaction_number)
                             <div class="form-group">
-                                <label>{{ $paymentMethod->settings->reference_field_label }} <span
+                                <label class="sky">{{ $paymentMethod->settings->reference_field_label }} <span
                                         class="required">*</span></label>
                                 <input type="text"
                                     class="form-control {{ showErrorClass($errors,'reference') }}"
@@ -45,18 +46,18 @@
                         @endif
                         @if($paymentMethod->settings->requires_uploading_attachment)
                             <div class="form-group">
-                                <label>{{ $paymentMethod->settings->attachment_field_label }} <span
-                                        class="required">*</span></label>                                     
+                                <label class="sky ">{{ $paymentMethod->settings->attachment_field_label }} <span
+                                     class="required">*</span></label>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile" name="attachment">
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <input type="file" class="custom-file-input sky" id="customFile" name="attachment">
+                                    <label class="custom-file-label text-grey" for="customFile">Choose file</label>
                                 </div>
                                 <div class="invalid-feedback d-block">
                                     {{ showError($errors,'attachment') }}</div>
-                                    <div><small class="text-muted">Allowed file types: pdf,jpeg,png,zip, Maximum file size:10 MB</small></div>                                       
+                                    <div><small class="text-muted">Allowed file types: pdf,jpeg,png,zip, Maximum file size:10 MB</small></div>
                             </div>
                         @endif
-                        <button type="submit" class="btn btn-success btn-lg btn-block confirm-button"><i
+                        <button type="submit" class="btn bg-sky text-white btn-block confirm-button"><i
                                 class="fas fa-shopping-cart"></i> Confirm Payment</button>
                     </form>
                 </div>

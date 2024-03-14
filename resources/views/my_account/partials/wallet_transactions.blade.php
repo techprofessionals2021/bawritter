@@ -1,7 +1,10 @@
-<h4>My Transactions</h4>
-<table id="table" class="table table-striped nowrap w-100">
+<div class="card-body br-20">
+
+<h4 class="sky font-weight-bold">My Transactions</h4>
+
+    <table id="table" class="table mt-5 nowrap w-100">
     <thead>
-        <tr>
+        <tr class="sky font-weight-bold">
             <th scope="col" data-priority="1">Date</th>
             <th scope="col" data-priority="2">Type</th>
             <th scope="col">Description</th>
@@ -11,6 +14,8 @@
         </tr>
     </thead>
 </table>
+
+</div>
 @section('innerJs')
 <script>
     $(function () {

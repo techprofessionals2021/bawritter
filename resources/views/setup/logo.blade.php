@@ -1,6 +1,7 @@
 @extends('setup.index')
 @section('title', 'Upload Logo')
-@section('setting_page') 
+@section('setting_page')
+<div class="card-body br-20 shadow ">
    @include('setup.partials.action_toolbar', ['title' => 'Upload Logo', 'hide_save_button' => TRUE])
    <div class="row">
       <div class="col-md-6">
@@ -11,7 +12,7 @@
             </div>
             <div class="invalid-feedback d-block">{{ showError($errors, 'company_logo')}}</div>
          </div>
-        
+
       </div>
       <div class="col-md-6 text-right">
          <small class="form-text text-muted">
@@ -50,11 +51,12 @@
    </div>
 </div>
 
+</div>
 @endsection
 
 @section('innerPageJS')
 <script>
-   $(function() {    
+   $(function() {
 
     $('.upload_photo').on("click", function(e) {
         e.preventDefault();
@@ -64,7 +66,7 @@
 
     $image_crop = $('#image_demo').croppie({
         enableExif: true,
-    
+
         viewport: {
             width: 154,
             height: 36,
@@ -83,7 +85,7 @@
         var file = this.files[0]; // Get your file here
         var fileExt = file.type.split('/')[1]; // Get the file extension
 
-        if (fileTypes.indexOf(fileExt) !== -1) 
+        if (fileTypes.indexOf(fileExt) !== -1)
         {
 
           reader.onload = function(event) {
@@ -95,9 +97,9 @@
           }
           reader.readAsDataURL(this.files[0]);
           $('#uploadimageModal').modal('show');
-        
-        } 
-        else 
+
+        }
+        else
         {
           alert('File not supported');
         }
@@ -137,7 +139,7 @@
                 $('.uploading_spinner').hide();
                 $('#uploadimageModal').modal('hide');
                 $('.logo').attr("src", response.file_url);
-                
+
 
             })
             .fail(function($xhr) {

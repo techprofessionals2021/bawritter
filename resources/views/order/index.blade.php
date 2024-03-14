@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('title', 'Orders')
 @section('content')
-<div class="container page-container">
+<div class="container page-container ">
    <div class="row">
       <div class="col-md-10">
          <h4 class="sky font-weight-bold">Orders</h4>
       </div>
       <div class="col-md-2">
          <a href="{{ route('order_page')}}" class="btn bg-sky text white ">
-            <i class="fa fa-plus-square   br-10 text-white"></i>
-            <span class="text-white">  Create Order</span>
+            <i class="fa fa-plus-square br-10 text-white"></i>
+            <span class="text-white"> Create Order</span>
          </a>
       </div>
 
@@ -18,14 +18,14 @@
          @include('order.partials.statistics')
       </div>
     </div>
-    <div class="bg-white">
+    <div class="bg-white card-body shadow br-10">
 
-    <div class="row  scroll-bar">
+    <div class="row scroll-bar">
 
-      <div class="col-md-4 mt-10 ">
+      <div class="col-md-4 mt-5">
          @include('order.partials.search')
       </div>
-      <div class="col-md-8 mt-10">
+      <div class="col-md-8 mt-5">
          <table id="orders_table" class="w-100">
             <thead>
                <tr>

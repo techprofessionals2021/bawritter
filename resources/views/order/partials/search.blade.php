@@ -1,6 +1,6 @@
 <div class="sticky-top ">
    <div class="card mb-40 outlined br-20">
-      <div class="card-header font-weight-bold sky">Filter <i class=""></i></div>
+      <div class="card-header font-weight-bold sky">Filter <i class="fa fa-align-center"></i></div>
       <div class="card-body">
          <form id="search-form" autocomplete="off">
             <div class="form-group">
@@ -9,11 +9,11 @@
             </div>
             <div class="form-group">
                <label class="sky">Due Date</label>
-               <?php echo form_dropdown("dead_line", $data['dead_line_list'], NULL, "class='form-control form-control-sm  selectpicker'") ?>
+               <?php echo form_dropdown("dead_line", $data['dead_line_list'], NULL, "class='form-control selectpicker'") ?>
             </div>
             <div class="form-group">
                <label class="sky">Assignee</label>
-               <?php echo form_dropdown("staff_id", $data['staff_list'], NULL, "class='form-control form-control-sm  selectpicker'") ?>
+               <?php echo form_dropdown("staff_id", $data['staff_list'], NULL, "class=' form-control form-control-sm  selectpicker'") ?>
             </div>
             <div class="form-group">
                <label class="sky">Status</label>

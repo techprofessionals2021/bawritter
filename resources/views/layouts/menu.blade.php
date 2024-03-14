@@ -40,7 +40,7 @@
                   <a class="dropdown-item" href="{{ route('payments_list') }}">Payments List</a>
                   <a class="dropdown-item" href="{{ route('wallet_transactions') }}">Wallet Transactions</a>
                </div>
-            </li>
+        </li>
             <li class="nav-item dropdown ml-3">
                 {{-- <img src="images/manage.png" alt="" class="mr-1"> --}}
                <a id="managerial" class="text-grey dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -128,14 +128,14 @@
             </li>
             @endhasanyrole
              <li class="nav-item dropdown" style="z-index: 2000 !important;">
-                {{-- <img src="{{Auth::user()->photo }}" class="card-profile-image avatar rounded-circle shadow hover-shadow-lg user-avatar" alt="..."> --}}
-
-                {{-- <img alt="Image "  src="{{asset('images/user-placeholder.jpg')}}"  class="mr-3  avatar rounded-circle "> --}}
 
                 @auth
                 @php
-                    $user = auth()->user();
-                    $profilePic = $user->photo ? asset(Storage::url($user->photo)) : asset('images/user-placeholder.jpg');
+                        $user = Auth::user();
+                        $firstRole = $user->roles->first();
+                        $user_role = $user->roles->isEmpty() ? 'client' : $user->roles->first()->name;
+                        $user = auth()->user();
+                        $profilePic = $user->photo ? asset(Storage::url($user->photo)) : asset('images/user-placeholder.jpg');
                 @endphp
 
                 <img
@@ -143,26 +143,15 @@
                   src="{{ $profilePic }}"
                   class="mr-3 avatar rounded-circle"
                 >
-              @endauth
-
-
-
-                <!-- Assuming $user is the variable containing the User model instance -->
-
-               {{-- <a id="navbarDropdown" class=" dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-               {{ Auth::user()->first_name }}
-               <p class="role"> {{ Auth::user()->roles->first()->name }} </p>
-               <span class="caret"></span>
-               </a> --}}
-
-               <a id="navbarDropdown" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->first_name }}
-
-                {{-- <span class="role"> {{ Auth::user()->roles->first()->name }}</span> --}}
-                <span class="caret"></span>
-
+               @endauth
+                </li>
+                <li>
+               <a id="navbarDropdown" class="dropdown-toggle text-grey" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+               <span class="sky font-weight-bold"> {{ Auth::user()->first_name }}</span>
+                <span class="caret "></span>
                </a>
-                {{-- <span class="role"> {{ Auth::user()->roles->first()->name }}</span> --}}
+               <br><span class="text-grey">{{$user_role}}</span>
+
                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                   <a class="dropdown-item" href="{{ route('my_account') }}">

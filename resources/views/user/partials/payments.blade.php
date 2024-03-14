@@ -1,6 +1,6 @@
-<h4>My Payments</h4>
-<table id="table" class="table table-striped nowrap w-100">
-    <thead>
+<h4 class="sky">My Payments</h4>
+<table id="table" class="table nowrap w-100">
+    <thead class="sky">
         <tr>
             <th scope="col" data-priority="1">Date</th>
             <th scope="col">Number</th>

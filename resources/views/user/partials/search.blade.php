@@ -1,6 +1,6 @@
 <div class="sticky-top">
    <div class="card mb-40 outlined br-20">
-      <div class="card-header sky">Search</div>
+      <div class="card-header sky">Filter <i class="fa fa-align-center"></i></div>
       <div class="card-body">
          <form id="search-form" autocomplete="off">
             <div class="form-group">
@@ -12,7 +12,6 @@
                   <input type="checkbox" class="custom-control-input" value="1" id="inactive">
                   <label class="custom-control-label text-grey" for="inactive">Inactive Users</label>
                 </div>
-
             </div>
             @if($data['type'] == 'staff')
             <div class="form-group">

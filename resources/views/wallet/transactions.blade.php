@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Wallet Transactions')
 @section('content')
-<div class="container page-container">
-    <div class="row">
+<div class="container page-container card shadow br-20">
+    <div class="row card-body">
         <div class="col-md-6">
-            <h4>Wallet Transactions</h4>
+            <h4 class="sky font-weight-bold ">Wallet Transactions</h4>
         </div>
         <div class="col-md-6 text-right">
 
@@ -12,17 +12,17 @@
         <div class="col-md-3">
 
         </div>
-        <div class="col-md-12">    
-            <table id="table" class="table table-striped nowrap w-100">
-                <thead>
+        <div class="col-md-12">
+            <table id="table" class="table nowrap w-100 ">
+                <thead class="sky">
                     <tr>
                         <th scope="col" data-priority="1">Date</th>
                         <th scope="col" data-priority="4">Number</th>
                         <th scope="col" data-priority="2">Type</th>
-                        <th scope="col" data-priority="5">User</th>                        
+                        <th scope="col" data-priority="5">User</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Reference</th>                      
-                        <th scope="col" data-priority="3">Amount</th>                    
+                        <th scope="col">Reference</th>
+                        <th scope="col" data-priority="3">Amount</th>
                     </tr>
                 </thead>
             </table>
@@ -69,22 +69,22 @@
                     {
                         data: 'user',
                         name: 'user'
-                    },  
+                    },
                     {
                         data: 'description',
                         name: 'description'
-                    },                                      
-                    
+                    },
+
                     {
                         data: 'reference',
                         name: 'reference'
-                    },                      
+                    },
                     {
                         data: 'amount',
                         name: 'amount',
                         className: "text-right"
-                    }        
-                    
+                    }
+
                 ]
             }).on('page.dt', function () {
                 $('html, body').animate({

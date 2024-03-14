@@ -22,7 +22,7 @@
          </div>
       </div>
       <div class="col-md-3">
-         <div class="card bg-blue-lighten-3 text-white br-20">
+         <div class="card bg-skyblue-lighten text-white br-20">
             <div class="card-body">
                <h5 class="card-title">Orders </h5>
                <h5 class="float-right">
@@ -119,11 +119,11 @@
 
                        {{-- <img alt="Image"  src="images/user-placeholder.jpg" class="mr-3  avatar rounded-circle"> --}}
                         </div>
-                        <div class="col-8">
-                    <a   class=" sky  font-weight-bold" href="{{ route('user_profile', $activity->causer->id) }}">{{ $activity->causer->full_name }}</a>
+                        <div class="col-md-8">
+                        <a   class=" sky  font-weight-bold" href="{{ route('user_profile', $activity->causer->id) }}">{{ $activity->causer->full_name }}</a>
                         </br>
-                    <a class="text-grey"  href="{{ route('user_profile', $activity->causer->id) }}">{{ $activity->causer->full_name }}</a> has
-                    {!! $activity->description !!}
+                        <a class="text-grey"  href="{{ route('user_profile', $activity->causer->id) }}">{{ $activity->causer->full_name }}</a> has
+                       {!! $activity->description !!}
                         </div>
                          <div class="col-3">
                             <small class="text-muted ml-15">
@@ -131,9 +131,7 @@
                              </small>
                          </div>
                     </div>
-                    {{-- <small class="text-muted ml-15">
-                       {{ $activity->created_at->format("d-M-Y H:i")  }}
-                    </small> --}}
+
                 </p>
                 <hr/>
                 @endisset
@@ -144,7 +142,7 @@
            </div>
         </div>
     </div>
-    <div class="col-md-11 mt-5">
+    <div class="col-md-12 mt-5">
         <canvas id="canvas"></canvas>
      </div>
    </div>

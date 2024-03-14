@@ -9,21 +9,16 @@
      <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
      <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
-
      <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
      <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
      <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
      @stack('stylesheets')
    </head>
    <style>
-   body {
-  font-family: 'Montserrat';
-  font-size: 16px;
-  /* background-image: url('images/pattern-light.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center; */
-   }
+    body {
+    font-family: 'Montserrat';
+    font-size: 16px;
+    }
 
      .bg-sky{
         background-color: #5597D1 !important;
