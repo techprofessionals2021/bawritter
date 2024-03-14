@@ -22,11 +22,11 @@
         <?php echo Str::words($order->instruction, 20, ' ...'); ?>
     </p>
     <div class="row order-overview">
-        <div class="col-md-6"><span class="font-weight-bold sky">Service Type</span>
+        <div class="col-md-5"><span class="font-weight-bold sky">Service Type</span>
             <br>
             <span class="text-grey">  {{ @$order->service->name }}</span>
         </div>
-        <div class="col-md-6"><span class="font-weight-bold sky">Assigned To</span>
+        <div class="col-md-5"><span class="font-weight-bold sky">Assigned To</span>
             <br>
             <?php
             // if (isset($order->assignee)) {
@@ -40,7 +40,7 @@
                             <span class="text-grey">{{ @$order->assignee->full_name }}</span>
                         </a>
                     @else
-                    <span class="text-grey">    {{ @$order->assignee->full_name }}</span>
+                    <span class="text-grey">{{ @$order->assignee->full_name }}</span>
                     @endif
                 </span>
             @else
@@ -48,21 +48,20 @@
                 @if (auth()->user()->hasRole('admin'))
                     None
                 @else
-
-                        {{ @$order->assignee_from_client->full_name }}
+                       <span class="text-grey">{{ @$order->assignee_from_client->full_name }}</span>
                 @endif
             @endif
         </div>
     </div>
     <div class="row order-overview">
-        <div class="col-md-6"><span class="font-weight-bold sky">Posted</span>
+        <div class="col-md-5"><span class="font-weight-bold sky">Posted</span>
             <br>
             <span class="text-grey">{{ convertToLocalTime($order->created_at) }}</span>
         </div>
-        <div class="col-md-6"><span class="font-weight-bold sky">Deadline</span>
+        <div class="col-md-5"><span class="font-weight-bold sky">Deadline</span>
             <br>
             @if ($order->order_status_id != ORDER_STATUS_PENDING_PAYMENT)
-            <span class="text-grey">  {{ convertToLocalTime($order->dead_line) }}</span>
+            <span class="text-grey">{{ convertToLocalTime($order->dead_line) }}</span>
             @else
                 <small class="sky">Applicable after payment</small>
             @endif

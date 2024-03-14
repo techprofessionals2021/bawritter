@@ -1,6 +1,6 @@
 <div class="sticky-top">
    <div class="card outlined br-20">
-      <div class="card-header sky ">Filter</div>
+      <div class="card-header sky ">Filter <i class="fa fa-align-center"></i></div>
       <div class="card-body">
          <form id="search-form" autocomplete="off">
             <div class="form-group">

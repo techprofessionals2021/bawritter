@@ -13,25 +13,16 @@
     <div class="">
         <div class="row no-gutters">
             <div class="col-6 rounded-top-right">
-                <div class="mb-0 check">
+                <div class="mb-0 check mt-5">
                     <div class="card-body" id="authentication">
-                       <div class="mb-5 text-center">
+                       <div class="mb-5 text-center mt-lg-5">
                           <h1 class="heading mt-lg-4">Welcome,</h1>
                           <p class="text-muted mb-0">Sign in to your account to continue.</p>
                        </div>
                        <form method="POST" action="{{ route('login') }}">
                           @csrf
-                          {{--  --}}
-                          {{-- <div class="form-group mb-4">
-                            <input type="email" class="form-control no-border" name="email" required autocomplete="email" placeholder="Email" autofocus>
-                          </div> --}}
 
-    {{--  --}}
-     {{-- <div class=" form-group mb-4">
-      <input type="email" class=" no-border" name="email" required autocomplete="email" placeholder="User name or Email" autofocus>
-    </div> --}}
-
-                          <div class="form-group @error('email') is-invalid @enderror mb-5">
+                          <div class=" form-group @error('email') is-invalid @enderror mb-5">
                              <div class="input-group input-group-merge mb-5">
                                 <input id="email" type="email" class="form-control no-border" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email" autofocus>
                                 @error('email')
@@ -68,23 +59,21 @@
                                 {{ __('Login') }}
                                 {{-- <i class="fas fa-long-arrow-alt-right"></i> --}}
                             </button>
-                          {{-- </div> --}}
+                            {{-- </div> --}}
                             <div class ="row mt-3">
-                            {{-- <hr class=" col-2"><p class="col-2">Or</p><hr class="col-2"/> --}}
+                            <hr class=" col-2"><p class="col-2">Or</p><hr class="col-2"/>
                             </div>
-                            {{-- <button type="button" class="btn btn-primary btn-lg br-20 p-0 text-white mt-2 "><i class="fab fa-facebook-f"></i>  Facebook</button>
-                            <button type="button" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">  <i class="fab fa-google"></i> Google</button> --}}
-
+                            <button type="button" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2 "><i class="fab fa-facebook-f"></i>  Facebook</button>
+                            <button type="button" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">  <i class="fab fa-google"></i> Google</button>
                           </div>
                        </form>
-
                        <div class="text-center mt-5">Don't have an account? <a href="{{ route('register') }}">Sign up</a></div>
                     </div>
                  </div>
             </div>
 
             <div class="col-md-6 position-relative " >
-                <img src="images/login-image-1.png" class="img-fluid" alt="Your Image">
+                <img src="images/login-image-1.png" class="img-fluid cover-image" alt="Your Image">
                 <div class="header position-absolute top-50 start-50 translate-middle  bg-transparent">
 
                     <a class="" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -96,7 +85,11 @@
 
     <style>
         body{
-            font-family: 'Montserrat';';font-size: 16px;
+            font-family: 'Montserrat';
+             font-size: 16px;
+        }
+        .cover-image{
+            height: 48rem;
         }
         .m-l-27{
             margin-left: 26rem;
@@ -107,7 +100,7 @@
 
         }
         .heading{
-            font-family:Raleway;
+
              color: #5597D1;
              font-size: 60px;
 
@@ -131,7 +124,7 @@
     .header {
 
       top: 10px;
-      left: 328px;
+      left: 360px;
       right: 20px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 10px;

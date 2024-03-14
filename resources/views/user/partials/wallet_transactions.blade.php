@@ -1,4 +1,4 @@
-<table id="table" class="table table-striped nowrap w-100">
+<table id="table" class="table nowrap w-100">
     <thead>
         <tr>
             <th scope="col">Date</th>

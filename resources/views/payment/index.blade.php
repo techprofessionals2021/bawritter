@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @section('title', 'Payments')
 @section('content')
-<div class="container page-container">
-    <div class="row">
+<div class="container page-container card br-20 shadow">
+    <div class="row card-body">
         <div class="col-md-6">
-            <h4>Payments</h4>
+            <h4 class="sky font-weight-bold ">Payments</h4>
         </div>
         <div class="col-md-6 text-right">
 
         </div>
         <div class="col-md-12">
-            <table id="orders_table" class="table table-striped nowrap w-100">
+            <table id="orders_table" class="table nowrap w-100">
                 <thead>
-                    <tr>
+                    <tr class="sky font-weight-bold mt-5">
                         <th scope="col">Date</th>
                         <th scope="col">Number</th>
                         <th scope="col">From</th>

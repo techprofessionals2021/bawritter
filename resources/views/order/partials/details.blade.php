@@ -111,8 +111,6 @@
                    @endforeach
                 </ol>
              </div>
-
-
          </div>
          <div class="row order-overview">
             <div class="col-md-4">

@@ -17,13 +17,12 @@
       <div class="col-md-6">
          <a href="{{ route('order_page') }}" class="btn bg-sky text-white float-md-right"> <i class="fas fa-plus"></i> New Order</a>
       </div>
-      <div class="col-md-12">
-         <hr>
-      </div>
    </div>
    <br>
-   <div class="row">
-      <div class="col-md-8">
+   <div class="bg-white card-body shadow br-10">
+
+   <div class="row mt-3 scroll-bar">
+      {{-- <div class="col-md-8">
          <table id="orders_table" class="w-100">
             <thead>
                <tr>
@@ -31,10 +30,21 @@
                </tr>
             </thead>
          </table>
-      </div>
-      <div class="col-md-4">
+      </div> --}}
+      <div class="col-md-4 mt-3">
          @include('my_account.partials.order_search')
       </div>
+     {{-- table col --}}
+      <div class="col-md-8 mt-5">
+
+        <table id="orders_table" class="w-100">
+           <thead>
+              <tr>
+                 <th scope="col"></th>
+              </tr>
+           </thead>
+        </table>
+     </div>
    </div>
    @else
    <div class="row">
@@ -43,14 +53,14 @@
             <img class="img-fluid" src="{{ asset('images/order.svg') }}">
             <h5 class="text-center font-weight-bold">Place your first order</h5>
             <br><br><br>
-            <a href="{{ route('order_page') }}" class="btn bg-sky text -white btn-lg btn-block">Order Now</a>
+            <a href="{{ route('order_page') }}" class="btn bg-sky text-white btn-lg btn-block">Order Now</a>
          </div>
       </div>
    </div>
    @endif
 </div>
+</div>
 @endsection
-
 
 @push('scripts')
 <script>

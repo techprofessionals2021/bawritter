@@ -3,11 +3,11 @@
    <div class="flex">
    <div class="col-6">
     <a href="{{ route('orders_show', $order->id) }}">
-        <h5 class="sky "><b>{{ $order->title }}</b></h5>
-        <span class="text-grey">{{ $order->number }}</span>
+        <h5 class="sky font-weight-bold"><b>{{ $order->title }}</b></h5>
+        <span class="text-grey ">{{ $order->number }}</span>
      </a>
-</div>
-      <div class="col-md-6 m-l-19">
+  </div>
+      <div class="">
          @if($order->archived)
             <span class="badge badge-secondary">Archived</span>
          @endif
@@ -15,13 +15,14 @@
             {{ $order->service->price_type->name }}
             </span>
          <span class="badge {{ $order->status->badge }}">{{ $order->status->name }}</span>
-         <div class="sky ml-12 mt-3 ">
+         <div class="sky font-weight-bold text-align-end mt-3">
             Total : {{ format_money($order->total) }}
-         </div>
+        </div>
       </div>
    </div>
-   {{-- <div class="mt-4 flex">
-      <div class="col-md-6 sky">
+
+   {{-- <div class="mt-4 row">
+      <div class="col-md-12 sky">
          Client : <a  class="text-grey" href="{{ route('user_profile', $order->customer_id) }}">{{ $order->customer->full_name }}</a>
       </div>
    </div> --}}

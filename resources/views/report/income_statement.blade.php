@@ -4,30 +4,30 @@
 <div class="container page-container">
    <div class="row">
       <div class="col-md-12">
-         <h4>Income Statement</h4>
+         <h4 class="sky font-weight-bold">Income Statement</h4>
          <hr>
-         <form class="form-inline" action="" method="GET" autocomplete="off">
-            <label class="my-1 mr-2" for="date">Date Range</label>
-            <input type="text" class="form-control form-control-sm" id="reportrange" name="date" >                  
-            &nbsp &nbsp 
-            <button class="btn btn-success " type="submit" name="type" value="requested">&nbsp &nbsp &nbsp &nbsp Get Report &nbsp &nbsp &nbsp &nbsp</button>
+         <form class=" mt-10 form-inline" action="" method="GET" autocomplete="off">
+            <label class="my-1 mr-2 sky" for="date">Date Range</label>
+            <input type="text" class="form-control" id="reportrange" name="date" >
+            &nbsp &nbsp
+            <button class="btn bg-sky text-white" type="submit" name="type" value="requested">&nbsp &nbsp &nbsp &nbsp Get Report &nbsp &nbsp &nbsp &nbsp</button>
          </form>
       </div>
    </div>
-   <br>     <br>
+   <br><br>
    @if(isset($data['record']) && $data['record'])
    <small class="form-text text-muted text-center">
-   Report generated based on all the orders that are marked with status "Complete".
+    Report generated based on all the orders that are marked with status "Complete".
    </small>
-   <div class="row">
-      <div class="offset-md-2 col-md-8" style="background-color: #eee; padding: 10px;">
+   <div class="row mt-2">
+      <div class="offset-md-2 col-md-8" style="background-color:#94c3ec; padding: 10px;">
          <div style="background-color: #fff; padding: 10px;">
-            <h5 class="text-center">Income Statement</h5>
-            <div class="text-center">From {{ $data['from_date'] }} to {{ $data['to_date'] }}</div>
+            <h3 class="text-center sky font-weight-bold">Income Statement</h3>
+            <div class="text-center text-grey">From {{ $data['from_date'] }} to {{ $data['to_date'] }}</div>
             <table id="data" class="table table-sm">
                <thead>
                   <tr>
-                     <th scope="col" style="width: 40%;">Sales Revenue</th>
+                     <th scope="col" style="width: 40%;" class="sky">Sales Revenue</th>
                      <th scope="col" class="text-right"></th>
                   </tr>
                </thead>
@@ -39,36 +39,36 @@
                   </tr>
                   @endforeach
                   <tr>
-                     <th>Total</th>
-                     <th class="text-right">{{ format_money($data['total_revenue']) }}</th>
+                     <th class="sky">Total</th>
+                     <th class="text-right sky ">{{ format_money($data['total_revenue']) }}</th>
                   </tr>
                </tbody>
             </table>
             <table id="data" class="table table-sm">
                <thead>
                   <tr>
-                     <th scope="col" style="width: 40%;">(-) Expenses</th>
+                     <th scope="col" class="sky" style="width: 40%;">(-) Expenses</th>
                      <th scope="col" class="text-right"></th>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <td>Payments to staffs</th>                  
+                     <td >Payments to staffs</th>
                      <td class="text-right">
                         {{ format_money($data['total_expense']) }}
                      </td>
                   </tr>
                   <tr>
-                     <th>Total</th>
-                     <th class="text-right">{{ format_money($data['total_expense']) }}</th>
+                     <th class="sky font-weight-bold">Total</th>
+                     <th class="text-right sky font-weight-bold">{{ format_money($data['total_expense']) }}</th>
                   </tr>
                </tbody>
             </table>
             <table id="data" class="table table-sm">
                <thead>
                   <tr>
-                     <th scope="col" style="width: 40%;">Net Income</th>
-                     <th scope="col" class="text-right">{{ format_money($data['income']) }}</th>
+                     <th scope="col" class="sky font-weight-bold" style="width: 40%;">Net Income</th>
+                     <th scope="col" class="text-right font-weight-bold sky">{{ format_money($data['income']) }}</th>
                   </tr>
                </thead>
             </table>
@@ -116,5 +116,5 @@
     cb(start, end);
 });
 
-</script> 
+</script>
 @endpush

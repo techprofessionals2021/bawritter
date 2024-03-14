@@ -13,12 +13,12 @@
                 <div class="d-flex justify-content-between">
                     <div><span class="h2 mb-0 text-white d-block">{{ $order->number }}</span></div>
                     <div>
-                        <h5>Status: <span
+                        <h5 class="sky font-weight-bold">Status: <span
                      class="badge {{ $order->status->badge }}">{{ $order->status->name }}</span></h5>
                     </div>
                 </div>
                 <!-- Salute + Small stats -->
-                <div class="row align-items-center mb-4">
+                <div class="row align-items-center mb-4 ">
                     <div class="col-lg-8 col-xl-5 mb-4 mb-md-0">
                     </div>
                     <div class="col-auto flex-fill d-none d-xl-block">
@@ -26,14 +26,14 @@
                     </div>
                 </div>
                 <!-- Account navigation -->
-                <div class="d-flex">
+                <div class="d-flex ">
                     @include('order.partials.navigation')
                 </div>
             </div>
         </div>
     </div>
 </section>
-<div class="container mb-p20">
+<div class="container mb-p20 card-body shadow br-5 mt-5">
     <br>
     @if($group_name == '')
         @include('order.partials.details')

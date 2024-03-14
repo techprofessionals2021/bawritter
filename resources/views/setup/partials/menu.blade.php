@@ -1,15 +1,15 @@
-<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+<div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
    {{-- <a class="nav-link" href="{{ route('settings_main_page') }}">General</a> --}}
    <a class="nav-link" href="{{ route('settings_currency_page') }}">Currency</a>
    <a class="nav-link" href="{{ route('settings_staff_page') }}">Employees</a>
    <a class="nav-link" href="{{ route('settings_recruitment') }}">Recruitment</a>
 
    <div class="dropdown dropright">
-      <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle sky" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Services & Pricing
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-         <a class="dropdown-item" href="{{ route('services_list') }}">Services</a>
+         <a class="dropdown-item " href="{{ route('services_list') }}">Services</a>
          <a class="dropdown-item" href="{{ route('urgencies_list') }}">Urgencies</a>
          <a class="dropdown-item" href="{{ route('work_levels_list') }}">Work Levels</a>
          <a class="dropdown-item" href="{{ route('additional_services_list') }}">Additional Services
@@ -22,7 +22,7 @@
    </div>
 
       <div class="dropdown dropright">
-      <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle sky" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Email
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -36,7 +36,7 @@
    <a class="nav-link" href="{{ route('settings_logo_page') }}">Logo</a>
 
    <div class="dropdown dropright">
-      <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle sky" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Website Content
       </a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">

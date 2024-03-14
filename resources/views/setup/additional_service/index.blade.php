@@ -8,33 +8,35 @@
 }
 
 </style>
+<div class="card-body shadow br-20">
 @include('setup.partials.action_toolbar', [
- 'title' => 'Additional Services', 
+ 'title' => 'Additional Services',
  'hide_save_button' => TRUE,
  'create_link' => ['title' => 'Create Additional Service', 'url' => route("additional_services_create")]
 
  ])
-<table id="table" class="table table-striped">
-  <thead>
-     <tr>                  
-        <th scope="col" style="width: 40%;">Name</th>                                 
+<table id="table" class="table ">
+  <thead class="sky font-weight-bold">
+     <tr>
+        <th scope="col"  style="width: 40%; ">Name</th>
         <th scope="col" class="text-right">Rate</th>
-        <th scope="col">Status</th>                    
+        <th scope="col">Status</th>
         <th scope="col" class="text-right">Action</th>
      </tr>
   </thead>
 </table>
+</div>
 @endsection
 @push('scripts')
 <script>
-    $(function(){       
+    $(function(){
 
         var oTable = $('#table').DataTable({
           "bLengthChange": false,
             "dom": '<"toolbar">frtip',
             "bSort" : false,
             processing: true,
-            serverSide: true,                           
+            serverSide: true,
             "ajax": {
                     "url": "{!! route('datatable_additional_services') !!}",
                     "type": "POST",
@@ -42,18 +44,18 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     "data": function ( d ) {
-                        if ($("#showInactive").is(":checked")) 
-                        {  
+                        if ($("#showInactive").is(":checked"))
+                        {
                           d.include_inactive_items = 1;
-                        }               
+                        }
                     }
             },
-            columns: [                              
-                {data: 'name', name: 'name'},                                   
+            columns: [
+                {data: 'name', name: 'name'},
                 {data: 'rate', name: 'rate', className: "text-right"},
                 {data: 'status', name: 'status'},
-                {data: 'action', name: 'action', className: "text-right"},                
-                
+                {data: 'action', name: 'action', className: "text-right"},
+
             ]
         });
 
@@ -69,9 +71,9 @@
         var toolbar = '<div class="d-flex flex-row">' + checkbox + '</div>';
 
         $("div.toolbar").html(toolbar);
-      
+
         $('#table').on('click', '.delete-item', function (e) {
-               
+
             e.preventDefault();
             runSwal($(this).attr("href"));
 
@@ -81,12 +83,12 @@
             oTable.draw();
         });
 
-       
 
 
-        
 
-    });   
+
+
+    });
 
     function runSwal($link_to_delete)
     {
@@ -104,6 +106,6 @@
         }
       });
 
-    }   
+    }
 </script>
 @endpush

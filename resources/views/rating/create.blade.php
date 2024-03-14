@@ -4,7 +4,7 @@
 <div class="container page-container">
    <div class="row">
       <div class="col-md-8">
-         <h4>{{ $order->number }} - Tell us about your experience</h4>
+         <h4 class="sky font-weight-bold">{{ $order->number }} - Tell us about your experience</h4>
       </div>
       <div class="col-md-4">
          <div class="text-right">
@@ -43,7 +43,7 @@
 
                <div class="invalid-feedback d-block">{{ showError($errors, 'comment') }}</div>
             </div>
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn bg-sky text-white">
             <i class="fas fa-check-circle"></i> Submit
             </button>
          </form>
