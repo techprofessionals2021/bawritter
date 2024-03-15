@@ -22,23 +22,29 @@
                 </div>
                 <!-- Account navigation -->
                 <div class="d-flex">
-                    <a href="{{ route('users_edit', $user->id) }}"
+                    {{-- <a href="{{ route('users_edit', $user->id) }}"
                         class="btn btn-icon btn-group-nav shadow btn-neutral">
                         <span class="btn-inner--icon"><i class="far fa-user"></i></span>
-                        <span class="btn-inner--text d-none d-md-inline-block">Edit Profile</span>
-                    </a>
-                    <div class="btn-group btn-group-nav shadow ml-auto" role="group" aria-label="Basic example">
+                        <span class="btn-inner--text d-none d-md-inline-block sky">Edit Profile</span>
+                    </a> --}}
+                     <div class="btn-group btn-group-nav ml-auto" role="group" aria-label="Basic example">
                         <div class="btn-group" role="group">
-                            <a class="btn btn-neutral btn-icon"
+                            <a class="btn btn-neutral btn-icon sky "
                                 href="{{ route('user_profile', $user->id) }}">
                                 <i class="far fa-address-card"></i> Profile
                             </a>
-
+                            {{--  --}}
+                            <a href="{{ route('users_edit', $user->id) }}"
+                                class="btn btn-icon btn-group-nav  btn-neutral">
+                                <span class="btn-inner--icon"><i class="far fa-user"> </i></span>
+                                <span class="btn-inner--text d-none d-md-inline-block sky">&nbsp Edit Profile</span>
+                            </a>
+                            {{--  --}}
                             <div class="btn-group" role="group">
                                 <button id="btn-group-settings" type="button" class="btn btn-neutral btn-icon"
                                     data-toggle="dropdown" data-offset="0,8" aria-haspopup="true" aria-expanded="false">
                                     <span class="btn-inner--icon"><i class="fas fa-ellipsis-v"></i></span>
-                                    <span class="btn-inner--text d-none d-sm-inline-block">Activites</span>
+                                    <span class="btn-inner--text d-none d-sm-inline-block sky">&nbsp Activites</span>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
                                     aria-labelledby="btn-group-settings">

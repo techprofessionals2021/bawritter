@@ -73,7 +73,7 @@
             </div>
 
             <div class="col-md-6 position-relative " >
-                <img src="images/login-image-1.png" class="img-fluid cover-image" alt="Your Image">
+                <img src="images/login-image-1.png" class=" img-fluid cover-image" alt="Your Image">
                 <div class="header position-absolute top-50 start-50 translate-middle  bg-transparent">
 
                     <a class="" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -89,7 +89,7 @@
              font-size: 16px;
         }
         .cover-image{
-            height: 48rem;
+            height: 100vh;
         }
         .m-l-27{
             margin-left: 26rem;
@@ -124,7 +124,7 @@
     .header {
 
       top: 10px;
-      left: 360px;
+      left: 390px;
       right: 20px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 10px;

@@ -1,10 +1,10 @@
 <?php $photo_url = ($user->photo) ? asset(Storage::url($user->photo)) : asset('images/user-placeholder.jpg') ; ?>
 <section class="pt-5 pt-lg-0">
    <div class="container">
-      <div class="row">
+      <div class="row ">
          <div class="col-lg-4">
             <div class="sticky-top " data-toggle="sticky" data-sticky-offset="30" data-negative-margin=".card-profile-cover">
-               <div class="card card-profile border-0 shadow">
+               <div class="card card-profile border-0 shadow card-body shadow br-20">
                   <div class="card-profile-cover">
                      <img alt="Image placeholder" src="{{ $photo_url }}" class="card-img-top user-avatar" >
                   </div>
@@ -12,17 +12,17 @@
                      <img alt="Image placeholder" src="{{ $photo_url }}" class=" mt-5 card-profile-image avatar rounded-circle shadow hover-shadow-lg user-avatar">
                   </div>
                   <div class="card-body p-3 pt-0 text-center">
-                     <h5 class="mb-0">{{ $user->full_name }}</h5>
-                     <div>{{ $user->email }}</div>
+                     <h5 class="mb-0 sky font-weight-bold mt-3">{{ $user->full_name }}</h5>
+                     <div class="text-grey">{{ $user->email }}</div>
 
                      <table class="table table-sm mt-4">
                         <tr>
-                           <td class="text-muted text-left">Joined</td>
+                           <td class="text-muted text-left text-grey">Joined</td>
                            <td class="text-left">{{ $user->created_at->format("d/m/y") }}</td>
                         </tr>
                         <tr>
                            <td class="text-muted text-left">Country</td>
-                           <td class="text-left">{{ optional($user->meta)->country }}</td>
+                           <td class="text-left ">{{ optional($user->meta)->country }}</td>
                         </tr>
                         <tr>
                            <td class="text-muted text-left">Referral Source</td>
