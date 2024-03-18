@@ -63,8 +63,16 @@
                             <div class ="row mt-3">
                             <hr class=" col-2"><p class="col-2">Or</p><hr class="col-2"/>
                             </div>
-                            <button type="button" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2 "><i class="fab fa-facebook-f"></i>  Facebook</button>
-                            <button type="button" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">  <i class="fab fa-google"></i> Google</button>
+                            {{-- <button type="button" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2 "><i class="fab fa-facebook-f"></i> Facebook</button> --}}
+                            {{-- <button type="button" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">  <i class="fab fa-google"></i> Google</button> --}}
+
+                           {{--  --}}
+                            <a href="{{ route('redirectFacebook') }}" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2">
+                            <i class="fab fa-facebook"></i> facebook
+                            </a>
+                              <a href="{{ route('google') }}" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">
+                               <i class="fab fa-google"></i> Google
+                               </a>
                           </div>
                        </form>
                        <div class="text-center mt-5">Don't have an account? <a href="{{ route('register') }}">Sign up</a></div>
@@ -73,7 +81,7 @@
             </div>
 
             <div class="col-md-6 position-relative " >
-                <img src="images/login-image-1.png" class="img-fluid cover-image" alt="Your Image">
+                <img src="images/login-image-1.png" class=" img-fluid cover-image" alt="Your Image">
                 <div class="header position-absolute top-50 start-50 translate-middle  bg-transparent">
 
                     <a class="" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -89,7 +97,7 @@
              font-size: 16px;
         }
         .cover-image{
-            height: 48rem;
+            height: 100vh;
         }
         .m-l-27{
             margin-left: 26rem;
@@ -124,7 +132,7 @@
     .header {
 
       top: 10px;
-      left: 360px;
+      left: 390px;
       right: 20px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 10px;

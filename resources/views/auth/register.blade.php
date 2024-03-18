@@ -113,7 +113,7 @@
         }
 
         .cover-image{
-            height: 48rem;
+            height: 100vh;
         }
         .p-0{
             padding: 3px 45px 5px 40px !important;
@@ -143,7 +143,7 @@
     .header {
 
       top: 10px;
-      left: 360px;
+      left: 390px;
       right: 20px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 10px;
