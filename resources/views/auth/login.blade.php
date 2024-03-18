@@ -63,8 +63,16 @@
                             <div class ="row mt-3">
                             <hr class=" col-2"><p class="col-2">Or</p><hr class="col-2"/>
                             </div>
-                            <button type="button" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2 "><i class="fab fa-facebook-f"></i>  Facebook</button>
-                            <button type="button" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">  <i class="fab fa-google"></i> Google</button>
+                            {{-- <button type="button" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2 "><i class="fab fa-facebook-f"></i> Facebook</button> --}}
+                            {{-- <button type="button" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">  <i class="fab fa-google"></i> Google</button> --}}
+
+                           {{--  --}}
+                            <a href="{{ route('redirectFacebook') }}" class="btn bg-primary btn-lg br-20 p-0 text-white mt-2">
+                            <i class="fab fa-facebook"></i> facebook
+                            </a>
+                              <a href="{{ route('google') }}" class="btn btn-lg btn-outline-primary br-20 p-0  mt-2">
+                               <i class="fab fa-google"></i> Google
+                               </a>
                           </div>
                        </form>
                        <div class="text-center mt-5">Don't have an account? <a href="{{ route('register') }}">Sign up</a></div>
