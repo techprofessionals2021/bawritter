@@ -55,6 +55,7 @@ public function handleGoogleCallback()
 // faceboook login or sign in
 public function redirectFacebook()
     {
+
         return Socialite::driver('facebook')->redirect();
     }
 
@@ -63,6 +64,7 @@ public function redirectFacebook()
         try {
 
             $user = Socialite::driver('facebook')->user();
+            // .driver('facebook')->stateless()->user()
             //    dd($user);
             $finduser = User::where('facebook_id', $user->id)->first();
 
