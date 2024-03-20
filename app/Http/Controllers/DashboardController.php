@@ -3,9 +3,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
-use App\models\User;
-use App\models\Order;
-use App\models\Bill;
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Bill;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
