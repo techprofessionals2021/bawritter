@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 //  AUTH API
 
 Route::prefix('auth')->group(function () {
-    Route::post('register', [RegisterApiController::class, 'register'])->name('register');
+    Route::post('registerr', [RegisterApiController::class, 'register'])->name('register');
     Route::post('login',[LoginApiController::class, 'login'])->name('login');
     Route::post('forgot-password', [LoginApiController::class, 'forgotPassword'])->name('forget.password');
     Route::post('verify-otp',[LoginApiController::class, 'verifyOtp'])->name('verify.otp');
