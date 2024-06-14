@@ -46,11 +46,11 @@ class StoreOrderRequest extends FormRequest
             'urgency_id' => 'required',
             'dead_line' => 'required',
             'quantity' => 'required',
-            'added_services' => 'nullable|array',
+            // 'added_services' => 'nullable|array',
             'files_data' => 'nullable|array',
             'writer_model' => 'nullable|array',
             'base_price' => 'nullable',
-            'spacing_type'=>'required',
+            'spacing_type'=>'nullable',
             // 'customer_id'=>'required'// uncommit while testing api with postman.
 
         ];

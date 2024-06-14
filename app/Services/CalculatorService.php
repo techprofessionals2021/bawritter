@@ -25,57 +25,50 @@ class CalculatorService
 
     function calculatePrice($request)
     {
+        // Retrieve service, work level, and urgency information
         $service = Service::find($request['service_id']);
         $workLevel = WorkLevel::find($request['work_level_id']);
         $urgency = Urgency::find($request['urgency_id']);
-
-        // When Price Type is fixed
-        if ($service->price_type_id == PriceType::Fixed) {
-            $base_price = $service->price;
-            $unit_name = PriceType::FixedPriceUnit;
-        }
-        // When Price Type is Per Word
-        if ($service->price_type_id == PriceType::PerWord) {
-            $base_price = $service->price;
-            $unit_name = PriceType::PerWordPriceUnit;
-        }
-        // When Price Type is based on Number of Pages
-        if ($service->price_type_id  == PriceType::PerPage) {
-            if ($request['spacing_type'] == SpacingType::DoubleLine) {
-                // If spacing type is double
-                // $base_price = $service->double_spacing_price;
+    
+        // Initialize variables
+        $base_price = 0;
+        $unit_name = '';
+    
+        // Determine base price and unit name based on price type
+        switch ($service->price_type_id) {
+            case PriceType::Fixed:
+                $base_price = $service->price;
+                $unit_name = PriceType::FixedPriceUnit;
+                break;
+            case PriceType::PerWord:
+                $base_price = $service->price;
+                $unit_name = PriceType::PerWordPriceUnit;
+                break;
+            case PriceType::PerPage:
                 $base_price = $request['base_price'];
-            } else {
-                // If spacing type is single
-                // $base_price = $service->single_spacing_price;
-                $base_price = $request['base_price'];
-            }
-            $unit_name = PriceType::PerPagePriceUnit;
-        } else {
-            $request['spacing_type'] = null;
+                $unit_name = PriceType::PerPagePriceUnit;
+                break;
+            default:
+                $request['spacing_type'] = null;
+                break;
         }
-
-        // Calculate Work Level Price
+    
+        // Calculate work level and urgency prices
         $work_level_price = $this->calculatePercentage($base_price, $workLevel->percentage_to_add);
-
-        // Calculate Urgency Price
         $urgency_price = $this->calculatePercentage($base_price, $urgency->percentage_to_add);
-
-        // Calculate Unit Price
-        $unit_price = ($base_price + $work_level_price + $urgency_price);
-
-        // Amount before including Additional Services
-        $amount = $this->roundPrice(($unit_price * $request['quantity']));
-
-        // Calculate Total Price of Additional Services
-        $additional_services_cost = $this->getTotalPriceoOfAdditionalServices($request['added_services']);
-
-        // Calculate Sub Total  Amount + Additional Services
-        $sub_total = $this->roundPrice(($amount + $additional_services_cost));
-
-        // Total (work here if you need to add discount option)
-        $total = $sub_total;
-
+    
+        // Calculate unit price and amount
+        $unit_price = $base_price + $work_level_price + $urgency_price;
+        $amount = $this->roundPrice($unit_price * $request['quantity']);
+    
+        // Calculate additional services cost
+        $additional_services_cost = $this->getTotalPriceoOfAdditionalServices($request['added_services'] ?? []);
+    
+        // Calculate sub-total and total
+        $sub_total = $this->roundPrice($amount + $additional_services_cost);
+        $total = $sub_total; // Add discount logic here if needed
+    
+        // Return calculated prices and details
         return [
             'spacing_type' => $request['spacing_type'],
             'unit_name' => $unit_name,
@@ -86,11 +79,11 @@ class CalculatorService
             'amount' => $amount,
             'additional_services_cost' => $additional_services_cost,
             'sub_total' => $sub_total,
-            'discount' => 0,
+            'discount' => 0, // Placeholder for discount logic
             'total' => $total,
-
         ];
     }
+    
     function orderTotal($request)
     {
         return $this->calculatePrice($request)['total'];
