@@ -42,22 +42,26 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[LoginApiController::class,'logout'])->name('logout');
+
+
+
+    Route::prefix('order')->group(function () {
+
+        Route::get('create', [OrderApiController::class, 'create']);
+        Route::post('store', [OrderApiController::class,'storeApiOrderInSession']);
+        Route::get('datatable', [OrderApiController::class, 'datatable']);//only clients's order
+        Route::get('status_count',[OrderApiController::class, 'index']);
+        Route::get('search',[OrderApiController::class, 'search']);
+        Route::get('detail/{id}',[OrderApiController::class,'show']);
+        Route::get('attachment_download',[OrderApiController::class,'download']);
+        Route::post('rating_store',[OrderApiController::class,'rating_store']);
+   
+   });
 });
 
 //  Order API
 
-Route::prefix('order')->group(function () {
 
-     Route::get('create', [OrderApiController::class, 'create']);
-     Route::post('store', [OrderApiController::class,'storeApiOrderInSession']);
-     Route::get('datatable', [OrderApiController::class, 'datatable']);//only clients's order
-     Route::get('status_count',[OrderApiController::class, 'index']);
-     Route::get('search',[OrderApiController::class, 'search']);
-     Route::get('detail/{id}',[OrderApiController::class,'show']);
-     Route::get('attachment_download',[OrderApiController::class,'download']);
-     Route::post('rating_store',[OrderApiController::class,'rating_store']);
-
-});
 
  //  Dashboard Api
 
