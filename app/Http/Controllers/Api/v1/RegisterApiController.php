@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\models\User;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +29,7 @@ class RegisterApiController extends Controller
 
            'first_name' => ['required', 'string', 'max:255'],
            'last_name' => ['required', 'string', 'max:255'],
+           'phone_number' => ['required'],
            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
            'password' => ['required', 'string', 'min:1'],
         ]);
@@ -43,6 +44,7 @@ class RegisterApiController extends Controller
                 'first_name' => $request['first_name'],
                 'last_name' => $request['last_name'],
                 'email' => $request['email'],
+                'phone_number' => $request['phone_number'],
                 'password' => Hash::make($request['password']),
             ]);
 
@@ -53,6 +55,7 @@ class RegisterApiController extends Controller
                 'token' => $token->plainTextToken,
                 'first_name'=>$user->first_name,
                 'email' => $user->email,
+                'phone_number' => $user->phone_number,
                 'last_name'=>$user->last_name,
             ];
         });
@@ -63,6 +66,7 @@ class RegisterApiController extends Controller
                 'firstName' => $response['first_name'],
                 'lastName' => $response['last_name'],
                 'email' => $response['email'],
+                'phone_number' => $response['phone_number'],
             ]
         ];
 

@@ -8,7 +8,7 @@ use App\Mail\SendOtp;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use App\models\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -46,13 +46,13 @@ class LoginApiController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $token =  $user->createToken('Token');
+            $token = $user->createToken('Token');
             $data = [
                 'user' => $user->email,
                 'token' => $token->plainTextToken
             ];
 
-            return  apiResponseSuccess($data, 'Login Successfull!');
+            return apiResponseSuccess($data, 'Login Successfull!');
         }
         
         return responseError('The provided credentials do not match our records.', 'Authentication Error', 401);
@@ -66,98 +66,102 @@ class LoginApiController extends Controller
         if ($user) {
             $user->tokens()->delete();
 
-            return  apiResponseSuccess([
+            return apiResponseSuccess([
                 'success' => true,
-            ],'Logout successfulLy');
+            ], 'Logout successfulLy');
         }
 
         return responseError([
             'success' => false,
-        ],'User not authenticated');
+        ], 'User not authenticated');
 
     }
 
 
-       public function forgotPassword(Request $request)
-       {
-           $otp = mt_rand(1000, 9999);
+    public function forgotPassword(Request $request)
+    {
+        $otp = mt_rand(1000, 9999);
 
-           $validator = Validator::make($request->all(), [
-               'email' => 'required|email|exists:users',
-           ]);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users',
+        ]);
 
-           Mail::to($request->email)->send(new SendOtp(
+        Mail::to($request->email)->send(
+            new SendOtp(
 
-               'OTP',
-               'emails.otp',
+                'OTP',
+                'emails.otp',
                 [
-                   'heading' => " Email Verification",
-                   'content' => "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic sunt delectus distinctio tenetur impedit nam quo similique quos labore explicabo doloremque praesentium quod nobis dolor ex consequatur quasi, ad itaque.",
-                   'btn' => [
-                       'text' => $otp
-                   ]
-               ]
-           ));
+                    'heading' => "Best Assignment Writer",
+                    'content' => "Verify your Email Address Your Otp is.",
+                    'btn' => [
+                        'text' => $otp
+                    ]
+                ]
+            )
+        );
 
-           DB::table('password_resets')
-               ->where('email', $request->email)->delete();
+        DB::table('password_resets')
+            ->where('email', $request->email)->delete();
 
-           DB::table('password_resets')->insert([
-               'email' => $request->email,
-               'token' => $otp,
-               'created_at' => now()
-           ]);
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $otp,
+            'created_at' => now()
+        ]);
 
-           return apiResponseSuccess([
-               'user' => $request->email,
-               'token' => $otp,
-               'endPoint' => route('verify.otp'),
-           ], 'We have emailed your password reset link!');
-       }
+        return apiResponseSuccess([
+            'user' => $request->email,
+            'token' => $otp,
+            'endPoint' => route('verify.otp'),
+        ], 'We have emailed your password reset link!');
+    }
 
-       public function verifyOtp(Request $request)
-       {
-           $password_reset_column =  DB::table('password_resets')->where([
-               'email' => $request->email,
-           ])->first();
-
-
-           if ($password_reset_column) {
-               if ($password_reset_column->token == $request->token) {
-
-                   return apiResponseSuccess([
-                       'success' => true,
-
-                   ], 'Otp verified');
-               }
-           }
-       }
-       public function resetPassword(Request $request)
-       {
-
-           $validator = Validator::make($request->all(), [
-               'email' => 'required',
-               'password' => 'required|string|min:8|confirmed',
-           ]);
-
-           $password_reset_column =  DB::table('password_resets')->where([
-               'email' => $request->email,
-
-           ])->first();
+    public function verifyOtp(Request $request)
+    {
+        $password_reset_column = DB::table('password_resets')->where([
+            'email' => $request->email,
+        ])->first();
 
 
-           if ($password_reset_column) {
-               User::where('email', $request->email)
-                   ->update(['password' =>  Hash::make($request->password)]);
-               DB::table('password_resets')->where([
-                   'email' => $request->email,
+        if ($password_reset_column) {
 
-               ])->delete();
-               return apiResponseSuccess([
-                   'success' => true,
-               ], 'Password Updated Successfully');
-           }
-       }
+
+            if ($password_reset_column->token == $request->token) {
+
+                return apiResponseSuccess([
+                    'success' => true,
+
+                ], 'Otp verified');
+            }
+        }
+    }
+    public function resetPassword(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $password_reset_column = DB::table('password_resets')->where([
+            'email' => $request->email,
+
+        ])->first();
+
+
+        if ($password_reset_column) {
+            User::where('email', $request->email)
+                ->update(['password' => Hash::make($request->password)]);
+            DB::table('password_resets')->where([
+                'email' => $request->email,
+
+            ])->delete();
+            return apiResponseSuccess([
+                'success' => true,
+            ], 'Password Updated Successfully');
+        }
+    }
 
 }
 

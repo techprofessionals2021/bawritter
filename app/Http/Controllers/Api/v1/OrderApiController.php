@@ -24,9 +24,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class OrderApiController extends Controller
-
 {
 
     /**
@@ -38,11 +38,12 @@ class OrderApiController extends Controller
     {
 
         $data['statistics'] = Order::apiStatistics();
-        return apiResponseSuccess($data,'status counts');
+        return apiResponseSuccess($data, 'status counts');
 
     }
 
-     public function search(){
+    public function search()
+    {
 
         $dropdowns = [
             'staff_list' => [
@@ -60,13 +61,14 @@ class OrderApiController extends Controller
             ],
         ];
 
-        return apiResponseSuccess($dropdowns,'Searching_dropdown');
+        return apiResponseSuccess($dropdowns, 'Searching_dropdown');
 
-     }
+    }
 
 
     public function datatable(Request $request)
     {
+
         $query = Order::with([
             'assignee',
             'customer'
@@ -95,11 +97,10 @@ class OrderApiController extends Controller
 
 
     function show($id)
-
     {
         $data = Order::find($id);
-   
-        return  apiResponseSuccess($data,'order detail');
+
+        return apiResponseSuccess($data, 'order detail');
     }
 
     public function quote(Request $request)
@@ -120,78 +121,81 @@ class OrderApiController extends Controller
      */
     public function create()
     {
-     
+
         $data = Order::dropdown();
         $data['title'] = 'Let\'s get started on your project!';
 
-        return  apiResponseSuccess($data, 'order created Successfully!');
+        return apiResponseSuccess($data, 'order created Successfully!');
     }
 
 
-       // store order function
+    // store order function
 
-       public function storeApiOrderInSession(StoreOrderRequest $request, CalculatorService $calculator, CartService $cart)
-       {
-
-           $data = $request->validated();
-
-           $data = array_merge($data, $calculator->calculatePrice($data));
-
-          //$data['staff_id_from_client'] = $data['writer_model']['id'];
-           $data['staff_id_from_client'] = isset($data['writer_model']['id']) ? $data['writer_model']['id'] : null;
-           $data['customer_id'] = $data['customer_id'];
-
-           $data['cart_total'] = $data['total'];
-           $data['staff_payment_amount'] = $calculator->staffPaymentAmount($data['cart_total']);
-           $data['title'] = Purifier::clean($request->input('title'));
-           $data['instruction'] = Purifier::clean($request->input('instruction'));
-
-           $orderService = app()->make('App\Services\OrderService');
-
-           $order = $orderService->create($data);
-
-           $cart->setCart([
-               'order_id' => $order->id,
-               'order_number' => $order->number,
-               'cart_total' => $data['cart_total']
-           ], CartType::NewOrder);
-
-           session()->flash('success', 'Order has been saved. Please make the payment to confirm it');
-
-        return apiResponseSuccess( $data,'order has been stored');
-
-       }
-
-       public function rating_store(Request $request)
-       {
-
-           $validator = Validator::make($request->all(), [
-               'comment' => 'sometimes|max:500',
-               'number' => 'required'
-           ], [
-               'number.required' => 'Please choose a rating'
-           ]);
-
-           if ($validator->fails()) {
-               return redirect()->back()
-                   ->withErrors($validator)
-                   ->withInput();
-           }
-
-           $request['order_id'] = $request->order_id;
-           $request['user_id'] =$request->user_id;
+    public function storeApiOrderInSession(StoreOrderRequest $request, CalculatorService $calculator, CartService $cart)
+    {
+        // dd(Auth::id());
+        $data = $request->validated();
 
 
-          $rating= Rating::create($request->all());
+        $data = array_merge($data, $calculator->calculatePrice($data));
 
-           return apiResponseSuccess('Rating Saved','Thank you for your feedback!');
-       }
+        $data['staff_id_from_client'] = isset($data['writer_model']['id']) ? $data['writer_model']['id'] : 0;
+        $data['customer_id'] = Auth::id();
+
+        $data['cart_total'] = $data['total'];
+        $data['staff_payment_amount'] = $calculator->staffPaymentAmount($data['cart_total']);
+        $data['title'] = Purifier::clean($request->input('title'));
+        $data['instruction'] = Purifier::clean($request->input('instruction'));
+
+        $orderService = app()->make('App\Services\OrderService');
+
+
+        $order = $orderService->create($data);
+
+        $cart->setCart([
+            'order_id' => $order->id,
+            'order_number' => $order->number,
+            'cart_total' => $data['cart_total']
+        ], CartType::NewOrder);
+
+        session()->flash('success', 'Order has been saved. Please make the payment to confirm it');
+
+        return apiResponseSuccess($data, 'order has been stored');
+
+    }
+
+    public function rating_store(Request $request)
+    {
+
+
+        $validator = Validator::make($request->all(), [
+            'comment' => 'sometimes|max:500',
+            'number' => 'required'
+        ], [
+            'number.required' => 'Please choose a rating'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $request['order_id'] = $request->order_id;
+        $request['user_id'] = $request->user_id;
+
+
+        $rating = Rating::create($request->all());
+
+        return apiResponseSuccess('Rating Saved', 'Thank you for your feedback!');
+    }
 
     function download(Request $request)
     {
-        
-       $data= Storage::disk('local')->url($request->file);
-      return apiResponseSuccess($data,'Attachment url');
+
+        $data = Storage::disk('local')->url($request->file);
+        return apiResponseSuccess($data, 'Attachment url');
 
     }
 
