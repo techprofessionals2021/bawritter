@@ -360,9 +360,9 @@ function responseError($data, string $message = null, int $statusCode = 400)
     if (!is_array($data) || (is_array($data) && isset($data['message']))) {
         $data = [['message' => $data]];  // Wrap single message into an array
     }
-    
+
     return response()->json([
-        'statusCode' => $statusCode,
+        'status_code' => $statusCode,
         'message' => $message,
         'error' => $data
     ]);
