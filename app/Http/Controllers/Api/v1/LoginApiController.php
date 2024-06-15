@@ -39,6 +39,11 @@ class LoginApiController extends Controller
             'password' => 'required',
         ]);
 
+        // Check if the validation fails
+        if ($validator->fails()) {
+            return validationError($validator); // Use the custom validationError function
+        }
+
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $token =  $user->createToken('Token');
@@ -49,6 +54,8 @@ class LoginApiController extends Controller
 
             return  apiResponseSuccess($data, 'Login Successfull!');
         }
+        
+        return responseError('The provided credentials do not match our records.', 'Authentication Error', 401);
 
     }
 
