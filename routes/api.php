@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\v1\LoginApiController;
 use App\Http\Controllers\Api\v1\OrderApiController;
 use App\Http\Controllers\Api\v1\UserApiController;
 use App\Http\Controllers\Api\v1\WalletApiController;
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
@@ -53,10 +54,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('status_count',[OrderApiController::class, 'index']);
         Route::get('search',[OrderApiController::class, 'search']);
         Route::get('detail/{id}',[OrderApiController::class,'show']);
-        Route::get('attachment_download',[OrderApiController::class,'download']);
+        Route::post('attachment_download',[OrderApiController::class,'download']);
         Route::post('rating_store',[OrderApiController::class,'rating_store']);
    
    });
+
+
+   // Handle File Uploads and Downloads
+        Route::prefix('attachments')->group(function () {
+            Route::get('download', [AttachmentController::class, 'download'])
+                ->name('download_attachment');
+
+            Route::post('upload', [AttachmentController::class, 'upload'])
+                ->name('order_upload_attachment');
+
+            Route::post('remove', [AttachmentController::class, 'remove']);
+        });
+
 });
 
 //  Order API

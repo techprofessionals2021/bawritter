@@ -19,10 +19,33 @@ class AttachmentController extends Controller
 
     function remove(Request $request)
     {
-        if (Storage::exists($request->name)) {
-            Storage::delete($request->name);
+
+   
+        $filePath = 'attachments/' . $request->name;
+
+
+        if (Storage::exists($filePath)) {
+            // Delete the file
+            Storage::delete($filePath);
+            
+            // Return a JSON response indicating success
+            return response()->json([
+                'message' => 'File has been removed',
+                'file' => $request->name,
+                'status' => true
+            ]);
+        } else {
+            // Return a JSON response indicating the file was not found
+            return response()->json([
+                'message' => 'File not found',
+                'file' => $request->name,
+                'status' => false
+            ]);
         }
     }
+    
+    
+    
 
     function download(Request $request)
     {

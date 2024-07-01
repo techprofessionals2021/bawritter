@@ -193,6 +193,7 @@ class OrderApiController extends Controller
 
     function download(Request $request)
     {
+        // dd($request->file);
 
         $data = Storage::disk('local')->url($request->file);
         return apiResponseSuccess($data, 'Attachment url');
