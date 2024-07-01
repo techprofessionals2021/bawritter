@@ -19,16 +19,6 @@ Route::post('cart/add', [CartController::class,'storeOrderInSession'])
     ->name('add_to_cart');
 
 
-// Handle File Uploads and Downloads
-Route::prefix('attachments')->group(function () {
-    Route::get('download', [AttachmentController::class, 'download'])
-        ->name('download_attachment');
-
-    Route::post('upload', [AttachmentController::class, 'upload'])
-        ->name('order_upload_attachment');
-
-    Route::delete('upload', [AttachmentController::class, 'remove']);
-});
 
 // Checkout
 Route::prefix('checkout')->middleware(['check_cart'])->group(function () {
