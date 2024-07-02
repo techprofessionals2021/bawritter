@@ -126,3 +126,15 @@ Route::prefix('notifications')->group(function () {
     Route::get('/mark/read/all', [NotificationController::class, 'mark_all_notification_as_read'])
         ->name('notification_all_mark_as_read');
 });
+
+
+        Route::prefix('attachments')->group(function () {
+            Route::get('download', [AttachmentController::class, 'download'])
+                ->name('download_attachment');
+
+            Route::post('upload', [AttachmentController::class, 'upload'])
+                ->name('order_upload_attachment');
+
+            Route::post('remove', [AttachmentController::class, 'remove']);
+        });
+

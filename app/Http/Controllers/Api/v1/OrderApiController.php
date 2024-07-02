@@ -136,6 +136,7 @@ class OrderApiController extends Controller
         // dd(Auth::id());
         $data = $request->validated();
 
+        // dd($data);
 
         $data = array_merge($data, $calculator->calculatePrice($data));
 
