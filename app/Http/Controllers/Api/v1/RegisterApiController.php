@@ -29,9 +29,9 @@ class RegisterApiController extends Controller
 
            'first_name' => ['required', 'string', 'max:255'],
            'last_name' => ['required', 'string', 'max:255'],
-           'phone_number' => ['required'],
+           'phone_number' => ['required','unique:users'],
            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-           'password' => ['required', 'string', 'min:1'],
+           'password' => ['required', 'string', 'min:8'],
         ]);
 
         if ($validator->fails()) {

@@ -41,7 +41,8 @@ Route::prefix('auth')->group(function () {
     Route::post('password/reset', [LoginApiController::class, 'resetPassword'])->name('password.reset');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+// Route::get('order/create', [OrderApiController::class, 'create']);
+// Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[LoginApiController::class,'logout'])->name('logout');
 
 
@@ -59,7 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
    
    });
 
-
    // Handle File Uploads and Downloads
         Route::prefix('attachments')->group(function () {
             Route::get('download', [AttachmentController::class, 'download'])
@@ -72,6 +72,8 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
 });
+
+
 
 //  Order API
 

@@ -355,13 +355,32 @@ function apiResponseSuccess($data,$message,$status_code=200){
 function responseError($data, string $message = null, int $statusCode = 400)
 {
     // return (new ApiResponse)->error($data, $message, $code);
+
+    // Check if the data is not already an array of error messages
+    if (!is_array($data) || (is_array($data) && isset($data['message']))) {
+        $data = [['message' => $data]];  // Wrap single message into an array
+    }
+
     return response()->json([
-        'statusCode' => $statusCode,
+        'status_code' => $statusCode,
         'message' => $message,
         'error' => $data
     ]);
 }
 function validationError($validator)
 {
-    return responseError(['errors' => $validator->errors()], 'Validation Error', 422);
+    $errors = $validator->errors();
+    $formattedErrors = [];
+
+    // Transform the error messages
+    foreach ($errors->getMessages() as $field => $messages) {
+        foreach ($messages as $message) {
+            $formattedErrors[] = [
+                'field' => $field,
+                'message' => $message
+            ];
+        }
+    }
+
+    return responseError($formattedErrors, 'Validation Error', 422);
 }
