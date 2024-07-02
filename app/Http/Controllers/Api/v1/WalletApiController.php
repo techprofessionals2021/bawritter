@@ -10,7 +10,7 @@ use App\models\Tag;
 use App\models\User;
 use App\models\Wallet;
 use App\models\WalletTransaction;
-
+use Auth;
 class WalletApiController extends Controller
 {
 
@@ -18,16 +18,27 @@ public function index(Request $request)
 {
     $user_id = $request->id;
 
-    $wallet=Wallet::where('user_id',$user_id)->first();
+    // Find the wallet associated with the user
+    $wallet = Wallet::where('user_id', $user_id)->first();
 
+    // Check if the wallet is null
+    if (is_null($wallet)) {
+        return response()->json([
+            'message' => 'Wallet not found',
+            'status' => false
+        ], 404);
+    }
+
+    // dd(Auth::user()->id);
+    // Get the balance from the wallet
     $balance = $wallet->balance;
 
+    // Format the balance
     $formattedBalance = format_money($balance);
-    // $data = [
-    //     'balance' => $formattedBalance,
-    // ];
 
+    // Return the formatted balance in a JSON response
     return apiResponseSuccess($formattedBalance, 'Wallet current balance');
+
 
 }
 
@@ -57,9 +68,10 @@ public function walletPayments(Request $request)
 
    if($payments){
       return apiResponseSuccess($payments, 'Wallet payments');
-   }else{
+   }
+   else{
      return responseError('Data not received');
-    }
+   }
 
 
 }
