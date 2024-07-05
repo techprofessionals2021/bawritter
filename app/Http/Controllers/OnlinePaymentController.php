@@ -76,9 +76,11 @@ class OnlinePaymentController extends Controller
 
                 event(new PaymentApprovedEvent($payment));
 
+                $order_id = $this->cart->getCart()['order_id'];
+                
                 if($this->cart->getCartType()==CartType::NewOrder){
 
-                    $this->getOrderService()->confirmOrderPayment($this->cart->getCart()['order_id']);
+                    $this->getOrderService()->confirmOrderPayment($order_id);
 
                     $this->cart->destroy();
 
