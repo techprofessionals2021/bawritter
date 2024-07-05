@@ -6,6 +6,11 @@
 <head>
   <script src="https://www.paypal.com/sdk/js?client-id=ATFcfGtAaKU5MsB6ri6ih-THk-IZ1rRnVlSNbWXgznvOLH5JtO0g0qrMH7cG2tYIzyKVvAfVwzFLRDbY"></script>
 </head>
+<style>
+    .container {
+        margin: 10vh 10vw 1vh 10vw;  
+    }
+</style>
 <body>
   <div class="container">
     <div id="paypal-button-container"></div>
@@ -26,11 +31,11 @@
       },
       onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
-          window.location.href = `${APP_URL}/success`; 
+          window.location.href = 'https://dashboard.bestassignmentwriters.co.uk/success'; 
         });
       },
       onCancel: function(data) {
-        window.location.href = `${APP_URL}/cancel`; 
+        window.location.href = 'https://dashboard.bestassignmentwriters.co.uk/cancel'; 
       }
     }).render('#paypal-button-container');
   </script>
