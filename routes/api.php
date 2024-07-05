@@ -42,7 +42,7 @@ Route::prefix('auth')->group(function () {
 });
 
 // Route::get('order/create', [OrderApiController::class, 'create']);
-// Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[LoginApiController::class,'logout'])->name('logout');
 
 
@@ -70,6 +70,8 @@ Route::prefix('auth')->group(function () {
 
             Route::post('remove', [AttachmentController::class, 'remove']);
         });
+
+});        
 
 //  Order API
 
