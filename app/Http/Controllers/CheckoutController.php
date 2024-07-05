@@ -26,6 +26,7 @@ class CheckoutController extends Controller
         $data['total'] = $this->cart->getTotal();
         $data['payment_options'] = $paymentOptions->all();
         $data['show_wallet_option'] = true;
+        $data['show_paypal'] = true;
 
         if ($this->cart->getCartType() != CartType::NewOrder) {
             $data['show_wallet_option'] = false;
@@ -40,6 +41,11 @@ class CheckoutController extends Controller
         return view('checkout.select_payment_method')->with('data', $data);
     }
 
+    public function payWithPaypal(){
+        $data['total'] = $this->cart->getTotal();
+        // dd($data);
+        return view('checkout.pay_with_paypal')->with('data', $data);
+    }
 
     public function handleSuccessfullOnlinePayment(Request $request)
     {
@@ -71,7 +77,7 @@ class CheckoutController extends Controller
 
     public function payUsingOfflineMethod(Request $request, OfflinePaymentMethod $paymentMethod)
     {
-        $data['total'] = $this->cart->getTotal();
+       $data['total'] = $this->cart->getTotal();
         $data['gateway_name'] = $paymentMethod->name;
         return view('checkout.offline_payment', compact('data'))->with('paymentMethod', $paymentMethod);
     }

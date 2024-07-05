@@ -10,6 +10,7 @@ use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OnlinePaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', [DashboardController::class,'index'])
@@ -37,6 +38,18 @@ Route::prefix('checkout')->middleware(['check_cart'])->group(function () {
 
     Route::get('payment/online/success', [CheckoutController::class, 'handleSuccessfullOnlinePayment'])
         ->name('handle_successful_online_payment');
+
+    Route::get('payment/online/paypal', [CheckoutController::class, 'payWithPaypal'])
+        ->name('pay_with_paypal');
+
+    Route::post('payment/online/paypal/submit', [OnlinePaymentController::class, 'paypalPayment'])
+        ->name('paypalPayment');
+
+    Route::get('payment/online/paypal/success', [OnlinePaymentController::class, 'paypalSuccess'])
+        ->name('paypalSuccess');
+
+    Route::get('payment/online/paypal/cancel', [OnlinePaymentController::class, 'paypalCancel'])
+        ->name('paypalCancel');
 
     Route::get('payment/offline/{paymentMethod}', [CheckoutController::class, 'payUsingOfflineMethod'])
         ->name('pay_with_offline_method');
