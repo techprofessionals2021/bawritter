@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 load_route('website');
 
+Route::get('/paypal-payment', function () {
+    return view('paypal_testing');
+});
+
 Route::post('additional/services', [ServiceController::class, 'getAdditionalServicesByServiceId'])
     ->name('additional_services_by_service_id');
 

@@ -71,10 +71,6 @@ Route::prefix('auth')->group(function () {
             Route::post('remove', [AttachmentController::class, 'remove']);
         });
 
-});
-
-
-
 //  Order API
 
 
