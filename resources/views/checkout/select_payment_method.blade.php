@@ -48,15 +48,21 @@
                   </div>
                @endif
                @if($data['show_wallet_option'])
-               <br>
-               <p class="text-muted sky font-weight-bold">Wallet- Balance: {{ format_money(auth()->user()->wallet()->balance()) }}</p>
-                  <div class="list-group">
-                  <a href="{{ route('pay_with_wallet') }}" class="list-group-item list-group-item-action ">
-                        <div class="text-grey"><i class="fas fa-wallet"></i> Pay using your wallet</div>
-                     </a>
-                  </div>
+                <br>
+                <p class="text-muted sky font-weight-bold">Wallet- Balance: {{ format_money(auth()->user()->wallet()->balance()) }}</p>
+                    <div class="list-group">
+                    <a href="{{ route('pay_with_wallet') }}" class="list-group-item list-group-item-action ">
+                            <div class="text-grey"><i class="fas fa-wallet"></i> Pay using your wallet</div>
+                        </a>
+                    </div>
                @endif
-
+               @if ($data['show_paypal'])
+                    <br>
+                    <p class="text-muted font-weight-bold sky">Payment Gateway</p>
+                    <a href="{{ route('pay_with_paypal') }}" class="list-group-item list-group-item-action">
+                        <div class="text-grey"><i class="fab fa-paypal"></i> Pay with PayPal</div>
+                    </a>
+               @endif
             </div>
          </div>
       </div>
