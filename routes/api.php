@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AttachmentController;
 use App\Http\Controllers\Api\v1\DashboardApiController;
 use App\Http\Controllers\Api\v1\JobApplicantController;
 use App\Http\Controllers\Api\v1\RegisterApiController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Api\v1\LoginApiController;
 use App\Http\Controllers\Api\v1\OrderApiController;
 use App\Http\Controllers\Api\v1\UserApiController;
 use App\Http\Controllers\Api\v1\WalletApiController;
-use App\Http\Controllers\AttachmentController;
+
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
@@ -60,18 +61,18 @@ Route::middleware('auth:sanctum')->group(function () {
    
    });
 
-   // Handle File Uploads and Downloads
-        Route::prefix('attachments')->group(function () {
-            Route::get('download', [AttachmentController::class, 'download'])
-                ->name('download_attachment');
-
-            Route::post('upload', [AttachmentController::class, 'upload'])
-                ->name('order_upload_attachment');
-
-            Route::post('remove', [AttachmentController::class, 'remove']);
-        });
-
+   
 });        
+// Handle File Uploads and Downloads
+     Route::prefix('attachments')->group(function () {
+         Route::get('download', [AttachmentController::class, 'download'])
+             ->name('download_attachment');
+
+         Route::post('upload', [AttachmentController::class, 'upload'])
+             ->name('api.order_upload_attachment');
+
+         Route::post('remove', [AttachmentController::class, 'remove']);
+     });
 
 //  Order API
 
