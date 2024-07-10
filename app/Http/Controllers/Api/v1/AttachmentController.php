@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Http\Controllers\Api\v1;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use Auth;
+use Illuminate\Http\Request;
+
 class AttachmentController extends Controller
 {
-
     function upload(Request $request)
     {
         // dd(Auth::id());
