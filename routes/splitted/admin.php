@@ -189,6 +189,12 @@ Route::get('/staff', [SettingsController::class, 'staff'])
 Route::patch('/staff', [SettingsController::class, 'update_staff'])
     ->name('patch_settings_staff');
 
+Route::get('get_staff_prices', [SettingsController::class, 'getStaffPrices'])
+    ->name('get_staff_prices');
+
+Route::patch('/staff_payouts', [SettingsController::class, 'update_staff_payouts'])
+    ->name('patch_settings_staff_payout');
+
 Route::get('/social-links', [SettingsController::class, 'social_links'])
     ->name('settings_social_links');
 

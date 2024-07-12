@@ -11,6 +11,8 @@ use App\Services\PaymentGatewaySettingsService;
 use App\Models\Content;
 use App\Models\Setting;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\StaffPrice;
 use App\Services\LogoUploadService;
 use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use Mews\Purifier\Facades\Purifier;
@@ -129,7 +131,40 @@ class SettingsController extends Controller
             'staff_payment_amount'
         ]);
 
-        return view('setup.staff', compact('data', 'rec'));
+        $employees = User::role('staff')->with('staff_price')->get();
+
+        return view('setup.staff', compact('data', 'rec', 'employees'));
+    }
+
+    public function getStaffPrices(Request $request)
+    {
+        $employee_id = $request->get('employee_id');
+        $staff_price = StaffPrice::where('user_id', $employee_id)->first();
+
+        return response()->json($staff_price);
+    }
+
+    public function update_staff_payouts(Request $request)
+    {
+        $request->validate([
+            'employee_id' => 'required|exists:users,id',
+            'single_spaced_price' => 'required|numeric|min:0',
+            'double_spaced_price' => 'required|numeric|min:0',
+        ]);
+
+        $employee_id = $request->input('employee_id');
+        $single_spaced_price = $request->input('single_spaced_price');
+        $double_spaced_price = $request->input('double_spaced_price');
+
+        $staffPrice = StaffPrice::updateOrCreate(
+            ['user_id' => $employee_id],
+            [
+                'single_space_price' => $single_spaced_price,
+                'double_space_price' => $double_spaced_price,
+            ]
+        );
+
+        return redirect()->back()->with('success', 'Staff prices updated successfully!');
     }
 
     public function update_staff(Request $request)

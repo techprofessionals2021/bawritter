@@ -28,6 +28,14 @@
                            <td class="text-muted text-left">Referral Source</td>
                            <td class="text-left">{{ optional($user->meta)->referral_source }}</td>
                         </tr>
+                        <tr>
+                            <td class="text-muted text-left">Single Spaced Price</td>
+                            <td class="text-left">{{ optional($user->staff_price)->single_space_price }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted text-left">Double Spaced Price</td>
+                            <td class="text-left">{{ optional($user->staff_price)->double_space_price }}</td>
+                        </tr>
                      </table>
                      <div class="actions d-flex justify-content-center mt-3 pt-3 px-5 delimiter-top">
                         <a href="#" id="delete_profile" class="action-item text-danger">
