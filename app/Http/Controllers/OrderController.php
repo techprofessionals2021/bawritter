@@ -27,7 +27,7 @@ class OrderController extends Controller
      */
     function index()
     {
-     
+
         $data = Order::admin_dropdown();
 
         $data['statistics'] = Order::statistics();

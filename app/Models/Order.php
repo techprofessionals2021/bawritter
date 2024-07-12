@@ -204,7 +204,7 @@ class Order extends Model
     static function dropdown()
     {
 
-        $data['writer_list'] = $users = User::role('staff')->with('staff_price')->get();
+        $data['writer_list'] = User::role('staff')->whereHas('staff_price')->with('staff_price')->get();
         $data['service_id_list'] = Service::orderBy('name', 'ASC')->whereNull('inactive')->where('price_type_id', 3)->get();
         $data['work_level_id_list'] = WorkLevel::orderBy('id', 'ASC')->whereNull('inactive')->get();
         $urgencies = Urgency::whereNull('inactive')

@@ -14,10 +14,10 @@
          <a class="dropdown-item" href="{{ route('work_levels_list') }}">Work Levels</a>
          <a class="dropdown-item" href="{{ route('additional_services_list') }}">Additional Services
          </a>
-         <div class="dropdown-divider"></div>
+         {{-- <div class="dropdown-divider"></div>
          <a class="dropdown-item" href="{{ route('pricing') }}" target="_blank">
             View Generated Prices
-         </a>
+         </a> --}}
       </div>
    </div>
 
