@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Enums\CartType;
-use App\models\Order;
-use App\models\Comment;
+use App\Models\Order;
+use App\Models\Comment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
@@ -19,7 +19,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Events\RequestedForRevisionEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
-use App\models\Rating;
+use App\Models\Rating;
 use App\Services\CalculatorService;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Log;

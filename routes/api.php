@@ -79,7 +79,6 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
    
-});        
 // Handle File Uploads and Downloads
      Route::prefix('attachments')->group(function () {
          Route::get('download', [AttachmentController::class, 'download'])
