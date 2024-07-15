@@ -4,7 +4,7 @@
 <div class="container page-container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="font-weight-bold sky">Pay with{{ $data['gateway_name'] }}</h3>
+            <h3 class="font-weight-bold sky">Pay with {{ $data['gateway_name'] }}</h3>
             {{-- <hr> --}}
         </div>
         {{-- <div class="col-md-6 d-none d-lg-block ">
