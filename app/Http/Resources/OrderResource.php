@@ -30,6 +30,7 @@ class OrderResource extends JsonResource
             'total' => $this->total ?? '',
             'assign_to' => optional($this->assignee)->first_name ?? '',
             'status' => optional($this->status)->name ?? '',
+            'order_attachments' => AttachmentResource::collection($this->attachments),
             'created_at' => optional($this->created_at)->toDateTimeString() ?? '',
             'updated_at' => optional($this->updated_at)->toDateTimeString() ?? '',
         ];
