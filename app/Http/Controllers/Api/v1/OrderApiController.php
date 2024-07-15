@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Enums\CartType;
-use App\Models\Order;
-use App\Models\Comment;
+use App\models\Order;
+use App\models\Comment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Events\NewCommentEvent;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\OrderResource;
+
 use Mews\Purifier\Facades\Purifier;
 use App\Events\DeliveryAcceptedEvent;
 use App\Events\OrderStatusChangedEvent;
@@ -17,7 +19,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Events\RequestedForRevisionEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
-use App\Models\Rating;
+use App\models\Rating;
 use App\Services\CalculatorService;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Log;
@@ -69,10 +71,15 @@ class OrderApiController extends Controller
     public function datatable(Request $request)
     {
 
+        // $query = Order::with([
+        //     'assignee',
+        //     'customer'
+        // ])->where('customer_id', $request->id);
+
         $query = Order::with([
             'assignee',
             'customer'
-        ])->where('customer_id', $request->id);
+        ]);
 
         if ($request->order_number) {
             $query->where('number', $request->order_number);
@@ -98,9 +105,13 @@ class OrderApiController extends Controller
 
     function show($id)
     {
-        $data = Order::find($id);
+        // $data = Order::find($id);
 
-        return apiResponseSuccess($data, 'order detail');
+        // return apiResponseSuccess($data, 'order detail');
+
+        $order = Order::findOrFail($id);
+
+        return apiResponseSuccess(new OrderResource($order), 'Order detail');
     }
 
     public function quote(Request $request)
@@ -136,7 +147,7 @@ class OrderApiController extends Controller
         // dd(Auth::id());
         $data = $request->validated();
 
-        // dd($data);
+        // dd(Auth::id());
 
         $data = array_merge($data, $calculator->calculatePrice($data));
 
@@ -163,6 +174,66 @@ class OrderApiController extends Controller
 
         return apiResponseSuccess($data, 'order has been stored');
 
+    }
+
+    public function postComment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'message' => 'required',
+            'order_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $order = Order::find($request->order_id);
+
+        if (!$order) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Order not found'
+            ], 404);
+        }
+
+        // if (!auth()->user()->hasRole('admin')) {
+        //     if (
+        //         !in_array(auth()->user()->id, [
+        //             $order->customer_id,
+        //             $order->staff_id
+        //         ])
+        //     ) {
+        //         return response()->json([
+        //             'status' => 'error',
+        //             'message' => 'Unauthorized access'
+        //         ], 403);
+        //     }
+        // }
+
+        $message = Purifier::clean($request->input('message'));
+        if ($message) {
+            $comment = new Comment();
+            $comment->body = $message;
+            $comment->user_id = auth()->user()->id;
+            $order->comments()->save($comment);
+
+            // Dispatching Event
+            event(new NewCommentEvent($comment));
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Comment posted successfully',
+                'comment' => $comment
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Failed to post comment'
+        ], 500);
     }
 
     public function rating_store(Request $request)
