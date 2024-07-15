@@ -78,7 +78,8 @@ class OrderApiController extends Controller
 
         $query = Order::with([
             'assignee',
-            'customer'
+            'customer',
+            'attachments'
         ]);
 
         if ($request->order_number) {
@@ -99,7 +100,10 @@ class OrderApiController extends Controller
 
         $orders = $query->get();
 
-        return apiResponseSuccess(['data' => $orders], 'Successful!');
+        // return apiResponseSuccess(['data' => $orders], 'Order Retrieved Successfully.!');
+        return apiResponseSuccess(OrderResource::collection($orders), 'Successful!');
+
+
     }
 
 
