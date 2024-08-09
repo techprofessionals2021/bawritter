@@ -71,15 +71,18 @@ class OrderApiController extends Controller
     public function datatable(Request $request)
     {
 
-        // $query = Order::with([
-        //     'assignee',
-        //     'customer'
-        // ])->where('customer_id', $request->id);
 
+        // dd(Auth::id());
         $query = Order::with([
             'assignee',
             'customer'
-        ]);
+        ])->where('customer_id', Auth::id());
+
+        // $query = Order::with([
+        //     'assignee',
+        //     'customer',
+        //     'attachments'
+        // ]);
 
         if ($request->order_number) {
             $query->where('number', $request->order_number);
@@ -99,7 +102,10 @@ class OrderApiController extends Controller
 
         $orders = $query->get();
 
-        return apiResponseSuccess(['data' => $orders], 'Successful!');
+        // return apiResponseSuccess(['data' => $orders], 'Order Retrieved Successfully.!');
+        return apiResponseSuccess(OrderResource::collection($orders), 'Successful!');
+
+
     }
 
 
@@ -267,8 +273,18 @@ class OrderApiController extends Controller
     {
         // dd($request->file);
 
-        $data = Storage::disk('local')->url($request->file);
-        return apiResponseSuccess($data, 'Attachment url');
+        $filePath = $request->input('file');
+
+        $fileName = basename($filePath);
+
+        // dd($filePath);
+
+        // Define the destination path in the downloads folder
+        $destinationPath = 'downloads/' . $fileName;
+        Storage::disk('local')->move($filePath, $destinationPath);
+
+        $fileUrl = Storage::disk('local')->url($destinationPath);
+        return apiResponseSuccess($fileUrl, 'Attachment url');
 
     }
 
