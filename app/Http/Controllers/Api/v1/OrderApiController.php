@@ -100,7 +100,7 @@ class OrderApiController extends Controller
             }
         }
 
-        $orders = $query->get();
+        $orders = $query->orderByDesc('id')->get();
 
         // return apiResponseSuccess(['data' => $orders], 'Order Retrieved Successfully.!');
         return apiResponseSuccess(OrderResource::collection($orders), 'Successful!');
@@ -178,7 +178,7 @@ class OrderApiController extends Controller
 
         session()->flash('success', 'Order has been saved. Please make the payment to confirm it');
 
-        return apiResponseSuccess($data, 'order has been stored');
+        return apiResponseSuccess($order, 'order has been stored');
 
     }
 
@@ -286,6 +286,32 @@ class OrderApiController extends Controller
         $fileUrl = Storage::disk('local')->url($destinationPath);
         return apiResponseSuccess($fileUrl, 'Attachment url');
 
+    }
+
+    public function change_status(Request $request, Order $order)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'order_status_id' => 'required'
+        ], [
+
+            'order_status_id.required' => 'Order status is required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $previous = $order->status->name;
+        $order->order_status_id = $request->order_status_id;
+        $order->save();
+        $new = $order->status->name;
+
+        // Dispatching Event
+        event(new OrderStatusChangedEvent($order, $previous, $new));
+
+        return apiResponseSuccess('Status Updated', 'Status Updated Success fully');
     }
 
 }

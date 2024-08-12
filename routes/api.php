@@ -60,6 +60,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('rating_store',[OrderApiController::class,'rating_store']);
 
         Route::post('comment', [OrderApiController::class, 'postComment']);
+
+        Route::post('orders/{order}/status/change', [OrderApiController::class, 'change_status'])
+        ->name('order_change_status');
    });
 
 
