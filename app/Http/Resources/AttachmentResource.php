@@ -16,7 +16,7 @@ class AttachmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => route('download_attachment',["file" => $this->name]),
+            'name' => asset($this->name),
             'display_name' => $this->display_name
         ];
     }
