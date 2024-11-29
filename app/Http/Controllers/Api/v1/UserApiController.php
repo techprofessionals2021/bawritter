@@ -37,7 +37,7 @@ class UserApiController extends Controller
             $data['entity_singular'] = 'Customer';
         }
 
-        
+
         if($data){
 
         return apiResponseSuccess($data,'Searching-dropdown');
@@ -192,6 +192,19 @@ class UserApiController extends Controller
         $user->save();
 
         return apiResponseSuccess('', 'Password successfully updated');
+
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+
+        if(!$user){
+            return apiResponseSuccess('', 'User Not Found');
+        }
+
+        $user->delete();
+        return apiResponseSuccess('', 'User Deleted Successfully');
 
     }
 

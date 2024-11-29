@@ -46,6 +46,8 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[LoginApiController::class,'logout'])->name('logout');
 
+    Route::get('delete-user/{id}', [UserApiController::class, 'deleteUser'])->name('deleteUser');
+
 
 
     Route::prefix('order')->group(function () {
@@ -81,7 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
-   
+
 // Handle File Uploads and Downloads
      Route::prefix('attachments')->group(function () {
          Route::get('download', [AttachmentController::class, 'download'])
