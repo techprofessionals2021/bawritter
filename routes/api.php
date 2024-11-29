@@ -40,13 +40,14 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [LoginApiController::class, 'forgotPassword'])->name('forget.password');
     Route::post('verify-otp',[LoginApiController::class, 'verifyOtp'])->name('verify.otp');
     Route::post('password/reset', [LoginApiController::class, 'resetPassword'])->name('password.reset');
+    Route::get('delete-user/{id}', [UserApiController::class, 'deleteUser'])->name('deleteUser');
 });
 
 // Route::get('order/create', [OrderApiController::class, 'create']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[LoginApiController::class,'logout'])->name('logout');
 
-    Route::get('delete-user/{id}', [UserApiController::class, 'deleteUser'])->name('deleteUser');
+
 
 
 
