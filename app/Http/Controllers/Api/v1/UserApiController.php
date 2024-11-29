@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\models\Tag;
-use App\models\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Stripe\ApiResponse;
 use Illuminate\Support\MessageBag;
