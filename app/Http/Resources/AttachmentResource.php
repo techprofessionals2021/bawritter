@@ -15,11 +15,14 @@ class AttachmentResource extends JsonResource
      */
     public function toArray($request)
     {
+        $relativePath = str_replace(asset(''), '', $this->name);
         return [
             'id' => $this->id,
             'name' => asset($this->name),
             'display_name' => $this->display_name,
-            'size_in_kb' => round(Storage::size($this->name) / 1024)
+            'size_in_kb' => Storage::exists($relativePath) 
+                ? round(Storage::size($relativePath) / 1024) 
+                : null, // Handle missing files gracefully
         ];
     }
 }
