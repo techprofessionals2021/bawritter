@@ -229,11 +229,7 @@ class OrderApiController extends Controller
             // Dispatching Event
             event(new NewCommentEvent($comment));
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Comment posted successfully',
-                'comment' => $comment
-            ], 201);
+            return apiResponseSuccess('Message Sent', 'Your Message has been sent successfully.');
         }
 
         return response()->json([
@@ -312,6 +308,73 @@ class OrderApiController extends Controller
         event(new OrderStatusChangedEvent($order, $previous, $new));
 
         return apiResponseSuccess('Status Updated', 'Status Updated Success fully');
+    }
+
+    public function acceptSubmittedWork(Request $request, $id)
+    {
+        if (auth()->user()->id != $order->customer_id) {
+            abort(404);
+        }
+
+        $order = Order::find($id);
+
+        if(!$order){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Order not found'
+            ], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'submitted_work_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $order->order_status_id = ORDER_STATUS_COMPLETE;
+        $order->save();
+
+        event(new DeliveryAcceptedEvent($order));
+
+        return apiResponseSuccess('Order Accepted', 'Order Completed Successfully.');
+    }
+
+    public function reviseSubmittedWork(Request $request, $id)
+    {
+        if (auth()->user()->id != $order->customer_id) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'message' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $submitted_work = $order->latest_submitted_work();
+
+        if ($submitted_work->count() > 0) {
+            $submitted_work->needs_revision = TRUE;
+            $submitted_work->customer_message = Purifier::clean($request->message);
+            $submitted_work->save();
+
+            // Update Order Status
+            $order->order_status_id = ORDER_STATUS_REQUESTED_FOR_REVISION;
+            $order->save();
+
+            // Dispatching Event
+            event(new RequestedForRevisionEvent($order));
+        }
+
+        return apiResponseSuccess('Revision Request Sent', 'Order Revision Request Sent.');
     }
 
 }
