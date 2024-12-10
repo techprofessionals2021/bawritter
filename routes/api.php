@@ -64,6 +64,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('comment', [OrderApiController::class, 'postComment']);
 
+        Route::post('{id}/deliverable/accept', [OrderApiController::class, 'acceptSubmittedWork']);
+        Route::post('{id}/revision/request', [OrderApiController::class, 'reviseSubmittedWork']);
+
         Route::post('orders/{order}/status/change', [OrderApiController::class, 'change_status'])
         ->name('order_change_status');
    });
