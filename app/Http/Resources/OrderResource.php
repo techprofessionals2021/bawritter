@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Comment\CommentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -32,6 +33,7 @@ class OrderResource extends JsonResource
             'assign_to' => optional($this->assignee)->first_name ?? '',
             'status' => optional($this->status)->name ?? '',
             'submitted_work' => AttachmentResource::collection($this->submitted_works),
+            'comments' => CommentResource::collection($this->comments),
             'order_attachments' => AttachmentResource::collection($this->attachments),
             'created_at' => optional($this->created_at)->toDateTimeString() ?? '',
             'updated_at' => optional($this->updated_at)->toDateTimeString() ?? '',
