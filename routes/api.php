@@ -71,34 +71,31 @@ Route::middleware('auth:sanctum')->group(function () {
         ->name('order_change_status');
    });
 
+    Route::prefix('wallet')->group(function () {
 
+        Route::get('current_balance',[WalletApiController::class,'index']);
+        Route::get('payments',[WalletApiController::class,'walletPayments']);
 
-      // Handle File Uploads and Downloads
-      Route::prefix('attachments')->group(function () {
-        Route::get('download', [AttachmentController::class, 'download'])
-            ->name('download_attachment');
-
-        Route::post('upload', [AttachmentController::class, 'upload'])
-            ->name('order_upload_attachment');
-
-        Route::post('remove', [AttachmentController::class, 'remove']);
     });
+
+
+   // Handle File Uploads and Downloads
+        Route::prefix('attachments')->group(function () {
+            Route::get('download', [AttachmentController::class, 'download'])
+                ->name('download_attachment');
+   
+   
+            Route::post('upload', [AttachmentController::class, 'upload'])
+                ->name('api.order_upload_attachment');
+   
+            Route::post('remove', [AttachmentController::class, 'remove']);
+        });
+
 
 
 });
 
 
-// Handle File Uploads and Downloads
-     Route::prefix('attachments')->group(function () {
-         Route::get('download', [AttachmentController::class, 'download'])
-             ->name('download_attachment');
-
-
-         Route::post('upload', [AttachmentController::class, 'upload'])
-             ->name('api.order_upload_attachment');
-
-         Route::post('remove', [AttachmentController::class, 'remove']);
-     });
 
 
 
@@ -130,12 +127,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
   //User's wallet
 
-  Route::prefix('wallet')->group(function () {
 
-         Route::get('current_balance',[WalletApiController::class,'index']);
-         Route::get('payments',[WalletApiController::class,'walletPayments']);
-
-       });
 
   //job applicant Api
 

@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\models\Payment;
-use App\models\Setting;
+use App\Models\Payment;
+use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\models\Tag;
-use App\models\User;
-use App\models\Wallet;
-use App\models\WalletTransaction;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\Wallet;
+use App\Models\WalletTransaction;
 use Auth;
 class WalletApiController extends Controller
 {
 
 public function index(Request $request)
 {
-    $user_id = $request->id;
+    $user_id = auth()->id();
 
     // Find the wallet associated with the user
     $wallet = Wallet::where('user_id', $user_id)->first();
