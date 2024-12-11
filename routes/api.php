@@ -96,6 +96,35 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+// Grouping PayPal-related routes
+Route::prefix('paypal')->group(function () {
+
+    // Route for initiating a PayPal payment process
+    Route::get('/payment', function () {
+        return view('paypal_web_view');
+    })->name('paypal.payment');
+
+    // PayPal configuration endpoint
+    Route::get('/config', function () {
+        return response()->json([
+            'client_id' => env('PAYPAL_CLIENT_ID'),
+            'success_url' => env('PAYPAL_SUCCESS_URL'),
+            'cancel_url' => env('PAYPAL_CANCEL_URL'),
+        ]);
+    })->name('paypal.config');
+
+    // PayPal success callback
+    Route::get('/success', function () {
+        return 'success';
+    })->name('paypal.success');
+
+    // PayPal cancel callback
+    Route::get('/cancel', function () {
+        return 'cancel';
+    })->name('paypal.cancel');
+});
+
+
 
 
 

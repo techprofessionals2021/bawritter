@@ -21,15 +21,8 @@ use Illuminate\Support\Facades\Route;
 load_route('website');
 
 
-Route::get('/paypal-payment', function () {
-    return view('paypal_testing');
-});
-Route::get('/success', function () {
-    return 'success';
-});
-Route::get('/cancel', function () {
-    return 'cancel';
-});
+
+
 
 Route::post('additional/services', [ServiceController::class, 'getAdditionalServicesByServiceId'])
     ->name('additional_services_by_service_id');
