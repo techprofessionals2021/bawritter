@@ -5,7 +5,7 @@
     // Fetch PayPal configuration dynamically
     async function loadPayPalSdk() {
       try {
-        const response = await fetch('api/paypal/config');
+        const response = await fetch('{{ url("/api/paypal/config") }}');
         const config = await response.json();
 
         // Dynamically load PayPal SDK with client ID
