@@ -49,7 +49,9 @@ class LoginApiController extends Controller
             $token = $user->createToken('Token');
             $data = [
                 'user' => $user->email,
-                'token' => $token->plainTextToken
+                'token' => $token->plainTextToken,
+                'user_id' => $user->id,
+                'user_name' => $user->first_name ." ". $user->last_name,
             ];
 
             return apiResponseSuccess($data, 'Login Successfull!');
