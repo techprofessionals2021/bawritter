@@ -312,10 +312,6 @@ class OrderApiController extends Controller
 
     public function acceptSubmittedWork(Request $request, $id)
     {
-        if (auth()->user()->id != $order->customer_id) {
-            abort(404);
-        }
-
         $order = Order::find($id);
 
         if(!$order){
@@ -323,6 +319,10 @@ class OrderApiController extends Controller
                 'status' => 'error',
                 'message' => 'Order not found'
             ], 404);
+        }
+
+        if (auth()->user()->id != $order->customer_id) {
+            abort(404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -345,6 +345,15 @@ class OrderApiController extends Controller
 
     public function reviseSubmittedWork(Request $request, $id)
     {
+        $order = Order::find($id);
+
+        if(!$order){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Order not found'
+            ], 404);
+        }
+
         if (auth()->user()->id != $order->customer_id) {
             abort(404);
         }
