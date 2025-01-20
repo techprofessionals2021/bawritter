@@ -19,6 +19,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Events\RequestedForRevisionEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderIndexResource;
 use App\Models\Rating;
 use App\Services\CalculatorService;
 use App\Services\CartService;
@@ -100,10 +101,18 @@ class OrderApiController extends Controller
             }
         }
 
-        $orders = $query->orderByDesc('id')->get();
+        $orders = $query->orderByDesc('id')->paginate(10);
 
         // return apiResponseSuccess(['data' => $orders], 'Order Retrieved Successfully.!');
-        return apiResponseSuccess(OrderResource::collection($orders), 'Successful!');
+        return apiResponseSuccess([
+            'data' => OrderIndexResource::collection($orders),
+            'pagination' => [
+                'current_page' => $orders->currentPage(),
+                'last_page' => $orders->lastPage(),
+                'per_page' => $orders->perPage(),
+                'total' => $orders->total(),
+            ],
+        ], 'Orders retrieved successfully!');
 
 
     }
