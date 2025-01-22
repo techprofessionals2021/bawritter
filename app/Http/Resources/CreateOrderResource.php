@@ -42,6 +42,12 @@ class CreateOrderResource extends JsonResource
                     'percentage_to_add' => $urgency['percentage_to_add'] ?? null,
                 ];
             })->all(),
+            'spacings_list' => collect($this['spacings_list'] ?? [])->map(function($spacing) {
+                return [
+                    'id' => $spacing['id'] ?? null,
+                    'name' => $spacing['name'] ?? null,
+                ];
+            })->all(),
         ];
     }
 }
