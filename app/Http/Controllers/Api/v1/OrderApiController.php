@@ -6,6 +6,7 @@ use App\Enums\CartType;
 use App\Models\Order;
 use App\Models\Comment;
 use Carbon\Carbon;
+use App\Http\Resources\CreateOrderResource;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use App\Events\NewCommentEvent;
@@ -146,13 +147,13 @@ class OrderApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+{
+    // Get the original data array from the dropdown method.
+    $data = Order::dropdown();
+    // Wrap the $data in your resource, then return.
+    return apiResponseSuccess(new CreateOrderResource($data), 'order created Successfully!');
+}
 
-        $data = Order::dropdown();
-        $data['title'] = 'Let\'s get started on your project!';
-
-        return apiResponseSuccess($data, 'order created Successfully!');
-    }
 
 
     // store order function
