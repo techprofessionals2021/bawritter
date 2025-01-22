@@ -44,7 +44,7 @@ class StoreOrderRequest extends FormRequest
             'service_id' => 'required',
             'work_level_id' => 'required',
             'urgency_id' => 'required',
-            // 'dead_line' => 'required',
+            'dead_line' => 'nullable',
             'quantity' => 'required',
             // 'added_services' => 'nullable|array',
             'files_data' => 'nullable|array',
