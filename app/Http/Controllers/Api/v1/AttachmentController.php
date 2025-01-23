@@ -45,7 +45,7 @@ class AttachmentController extends Controller
     {
 
    
-        $filePath = 'attachments/' . $request->name;
+        $filePath = $request->name;
 
 
         if (Storage::exists($filePath)) {
