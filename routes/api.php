@@ -69,6 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::post('orders/{order}/status/change', [OrderApiController::class, 'change_status'])
         ->name('order_change_status');
+        Route::get('get-status-count', [OrderApiController::class, 'orderStateCount']);
    });
 
     Route::prefix('wallet')->group(function () {

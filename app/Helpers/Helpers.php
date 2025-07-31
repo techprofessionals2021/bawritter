@@ -384,3 +384,21 @@ function validationError($validator)
 
     return responseError($formattedErrors, 'Validation Error', 422);
 }
+
+// class PercentageHelper
+// {
+     function calculatePercentage($current, $previous)
+    {
+        if($current == 0 && $previous == 0){
+            return 0;
+        }elseif ($previous == 0 && $current > 0){
+            return 100;
+        }elseif ($previous > 0 && $current == 0){
+            return -100;
+        }else {
+            return round((($current - $previous) / $previous) * 100, 2);
+        }
+    }
+// }
+
+

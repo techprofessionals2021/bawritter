@@ -396,5 +396,75 @@ class OrderApiController extends Controller
         return apiResponseSuccess('Revision Request Sent', 'Order Revision Request Sent.');
     }
 
+     public function orderStateCount(Request $request)
+    {
+        $filter = $request->query('filter');
+        $query = Order::query();
+
+        if ($filter === 'this_week'){
+            $currentStart = Carbon::now()->startOfWeek();
+            $CurrentEnd = Carbon::now()->endOfWeek();
+            
+            $previousStart = Carbon::now()->subWeek()->startOfWeek();
+            $previousEnd = Carbon::now()->subWeek()->endOfWeek();
+            
+        }elseif ($filter === 'this_month'){
+            $currentStart = Carbon::now()->startOfMonth();
+            $CurrentEnd = Carbon::now()->endOfMonth();
+            
+            $previousStart = Carbon::now()->subMonth()->startOfMonth();
+            $previousEnd = Carbon::now()->subMonth()->endOfMonth();
+
+        }elseif ($filter === 'this_year') {
+           $currentStart = Carbon::now()->startOfYear();
+            $CurrentEnd = Carbon::now()->endOfYear();
+            
+            $previousStart = Carbon::now()->subYear()->startOfYear();
+            $previousEnd = Carbon::now()->subYear()->endOfYear();
+
+        }else {
+            return response()->json(['error' => 'invalid filter'], 400);
+        }
+         
+        $currentNewOrders = Order::where('order_status_id', 1)
+            ->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
+        $currentInProgressOrders = Order::where('order_status_id', 2)
+            ->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
+        $currentCompletedOrders = Order::where('order_status_id', 5)
+            ->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
+        $currentTotalOrders = Order::whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
+
+        $previousNewOrders = Order::where('order_status_id', 1)
+            ->whereBetween('created_at', [$previousStart, $previousEnd])->count();
+        $previousInProgressOrders = Order::where('order_status_id', 2)
+            ->whereBetween('created_at', [$previousStart, $previousEnd])->count();
+        $previousCompletedOrders = Order::where('order_status_id', 5)
+            ->whereBetween('created_at', [$previousStart, $previousEnd])->count();
+        $previousTotalOrders = Order::whereBetween('created_at', [$previousStart, $previousEnd])->count();
+
+        $newOrdersPercentage = calculatePercentage($currentNewOrders, $previousNewOrders);
+        $inProgressOrdersPercentage = calculatePercentage($currentInProgressOrders, $previousInProgressOrders);
+        $completedOrdersPercentage = calculatePercentage($currentCompletedOrders, $previousCompletedOrders);
+        $totalOrdersPercentage = calculatePercentage($currentTotalOrders, $previousTotalOrders);
+
+        return response()->json([
+            'current_new_orders' => $currentNewOrders,
+            'percentage_new_orders' => $newOrdersPercentage,
+            'previous_new_orders' => $previousNewOrders,
+
+            'current_in_progress_orders' => $currentInProgressOrders,
+            'percentage_in_progress_orders' => $inProgressOrdersPercentage,
+            'previous_in_progress_orders' => $previousInProgressOrders,
+
+            'current_completed_orders' => $currentCompletedOrders,
+            'percentage_completed_orders' => $completedOrdersPercentage,
+            'previous_completed_orders' => $previousCompletedOrders,
+
+            'current_total_orders' => $currentTotalOrders,
+            'percentage_total_orders' => $totalOrdersPercentage,
+            'previous_total_orders' => $previousTotalOrders,
+            
+        ]);
+    }
 }
 
