@@ -10,7 +10,10 @@ use App\Models\Tag;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Models\WalletTransaction;
+use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Auth;
+
 class WalletApiController extends Controller
 {
 
@@ -76,6 +79,36 @@ public function walletPayments(Request $request)
 
 }
 
+ public function payUsingWallet(Request $request)
+    {
+        $request->validate([
+            'order_id' => 'required|exists:orders,id'
+        ]);
 
+        DB::beginTransaction();
+
+        try {
+            // Order find karke tumhara confirmOrderPayment call
+            $order = app()->make(\App\Services\OrderService::class)
+              ->confirmOrderPayment($request->order_id);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Order payment confirmed using wallet',
+                'order' => $order
+            ], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Payment failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 }

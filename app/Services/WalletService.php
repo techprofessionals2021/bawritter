@@ -27,7 +27,7 @@ class WalletService
 
     public function gift($amount, $transactionableEntity, $desctiption = NULL)
     {       
-        $$desctiption = ($desctiption) ? $desctiption : 'Gift';
+        $desctiption = ($desctiption) ? $desctiption : 'Gift';
         return $this->add($amount, 'Gift', $transactionableEntity);
     }
     

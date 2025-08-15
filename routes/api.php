@@ -72,10 +72,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('get-status-count', [OrderApiController::class, 'orderStateCount']);
    });
 
-    Route::prefix('wallet')->group(function () {
 
+    Route::prefix('wallet')->group(function () {
         Route::get('current_balance',[WalletApiController::class,'index']);
         Route::get('payments',[WalletApiController::class,'walletPayments']);
+        Route::middleware('auth:sanctum')->post('orders/pay-wallet', [WalletApiController::class, 'payUsingWallet']);
 
     });
 
