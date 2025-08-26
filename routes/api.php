@@ -40,7 +40,7 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [LoginApiController::class, 'forgotPassword'])->name('forget.password');
     Route::post('verify-otp',[LoginApiController::class, 'verifyOtp'])->name('verify.otp');
     Route::post('password/reset', [LoginApiController::class, 'resetPassword'])->name('password.reset');
-    Route::get('delete-user/{id}', [UserApiController::class, 'deleteUser'])->name('deleteUser');
+    Route::delete('delete-user/{id}', [UserApiController::class, 'deleteUser'])->name('deleteUser');
 });
 
 // Route::get('order/create', [OrderApiController::class, 'create']);
@@ -63,7 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('rating_store',[OrderApiController::class,'rating_store']);
 
         Route::post('comment', [OrderApiController::class, 'postComment']);
-
+        // uncomplete
         Route::post('{id}/deliverable/accept', [OrderApiController::class, 'acceptSubmittedWork']);
         Route::post('{id}/revision/request', [OrderApiController::class, 'reviseSubmittedWork']);
 

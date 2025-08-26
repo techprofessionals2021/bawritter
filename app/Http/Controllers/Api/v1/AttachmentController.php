@@ -15,7 +15,7 @@ class AttachmentController extends Controller
     {
         // dd(Auth::id());
         $validator = Validator::make($request->all(), [
-            'file' => 'required|file|max:2048', // Maximum file size of 2MB
+            'file' => 'required|file|max:10240', // Maximum file size of 10MB
         ]);
     
         if ($validator->fails()) {
