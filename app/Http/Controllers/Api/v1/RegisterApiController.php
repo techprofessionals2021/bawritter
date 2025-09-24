@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -46,6 +47,10 @@ class RegisterApiController extends Controller
                 'email' => $request['email'],
                 'phone_number' => $request['phone_number'],
                 'password' => Hash::make($request['password']),
+            ]);
+            $wallet = Wallet::create([
+                'user_id' => $user->id,
+                'balance' => 0.00
             ]);
 
             $token = $user->createToken('API Token');

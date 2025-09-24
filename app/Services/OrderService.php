@@ -21,6 +21,10 @@ class OrderService
             $data['order_status_id'] = ORDER_STATUS_PENDING_PAYMENT;
         }
 
+          if (isset($data['writer_model'][0]['id'])) {
+        $data['staff_id_from_client'] = $data['writer_model'][0]['id'];
+    }
+
         // Get the datetime based on the urgency
         $urgency = Urgency::find($data['urgency_id']);
         if ($urgency->type == 'hours') {

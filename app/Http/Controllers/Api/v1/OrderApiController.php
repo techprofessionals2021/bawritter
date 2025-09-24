@@ -396,58 +396,59 @@ class OrderApiController extends Controller
         return apiResponseSuccess('Revision Request Sent', 'Order Revision Request Sent.');
     }
 
-     public function orderStateCount(Request $request)
-    {
-        $filter = $request->query('filter');
-        $query = Order::query();
+    public function orderStateCount(Request $request)
+{
+    $filter = $request->query('filter');
+    $query = Order::query();
 
-        if ($filter === 'this_week'){
-            $currentStart = Carbon::now()->startOfWeek();
-            $CurrentEnd = Carbon::now()->endOfWeek();
-            
-            $previousStart = Carbon::now()->subWeek()->startOfWeek();
-            $previousEnd = Carbon::now()->subWeek()->endOfWeek();
-            
-        }elseif ($filter === 'this_month'){
-            $currentStart = Carbon::now()->startOfMonth();
-            $CurrentEnd = Carbon::now()->endOfMonth();
-            
-            $previousStart = Carbon::now()->subMonth()->startOfMonth();
-            $previousEnd = Carbon::now()->subMonth()->endOfMonth();
+    if ($filter === 'this_week'){
+        $currentStart = Carbon::now()->startOfWeek();
+        $CurrentEnd = Carbon::now()->endOfWeek();
+        
+        $previousStart = Carbon::now()->subWeek()->startOfWeek();
+        $previousEnd = Carbon::now()->subWeek()->endOfWeek();
+    } elseif ($filter === 'this_month') {
+        $currentStart = Carbon::now()->startOfMonth();
+        $CurrentEnd = Carbon::now()->endOfMonth();
+        
+        $previousStart = Carbon::now()->subMonth()->startOfMonth();
+        $previousEnd = Carbon::now()->subMonth()->endOfMonth();
+    } elseif ($filter === 'this_year') {
+        $currentStart = Carbon::now()->startOfYear();
+        $CurrentEnd = Carbon::now()->endOfYear();
+        
+        $previousStart = Carbon::now()->subYear()->startOfYear();
+        $previousEnd = Carbon::now()->subYear()->endOfYear();
+    } else {
+        return responseError(['message' => 'invalid filter'], 'Invalid filter value', 400);
+    }
 
-        }elseif ($filter === 'this_year') {
-           $currentStart = Carbon::now()->startOfYear();
-            $CurrentEnd = Carbon::now()->endOfYear();
-            
-            $previousStart = Carbon::now()->subYear()->startOfYear();
-            $previousEnd = Carbon::now()->subYear()->endOfYear();
-
-        }else {
-            return response()->json(['error' => 'invalid filter'], 400);
-        }
-         
-        $currentNewOrders = Order::where('order_status_id', 1)
+    try {
+        // Fetching the order counts for the current and previous periods
+        $currentNewOrders = Order::where('customer_id', auth()->id())->where('order_status_id', 1)
             ->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
-        $currentInProgressOrders = Order::where('order_status_id', 2)
+        $currentInProgressOrders = Order::where('customer_id', auth()->id())->where('order_status_id', 2)
             ->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
-        $currentCompletedOrders = Order::where('order_status_id', 5)
+        $currentCompletedOrders = Order::where('customer_id', auth()->id())->where('order_status_id', 5)
             ->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
-        $currentTotalOrders = Order::whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
+        $currentTotalOrders = Order::where('customer_id', auth()->id())->whereBetween('created_at', [$currentStart, $CurrentEnd])->count();
 
-        $previousNewOrders = Order::where('order_status_id', 1)
+        $previousNewOrders = Order::where('customer_id', auth()->id())->where('order_status_id', 1)
             ->whereBetween('created_at', [$previousStart, $previousEnd])->count();
-        $previousInProgressOrders = Order::where('order_status_id', 2)
+        $previousInProgressOrders = Order::where('customer_id', auth()->id())->where('order_status_id', 2)
             ->whereBetween('created_at', [$previousStart, $previousEnd])->count();
-        $previousCompletedOrders = Order::where('order_status_id', 5)
+        $previousCompletedOrders = Order::where('customer_id', auth()->id())->where('order_status_id', 5)
             ->whereBetween('created_at', [$previousStart, $previousEnd])->count();
-        $previousTotalOrders = Order::whereBetween('created_at', [$previousStart, $previousEnd])->count();
+        $previousTotalOrders = Order::where('customer_id', auth()->id())->whereBetween('created_at', [$previousStart, $previousEnd])->count();
 
+        // Calculate percentage changes
         $newOrdersPercentage = calculatePercentage($currentNewOrders, $previousNewOrders);
         $inProgressOrdersPercentage = calculatePercentage($currentInProgressOrders, $previousInProgressOrders);
         $completedOrdersPercentage = calculatePercentage($currentCompletedOrders, $previousCompletedOrders);
         $totalOrdersPercentage = calculatePercentage($currentTotalOrders, $previousTotalOrders);
 
-        return response()->json([
+        // Return successful response with data
+        return apiResponseSuccess([
             'current_new_orders' => $currentNewOrders,
             'percentage_new_orders' => $newOrdersPercentage,
             'previous_new_orders' => $previousNewOrders,
@@ -463,8 +464,12 @@ class OrderApiController extends Controller
             'current_total_orders' => $currentTotalOrders,
             'percentage_total_orders' => $totalOrdersPercentage,
             'previous_total_orders' => $previousTotalOrders,
-            
-        ]);
+        ], 'Order State Count Retrieved Successfully!');
+    } catch (\Exception $e) {
+        // If there is an error fetching the data, return an error response
+        return responseError(['message' => $e->getMessage()], 'Error while fetching order counts', 500);
     }
+}
+
 }
 
