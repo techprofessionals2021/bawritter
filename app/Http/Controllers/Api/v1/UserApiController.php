@@ -142,10 +142,14 @@ class UserApiController extends Controller
 
          $user_id=$request->id;
 
-         $profile=User::with('ratings_received')->where('id',$user_id)->get();
+         $profile=User::with('ratings_received')->where('id',$user_id)->first();
 
+         if ($profile) {
+        $profile->photo_url = $profile->photo ? url($profile->photo) : null;
+        return apiResponseSuccess($profile, 'User data');
+    }
 
-       return apiResponseSuccess($profile,'User data');
+       return responseError(null, 'User not found');
 
     }
 
@@ -154,17 +158,27 @@ class UserApiController extends Controller
         $user = User::find($request->id);
 
        if ($user) {
-        $user->update([
-        'first_name' => $request->input('first_name'),
-        'last_name' => $request->input('last_name'),
-        'timezone' => $request->input('timezone'),
-        'bio' => $request->input('bio'),
-        'address' => $request->input('address'),
+        if ($request->hasFile('photo')) {
+            $request->validate([
+               'photo' => 'image|mimes:jpeg,png,jpg,gif,webp|max:5120' // max 5MB 
+            ]);
 
-      ]);
-          return apiResponseSuccess($user, 'Successfully updated');
+            $filename = time().'_'.$request->file('photo')->getClientOriginalName();
+            $filepath = $request->file('photo')->storeAs('profile_photos', $filename, 'public');
+            $user->photo = '/storage/' . $filepath;
+
+        }
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->timezone = $request->input('timezone');
+        $user->bio = $request->input('bio');
+        $user->phone_number = $request->input('phone_number');
+
+        $user->save();
+        $user->photo_url = $user->photo ? url($user->photo) : null;
+        return apiResponseSuccess($user, 'Successfully updated');
        }
-
+       return responseError(null, 'User not found...!');
     }
 
 

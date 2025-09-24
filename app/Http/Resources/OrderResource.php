@@ -20,6 +20,7 @@ class OrderResource extends JsonResource
             'order_no' => $this->number ?? '',
             'title' => $this->title ?? '',
             'customer' => optional($this->customer)->first_name ?? '',
+            'service' => optional($this->service)->name ?? '',
             'dead_line' => $this->dead_line ?? '',
             'quantity' => $this->quantity ?? '',
             'base_price' => $this->base_price ?? '',

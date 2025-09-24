@@ -79,36 +79,57 @@ public function walletPayments(Request $request)
 
 }
 
- public function payUsingWallet(Request $request)
-    {
-        $request->validate([
-            'order_id' => 'required|exists:orders,id'
-        ]);
+public function payUsingWallet(Request $request)
+{
+    $request->validate([
+        'order_id' => 'required|exists:orders,id'
+    ]);
+    DB::beginTransaction();
 
-        DB::beginTransaction();
+    try {
+        $user = auth()->user();
 
-        try {
-            // Order find karke tumhara confirmOrderPayment call
-            $order = app()->make(\App\Services\OrderService::class)
-              ->confirmOrderPayment($request->order_id);
-
-            DB::commit();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Order payment confirmed using wallet',
-                'order' => $order
-            ], 200);
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json([
-                'status' => false,
-                'message' => 'Payment failed',
-                'error' => $e->getMessage()
-            ], 500);
+        // Find order
+        $order = Order::find($request->order_id);
+        if (!$order) {
+            return responseError([], 'Order not found', 404);
         }
+
+        // Check order belongs to this user
+        if ($order->customer_id !== $user->id) {
+            return responseError([],'Unauthorized access to this order', 403);
+        }
+
+        // Find wallet
+        $wallet = Wallet::where('user_id', $user->id)->first();
+        if (!$wallet) {
+            return responseError([], 'Wallet not found', 404);
+        }
+
+        // check if order is already paid
+        if ($order->order_status_id == 1) {
+            DB::rollBack();
+            return responseError([],'Order already paid!', 400);
+        }
+        
+        // Check balance
+        if ($wallet->balance < $order->amount) {
+            return responseError([], 'Insufficient wallet balance', 400);
+        }
+
+        // Confirm order payment (inside it pay() → deduct())
+        $order = app()->make(\App\Services\OrderService::class)
+            ->confirmOrderPayment($request->order_id);
+
+        DB::commit();
+
+        return apiResponseSuccess($order, 'Order paid successfully using wallet', 200);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return responseError('An error occurred: ' . $e->getMessage(), 500);
     }
+}
 
 }
